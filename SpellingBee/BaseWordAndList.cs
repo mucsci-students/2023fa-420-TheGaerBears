@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 
@@ -9,6 +10,18 @@ namespace SpellingBee
 {
     public class BaseWordAndList
     {
+        public List<string> tableNames = new List<string> {"four_letter_words",
+                                                           "five_letter_words",
+                                                           "six_letter_words",
+                                                           "seven_letter_words",
+                                                           "eight_letter_words",
+                                                           "nine_letter_words",
+                                                           "ten_letter_words",
+                                                           "eleven_letter_words",
+                                                           "twelve_letter_words",
+                                                           "thirteen_letter_words",
+                                                           "fourteen_letter_words",
+                                                           "fifteen_letter_words",};
         public string IdentifyBaseWord(char mustUseLetter)
         {
             Random random = new Random();
@@ -23,15 +36,28 @@ namespace SpellingBee
             return pangram;
         }
 
-        public List<string> GenerateWordList(string pangram, int minLength = 4)
+        public List<string> GenerateWordList(char mustUseLetter, string pangram, int minLength = 4)
         {
             List<string> words = new List<string>();
-            if (string.IsNullOrEmpty(pangram))
+            if (!char.IsLetter(mustUseLetter))
             {
-                throw new ArgumentException("Pangram cannot be null or empty.", nameof(pangram));
+                throw new ArgumentException("Must use letter must be a valid letter.", nameof(mustUseLetter));
             }
 
-            string query = $"SELECT word FROM your_table WHERE LENGTH(word) >= {minLength} AND word LIKE '{pangram}%'";
+            StringBuilder queryBuilder = new StringBuilder();
+            foreach (string tableName in tableNames)
+            {
+                queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE LENGTH(word) >= {minLength} AND word LIKE '%{mustUseLetter}%' AND word GLOB '*[{pangram}]*'");
+
+                // Add UNION between queries, except for the last one
+                if (tableNames.IndexOf(tableName) < tableNames.Count - 1)
+                {
+                    queryBuilder.AppendLine("UNION");
+                }
+            }
+
+            string query = queryBuilder.ToString();
+
             string connectionString = "Data Source=C:\\Users\\skyfa\\source\\repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
 
             try
@@ -60,9 +86,6 @@ namespace SpellingBee
 
             return words;
         }
-        public bool IsInputValid(string userInput, List<string> wordList)
-        {
-            return wordList.Contains(userInput);
-        }
+
     }
 }
