@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SetUpSpellingBee\obj\Release\**" />
+    <Compile Remove="SetUpSpellingBee\src\obj\**" />
+    <EmbeddedResource Remove="SetUpSpellingBee\obj\Release\**" />
+    <EmbeddedResource Remove="SetUpSpellingBee\src\obj\**" />
+    <None Remove="SetUpSpellingBee\obj\Release\**" />
+    <None Remove="SetUpSpellingBee\src\obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SetUpSpellingBee\Database\" />
+  </ItemGroup>
+
+</Project>

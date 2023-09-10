@@ -1,0 +1,25 @@
+﻿using (var cmd = con.CreateCommand())
+{
+    cmd.CommandText = $"DELETE FROM {tableName} WHERE id >= {number}";
+    cmd.ExecuteNonQuery();
+
+    foreach (var entry in wordEntries)
+    {
+        using (var cmd = con.CreateCommand())
+        {
+            cmd.CommandText = $"INSERT INTO {tableName} (word) VALUES (@word)";
+            cmd.Parameters.AddWithValue("@word", entry.word);
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
+    using (var reader = cmd.ExecuteReader())
+    {
+        while (reader.Read())
+        {
+            tableName = reader.GetString(0);
+            Console.WriteLine($"Table Name: {tableName}");
+        }
+    }
+}

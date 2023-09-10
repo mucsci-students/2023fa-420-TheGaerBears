@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-ParsingJson",
+      "appliesTo": "SetUpSpellingBee/src/main/ParsingJson.cs",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-2023fa-420-TheGaerBears",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}
