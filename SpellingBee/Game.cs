@@ -6,5 +6,9 @@ namespace SpellingBee
 {
     internal class Game
     {
+        public void Exit()
+        {
+            System.Environment.Exit(0);
+        }
     }
 }
