@@ -103,10 +103,10 @@ namespace SpellingBee
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
         }
-        void ShowPuzzle()
+        public void ShowPuzzle()
         {
             Console.Write("Puzzle Letters: ");
-            foreach (char letter in letters)
+            foreach (char letter in baseWord)
             {
                 Console.Write(letter + " ");
             }
