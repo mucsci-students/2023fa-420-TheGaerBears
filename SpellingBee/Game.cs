@@ -103,6 +103,39 @@ namespace SpellingBee
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
         }
+        void ShowPuzzle(List<char> letters, char requiredLetter)
+        {
+            Console.Write("Puzzle Letters: ");
+            foreach (char letter in letters)
+            {
+                Console.Write(letter + " ");
+            }
+            Console.WriteLine();
+
+            Console.WriteLine($"The required letter is: {requiredLetter}");
+        }
+
+        void PuzzleRank()
+        {
+            int uniqueLetterCount = foundWords.Last().Distinct().Count(); // Count of unique letters in the word
+            int wordLength = foundWords.Last().Length;
+            int points = 0;
+
+            if (wordLength == 4)
+            {
+                points = 1;
+            }
+            else if (wordLength == 5 || wordLength == 6)
+            {
+                points = wordLength;
+            }
+            else if (wordLength > 6)
+            {
+                points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
+            }
+
+            playerPoints += points; // Add the points to the player's total score.
+        }
 
     }
 }
