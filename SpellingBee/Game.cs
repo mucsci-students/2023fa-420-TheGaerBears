@@ -62,9 +62,9 @@ namespace SpellingBee
             System.Environment.Exit(0);
         }
 
-        void Shuffle(List<char> letters)
+        void Shuffle()
         {
-            int n = letters.Count;
+            int n = baseWord.Count;
 
             for (int i = n - 1; i > 0; i--)
             {
@@ -72,13 +72,13 @@ namespace SpellingBee
                 int j = rand.Next(i + 1);
 
                 // Swap elements
-                char temp = letters[i];
-                letters[i] = letters[j];
-                letters[j] = temp;
+                char temp = baseWord[i];
+                baseWord[i] = baseWord[j];
+                baseWord[j] = temp;
             }
             Console.WriteLine("Shuffled letters:");
 
-            foreach (char letter in letters)
+            foreach (char letter in baseWord)
             {
                 Console.Write(letter + " ");
             }
