@@ -62,7 +62,7 @@ namespace SpellingBee
             System.Environment.Exit(0);
         }
 
-        void Shuffle()
+        public void Shuffle()
         {
             int n = baseWord.Count;
 
@@ -83,6 +83,25 @@ namespace SpellingBee
                 Console.Write(letter + " ");
             }
             Console.WriteLine("\n");
+        }
+        public void ShowStatus()
+        {
+            double ratio = (double)playerPoints / totalPossiblePoints;
+            double percentageAsDecimal = ratio * 100;
+            int percentage = (int)Math.Round(percentageAsDecimal);
+
+            string status = "Beginner"; // Default status
+
+            foreach (var title in statusTitles)
+            {
+                if (percentage >= title.Value)
+                {
+                    status = title.Key;
+                }
+            }
+
+            Console.WriteLine($"Your current points: {playerPoints}");
+            Console.WriteLine($"Your status: {status}");
         }
 
     }
