@@ -61,5 +61,29 @@ namespace SpellingBee
         {
             System.Environment.Exit(0);
         }
+
+        void Shuffle(List<char> letters)
+        {
+            int n = letters.Count;
+
+            for (int i = n - 1; i > 0; i--)
+            {
+                // Get a random index up to i inclusive
+                int j = rand.Next(i + 1);
+
+                // Swap elements
+                char temp = letters[i];
+                letters[i] = letters[j];
+                letters[j] = temp;
+            }
+            Console.WriteLine("Shuffled letters:");
+
+            foreach (char letter in letters)
+            {
+                Console.Write(letter + " ");
+            }
+            Console.WriteLine("\n");
+        }
+
     }
 }
