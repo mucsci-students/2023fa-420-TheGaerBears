@@ -9,5 +9,8 @@ internal class Program
         Batteries.Init();
 
         Console.WriteLine("Start here!");
+        CreateDatabase db = new CreateDatabase();
+        //db.AddPangramTable("pangrams");
+        db.PrintCount("pangrams");
     }
 }
