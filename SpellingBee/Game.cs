@@ -21,5 +21,12 @@ namespace SpellingBee
                     Console.WriteLine(word);
             }
         }
+        /// <summary>
+        /// Exits the console app
+        /// </summary>
+        public void Exit()
+        {
+            System.Environment.Exit(0);
+        }
     }
 }
