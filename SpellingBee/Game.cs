@@ -136,6 +136,11 @@ namespace SpellingBee
 
             playerPoints += points; // Add the points to the player's total score.
         }
+        public void DisplayScore()
+        {
+            Console.WriteLine($"Your current score is: {playerPoints}");
+        }
+
 
     }
 }
