@@ -103,7 +103,7 @@ namespace SpellingBee
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
         }
-        void ShowPuzzle(List<char> letters, char requiredLetter)
+        void ShowPuzzle()
         {
             Console.Write("Puzzle Letters: ");
             foreach (char letter in letters)
@@ -115,7 +115,7 @@ namespace SpellingBee
             Console.WriteLine($"The required letter is: {requiredLetter}");
         }
 
-        void PuzzleRank()
+        public void PuzzleRank()
         {
             int uniqueLetterCount = foundWords.Last().Distinct().Count(); // Count of unique letters in the word
             int wordLength = foundWords.Last().Length;
