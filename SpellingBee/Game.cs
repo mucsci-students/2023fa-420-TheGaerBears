@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace SpellingBee
 {
     internal class Game
@@ -10,9 +9,9 @@ namespace SpellingBee
         /// Prints out the words found by the user, in one line
         /// </summary>
         /// <param name="foundWords"></param>
-        public static void ShowFoundWords(List<string> foundWords)
+        public void ShowFoundWords(List<string> foundWords)
         {
-            Console.WriteLine("The words you have found are:");
+            Console.WriteLine("The words you have found are: ");
             foreach (string word in foundWords)
             {
                 if (foundWords.IndexOf(word) < foundWords.Count - 1)
