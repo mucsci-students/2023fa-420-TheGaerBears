@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Data.Sqlite;
+using Newtonsoft.Json;
 using SQLitePCL;
 
 namespace SpellingBee
@@ -12,7 +13,7 @@ namespace SpellingBee
         private List<char> baseWord;
         private char requiredLetter;
         private Random rand;
-        private List<string> validWords;
+        [JsonIgnore] private List<string> validWords;
         private List<string> foundWords;
         private List<KeyValuePair<string, int>> statusTitles;
         private int playerPoints;
@@ -339,7 +340,21 @@ namespace SpellingBee
         {
             Console.WriteLine($"Your current score is: {playerPoints}");
         }
-
+        public void SaveCurrent()
+        {
+            //Creates the save folder if it doesnt exist
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            Console.WriteLine("Enter new save name");
+            string fileName = Console.ReadLine();
+            if (fileName == null)
+            {
+                Console.WriteLine("Error: no file name");
+                return;
+            }
+            fileName += ".json";
+            var jsonString = JsonConvert.SerializeObject(this);
+            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+        }
 
     }
 }
