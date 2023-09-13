@@ -116,17 +116,6 @@ internal class Program
                 }
                 break;
 
-            case "-guess":
-                if (mainGame.Active())
-                {
-                    mainGame.Guess();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-
             case "-new game":
                 mainGame.NewPuzzle();
                 break;
@@ -139,7 +128,14 @@ internal class Program
                 break;
 
             default:
-                Console.WriteLine("Sorry this is not a valid command. Please refer to '-help' for valid commands.");
+                if (mainGame.Active())
+                {
+                    mainGame.Guess(input);
+                }
+                else
+                {
+                    Console.WriteLine("This is not a valid command. Please use -help to see the list of commands.");
+                }
                 break;
         }
     }
