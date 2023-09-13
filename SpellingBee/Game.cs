@@ -98,8 +98,6 @@ namespace SpellingBee
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
-
-            this.validWords = validWords;
         }
 
         private List<string> PangramList()
@@ -163,7 +161,7 @@ namespace SpellingBee
             //Choose required letter
             requiredLetter = q[0];
             ShowPuzzle();
-            GenerateValidWords()
+            GenerateValidWords();
         }
 
         /// <summary>
@@ -198,7 +196,7 @@ namespace SpellingBee
             }
             //Choose required letter
             requiredLetter = q[0];
-            GenerateValidWords()
+            GenerateValidWords();
             ShowPuzzle();
             foundWords.Add(bWord);
             PuzzleRank();
