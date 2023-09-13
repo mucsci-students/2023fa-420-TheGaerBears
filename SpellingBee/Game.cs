@@ -139,6 +139,8 @@ namespace SpellingBee
         /// </summary>
         public void NewPuzzle()
         {
+            //Reset the values for the new puzzle
+            Reset();
             //Picks a random pangram
             string selectedWord = PangramWords[rand.Next(PangramWords.Count())];
 
@@ -159,8 +161,6 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
-            //Reset the values for the new puzzle
-            Reset();
 
             //Choose required letter
             requiredLetter = q[0];
@@ -175,6 +175,9 @@ namespace SpellingBee
         /// </summary>
         public void NewPuzzleBaseWord(string word)
         {
+            //Reset the values for the new puzzle
+            Reset();
+
             string bWord = word.ToLower();
             while (!PangramWords.Contains(bWord))
             {
@@ -198,8 +201,6 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
-            //Reset the values for the new puzzle
-            Reset();
 
             //Choose required letter
             requiredLetter = q[0];
