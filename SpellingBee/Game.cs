@@ -63,7 +63,7 @@ namespace SpellingBee
             StringBuilder queryBuilder = new StringBuilder();
             foreach (string tableName in tableNames)
             {
-                queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' AND word NOT GLOB '*[^{baseWord}]*'");
+                queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' AND word NOT GLOB '*[^{(new string(baseWord.ToArray()))}]*'");
 
                 // Add UNION between queries, except for the last one
                 if (tableNames.IndexOf(tableName) < tableNames.Count - 1)
@@ -341,6 +341,7 @@ namespace SpellingBee
                     {
                         Console.WriteLine("Word found!");
                         foundWords.Add(guess);
+                        PuzzleRank();
                     }
                 }
                 else
