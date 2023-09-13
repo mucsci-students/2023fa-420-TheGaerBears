@@ -159,6 +159,9 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
+            //Reset the values for the new puzzle
+            Reset();
+
             //Choose required letter
             requiredLetter = q[0];
             ShowPuzzle();
@@ -195,12 +198,25 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
+            //Reset the values for the new puzzle
+            Reset();
+
             //Choose required letter
             requiredLetter = q[0];
             GenerateValidWords();
             ShowPuzzle();
             foundWords.Add(bWord);
             PuzzleRank();
+        }
+
+        private void Reset()
+        {
+            baseWord = new List<char>();
+            requiredLetter = 'a';
+            validWords = new List<string>();
+            foundWords = new List<string>();
+            playerPoints = 0;
+            totalPossiblePoints = 0;
         }
 
         /// <summary>
