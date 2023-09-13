@@ -47,11 +47,11 @@ internal class Program
                 break;
 
             case "-save current":
-                //Add when done
+                mainGame.SaveCurrent();
                 break;
 
             case "-save puzzle":
-                //Add when done
+                mainGame.SavePuzzle();
                 break;
 
             case "-load puzzle":
@@ -59,8 +59,6 @@ internal class Program
                 break;
 
             case "-show puzzle":
-                //Needs to check if puzzle started for many of these commands
-                //Will add function to game class to check this
                 mainGame.ShowPuzzle();
                 break;
 
