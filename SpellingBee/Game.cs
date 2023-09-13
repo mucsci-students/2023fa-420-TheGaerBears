@@ -315,27 +315,7 @@ namespace SpellingBee
             
         }
 
-        public void PuzzleRank()
-        {
-            int uniqueLetterCount = foundWords.Last().Distinct().Count(); // Count of unique letters in the word
-            int wordLength = foundWords.Last().Length;
-            int points = 0;
-
-            if (wordLength == 4)
-            {
-                points = 1;
-            }
-            else if (wordLength == 5 || wordLength == 6)
-            {
-                points = wordLength;
-            }
-            else if (wordLength > 6)
-            {
-                points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
-            }
-
-            playerPoints += points; // Add the points to the player's total score.
-        }
+        
         public void DisplayScore()
         {
             Console.WriteLine($"Your current score is: {playerPoints}");
