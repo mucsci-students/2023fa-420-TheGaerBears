@@ -280,7 +280,6 @@ namespace SpellingBee
             Console.WriteLine($"The required letter is: {requiredLetter}");
         }
 
-<<<<<<< HEAD
         /// <summary>
         /// Allows user to Guess a word 
         /// if valid saves it in foundWords, if invalid shows corresponding error message
@@ -337,7 +336,5 @@ namespace SpellingBee
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
         }
 
-=======
->>>>>>> 0edff4a855041e1c2350243239a30a9d633f9f11
     }
 }
