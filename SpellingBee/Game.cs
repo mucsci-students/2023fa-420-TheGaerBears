@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.Data.Sqlite;
 using SQLitePCL;
 
@@ -41,6 +42,64 @@ namespace SpellingBee
             playerPoints = 0;
             totalPossiblePoints = 0;
             PangramWords = PangramList();
+        }
+
+        public void GenerateValidWords()
+        {
+            List<string> tableNames = new List<string> {"four_letter_words",
+                                                           "five_letter_words",
+                                                           "six_letter_words",
+                                                           "seven_letter_words",
+                                                           "eight_letter_words",
+                                                           "nine_letter_words",
+                                                           "ten_letter_words",
+                                                           "eleven_letter_words",
+                                                           "twelve_letter_words",
+                                                           "thirteen_letter_words",
+                                                           "fourteen_letter_words",
+                                                           "fifteen_letter_words"};
+
+            StringBuilder queryBuilder = new StringBuilder();
+            foreach (string tableName in tableNames)
+            {
+                queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' AND word NOT GLOB '*[^{baseWord}]*'");
+
+                // Add UNION between queries, except for the last one
+                if (tableNames.IndexOf(tableName) < tableNames.Count - 1)
+                {
+                    queryBuilder.AppendLine("UNION");
+                }
+            }
+
+            string query = queryBuilder.ToString();
+
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+
+            try
+            {
+                using (SqliteConnection con = new SqliteConnection(connectionString))
+                {
+                    con.Open();
+                    using (var cmd = con.CreateCommand())
+                    {
+                        cmd.CommandText = query;
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string word = reader.GetString(0);
+                                validWords.Add(word);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+
+            this.validWords = validWords;
         }
 
         private List<string> PangramList()
@@ -104,6 +163,7 @@ namespace SpellingBee
             //Choose required letter
             requiredLetter = q[0];
             ShowPuzzle();
+            GenerateValidWords()
         }
 
         /// <summary>
@@ -138,6 +198,7 @@ namespace SpellingBee
             }
             //Choose required letter
             requiredLetter = q[0];
+            GenerateValidWords()
             ShowPuzzle();
             foundWords.Add(bWord);
             PuzzleRank();
