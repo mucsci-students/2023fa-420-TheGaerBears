@@ -80,11 +80,11 @@ internal class Program
                 mainGame.Guess();
                 break;
 
-            case "-new puzzle":
+            case "-new game":
                 mainGame.NewPuzzle();
                 break;
 
-            case "-new puzzle from word":
+            case "-new game from word":
                 Console.WriteLine("Please enter a valid pangram: ");
 
                 string pang = Console.ReadLine().Trim();
