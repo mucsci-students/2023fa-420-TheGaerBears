@@ -115,6 +115,41 @@ namespace SpellingBee
             Console.WriteLine($"The required letter is: {requiredLetter}");
         }
 
+        /// <summary>
+        /// Allows user to Guess a word 
+        /// if valid saves it in foundWords, if invalid shows corresponding error message
+        /// </summary>
+        public void Guess()
+        {
+            Console.WriteLine("Enter a word: ");
+            try
+            {
+                String guess = Console.ReadLine();
+            
+                if (validWords.Contains(guess))
+                {
+                    if (foundWords.Contains(guess))
+                    {
+                        Console.WriteLine($"You have already found the word \"{guess}\"!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Word found!");
+                        foundWords.Add(guess);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{guess} is not a valid guess.");
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+        }
+
         public void PuzzleRank()
         {
             int uniqueLetterCount = foundWords.Last().Distinct().Count(); // Count of unique letters in the word
