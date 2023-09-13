@@ -47,11 +47,25 @@ internal class Program
                 break;
 
             case "-save current":
-                mainGame.SaveCurrent();
+                if (mainGame.Active())
+                {
+                    mainGame.SaveCurrent();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-save puzzle":
-                mainGame.SavePuzzle();
+                if (mainGame.Active())
+                {
+                    mainGame.SavePuzzle();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-load puzzle":
@@ -59,23 +73,58 @@ internal class Program
                 break;
 
             case "-show puzzle":
-                mainGame.ShowPuzzle();
+                if (mainGame.Active())
+                {
+                    mainGame.ShowPuzzle();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-show found words":
-                mainGame.ShowFoundWords();
+                if (mainGame.Active())
+                {
+                    mainGame.ShowFoundWords();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-shuffle":
-                mainGame.Shuffle();
+                if (mainGame.Active())
+                {
+                    mainGame.Shuffle();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-show status":
-                mainGame.ShowStatus();
+                if (mainGame.Active())
+                {
+                    mainGame.ShowStatus();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-guess":
-                mainGame.Guess();
+                if (mainGame.Active())
+                {
+                    mainGame.Guess();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
 
             case "-new game":
@@ -90,7 +139,7 @@ internal class Program
                 break;
 
             default:
-                Console.WriteLine("Sorry this is not a valid input. Please refer to '-help' for valid commands.");
+                Console.WriteLine("Sorry this is not a valid command. Please refer to '-help' for valid commands.");
                 break;
         }
     }
