@@ -43,6 +43,7 @@ namespace SpellingBee
             totalPossiblePoints = 0;
             PangramWords = PangramList();
         }
+
         public List<string> GenerateValidWords()
         {
             List<string> tableNames = new List<string> {"four_letter_words",
@@ -101,7 +102,7 @@ namespace SpellingBee
             return validWords;
         }
 
-    private List<string> PangramList()
+        private List<string> PangramList()
         {
             string query = $"select word from pangrams";
             string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
