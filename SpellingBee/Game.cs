@@ -44,7 +44,7 @@ namespace SpellingBee
             PangramWords = PangramList();
         }
 
-        public List<string> GenerateValidWords()
+        public void GenerateValidWords()
         {
             List<string> tableNames = new List<string> {"four_letter_words",
                                                            "five_letter_words",
@@ -73,7 +73,7 @@ namespace SpellingBee
 
             string query = queryBuilder.ToString();
 
-            string connectionString = "Data Source=C:\\Users\\skyfa\\source\\repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
 
             try
             {
@@ -99,7 +99,7 @@ namespace SpellingBee
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
 
-            return validWords;
+            this.validWords = validWords;
         }
 
         private List<string> PangramList()
@@ -163,6 +163,7 @@ namespace SpellingBee
             //Choose required letter
             requiredLetter = q[0];
             ShowPuzzle();
+            GenerateValidWords()
         }
 
         /// <summary>
@@ -197,6 +198,7 @@ namespace SpellingBee
             }
             //Choose required letter
             requiredLetter = q[0];
+            GenerateValidWords()
             ShowPuzzle();
             foundWords.Add(bWord);
             PuzzleRank();
