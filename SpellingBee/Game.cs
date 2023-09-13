@@ -104,7 +104,7 @@ namespace SpellingBee
             for (int i = 0; i < validWords.Count(); ++i)
             {
                 int uniqueLetterCount = validWords[i].Distinct().Count(); // Count of unique letters in the word
-                int wordLength = foundWords.Last().Length;
+                int wordLength = validWords[i].Count();
                 int points = 0;
 
                 if (wordLength == 4)
