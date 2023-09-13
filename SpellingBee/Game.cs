@@ -358,12 +358,11 @@ namespace SpellingBee
         /// Allows user to Guess a word 
         /// if valid saves it in foundWords, if invalid shows corresponding error message
         /// </summary>
-        public void Guess()
+        public void Guess(string word)
         {
-            Console.WriteLine("Enter a word: ");
             try
             {
-                String guess = Console.ReadLine();
+                String guess = word;
             
                 if (validWords.Contains(guess))
                 {
