@@ -241,7 +241,7 @@ namespace SpellingBee
                 "-save puzzle: Saves the game with no progress.\n" +
                 "-save current: Saves the game along with progress.\n" +
                 "-load puzzle: Loads a previously saved game.\n" +
-                "-guess: Allows you to guess a word to check if it is valid.\n"
+                "-guess: Allows you to guess a word to check if it is valid.\n" +
                 "-show puzzle: Displays letters and required letter of current puzzle.\n" +
                 "-show found words: Displays list of all words found so far\n" +
                 "-shuffle: Shuffles the order letters are displayed in.\n" +
