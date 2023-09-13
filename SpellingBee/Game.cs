@@ -280,6 +280,7 @@ namespace SpellingBee
             Console.WriteLine($"The required letter is: {requiredLetter}");
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// Allows user to Guess a word 
         /// if valid saves it in foundWords, if invalid shows corresponding error message
@@ -315,27 +316,7 @@ namespace SpellingBee
             
         }
 
-        public void PuzzleRank()
-        {
-            int uniqueLetterCount = foundWords.Last().Distinct().Count(); // Count of unique letters in the word
-            int wordLength = foundWords.Last().Length;
-            int points = 0;
-
-            if (wordLength == 4)
-            {
-                points = 1;
-            }
-            else if (wordLength == 5 || wordLength == 6)
-            {
-                points = wordLength;
-            }
-            else if (wordLength > 6)
-            {
-                points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
-            }
-
-            playerPoints += points; // Add the points to the player's total score.
-        }
+        
         public void DisplayScore()
         {
             Console.WriteLine($"Your current score is: {playerPoints}");
@@ -356,5 +337,7 @@ namespace SpellingBee
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
         }
 
+=======
+>>>>>>> 0edff4a855041e1c2350243239a30a9d633f9f11
     }
 }
