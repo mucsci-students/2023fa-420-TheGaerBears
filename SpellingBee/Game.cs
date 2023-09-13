@@ -395,6 +395,23 @@ namespace SpellingBee
 
             playerPoints += points; // Add the points to the player's total score.
         }
-
+        public void SavePuzzle()
+        {
+            //Creates the save folder if it doesnt exist
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            Console.WriteLine("Enter new save name");
+            string fileName = Console.ReadLine();
+            if (fileName == null)
+            {
+                Console.WriteLine("Error: no file name");
+                return;
+            }
+            fileName += ".json";
+            Game temp = new Game();
+            temp.requiredLetter = this.requiredLetter;
+            temp.baseWord = this.baseWord;
+            var jsonString = JsonConvert.SerializeObject(this);
+            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+        }
     }
 }
