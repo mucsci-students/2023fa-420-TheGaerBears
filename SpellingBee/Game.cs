@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Data.Sqlite;
+using SQLitePCL;
 
 namespace SpellingBee
 {
@@ -13,6 +16,7 @@ namespace SpellingBee
         private List<KeyValuePair<string, int>> statusTitles;
         private int playerPoints;
         private int totalPossiblePoints;
+        private List<string> PangramWords;
 
         public Game()
         {
@@ -36,6 +40,107 @@ namespace SpellingBee
                 };
             playerPoints = 0;
             totalPossiblePoints = 0;
+            PangramWords = PangramList();
+        }
+
+        private List<string> PangramList()
+        {
+            string query = $"select word from pangrams";
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+
+            List<string> words = new List<string>();
+            try
+            {
+                using (SqliteConnection con = new SqliteConnection(connectionString))
+                {
+                    con.Open();
+                    using (var cmd = con.CreateCommand())
+                    {
+                        cmd.CommandText = query;
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string word = reader.GetString(0);
+                                words.Add(word);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            return words;
+        }
+
+        /// <summary>
+        /// Creates a new puzzle when called
+        /// Selects a random Pangram
+        /// </summary>
+        public void NewPuzzle()
+        {
+            //Picks a random pangram
+            string selectedWord = PangramWords[rand.Next(PangramWords.Count())];
+
+
+            char[] q = selectedWord.Distinct().ToArray();
+            baseWord = new List<char>(q);
+
+            //Shuffles the letters without printing them
+            int n = baseWord.Count();
+
+            for (int i = n - 1; i > 0; i--)
+            {
+                // Get a random index up to i inclusive
+                int j = rand.Next(i + 1);
+
+                // Swap elements
+                char temp = baseWord[i];
+                baseWord[i] = baseWord[j];
+                baseWord[j] = temp;
+            }
+            //Choose required letter
+            requiredLetter = q[0];
+            ShowPuzzle();
+        }
+
+        /// <summary>
+        /// Takes a starting word for the puzzle and checks its validity
+        /// If valid it starts the puzzle with the pangrams letters
+        /// If not it asks for a new word
+        /// </summary>
+        public void NewPuzzleBaseWord(string word)
+        {
+            string bWord = word.ToLower();
+            while (!PangramWords.Contains(bWord))
+            {
+                Console.WriteLine("This word is not valid. Please enter a new word: ");
+                bWord = Console.ReadLine().ToLower();
+            }
+
+            char[] q = bWord.Distinct().ToArray();
+            baseWord = new List<char>(q);
+
+            //Shuffles the letters without printing them
+            int n = baseWord.Count();
+
+            for (int i = n - 1; i > 0; i--)
+            {
+                // Get a random index up to i inclusive
+                int j = rand.Next(i + 1);
+
+                // Swap elements
+                char temp = baseWord[i];
+                baseWord[i] = baseWord[j];
+                baseWord[j] = temp;
+            }
+            //Choose required letter
+            requiredLetter = q[0];
+            ShowPuzzle();
+            foundWords.Add(bWord);
+            PuzzleRank();
         }
 
         /// <summary>
