@@ -415,5 +415,49 @@ namespace SpellingBee
             var jsonString = JsonConvert.SerializeObject(this);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
         }
+
+        public void LoadPuzzle()
+        {
+            //Creates the save folder if it doesnt exist
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
+            var fileList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
+
+            //makes sure there are saved files
+            if (fileList.Length == 0)
+            {
+                Console.WriteLine("No Saved Games");
+                return;
+            }
+
+            Console.WriteLine("Which save file would you like to load?");
+            int i = 0;
+            //prints all files in the save folder
+            foreach (string file in fileList)
+            {
+                Console.WriteLine(i + ": " + Path.GetFileNameWithoutExtension(file));
+                ++i;
+            }
+            //reads user input as an integer
+            int fileId = Convert.ToInt32(Console.ReadLine());
+            //if it is a valid id then it loads the game
+            if (fileList.Length > fileId)
+            {
+                StreamReader fileContents = new StreamReader(File.OpenRead(fileList[fileId]));
+                string openedFile = fileContents.ReadToEnd();
+                Console.WriteLine("Game successfully loaded");
+                Game temp = JsonConvert.DeserializeObject<Game>(openedFile);
+                this.NewPuzzleBaseWord(temp.baseWord.ToString());
+                this.requiredLetter = temp.requiredLetter;
+                if (temp.foundWords !=  null)
+                {
+                    this.foundWords = temp.foundWords;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid file Id");
+            }
+        }
     }
+    
 }
