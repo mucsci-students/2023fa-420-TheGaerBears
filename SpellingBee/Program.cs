@@ -10,14 +10,16 @@ internal class Program
         // Initialize SQLitePCL
         Batteries.Init();
 
+        Game mainGame = new Game();
+
         Console.WriteLine("Welcome to the Spelling Bee Puzzle Game!");
         Console.WriteLine("Here are some commands to help you out:");
         //Call help command here
-
+        mainGame.Help();
 
         CreateDatabase db = new CreateDatabase();
 
-        Game mainGame = new Game();
+        
 
         //While loop that keeps game running
         while (true)
@@ -37,7 +39,7 @@ internal class Program
         switch (input)
         {
             case "-help":
-                //Add when done
+                mainGame.Help();
                 break;
 
             case "-exit":

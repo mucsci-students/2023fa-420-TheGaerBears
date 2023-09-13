@@ -227,6 +227,29 @@ namespace SpellingBee
             System.Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Displays help information for player
+        /// </summary>
+        public void Help()
+        {
+            Console.WriteLine("" +
+                "How to Play: enter a word containing letters from the 7 given letters.\n" +
+                "This word must be at least 4 letters long, and contain the indicated required letter.\n" +
+                "Commands:\n" +
+                "-help: Lists instructions and all available commands\n" +
+                "-exit: Quits the current game without saving anything.\n" +
+                "-save puzzle: Saves the game with no progress.\n" +
+                "-save current: Saves the game along with progress.\n" +
+                "-load puzzle: Loads a previously saved game.\n" +
+                "-guess: Allows you to guess a word to check if it is valid.\n" +
+                "-show puzzle: Displays letters and required letter of current puzzle.\n" +
+                "-show found words: Displays list of all words found so far\n" +
+                "-shuffle: Shuffles the order letters are displayed in.\n" +
+                "-show status: Shows the player their current rank.\n" +
+                "-new game: Generates a game with a random board without saving.\n" +
+                "-new game from word: Generates a game with a board based on an entered pangram.\n");
+        }
+
         public void Shuffle()
         {
             int n = baseWord.Count;
