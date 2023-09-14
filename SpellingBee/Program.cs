@@ -55,7 +55,7 @@ internal class Program
                 break;
 
             case "-load puzzle":
-                //Add when done
+                mainGame.Load(ref mainGame)
                 break;
 
             case "-show puzzle":

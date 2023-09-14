@@ -10,15 +10,15 @@ namespace SpellingBee
 {
     internal class Game
     {
-        private List<char> baseWord;
-        private char requiredLetter;
+        [JsonProperty] private List<char> baseWord;
+        [JsonProperty] private List<string> foundWords;
+        [JsonProperty] private int playerPoints;
+        [JsonProperty] private char requiredLetter;
         private Random rand;
-        [JsonIgnore] private List<string> validWords;
-        private List<string> foundWords;
+        private List<string> validWords;
         private List<KeyValuePair<string, int>> statusTitles;
-        private int playerPoints;
-        private int totalPossiblePoints;
         private List<string> PangramWords;
+        private int totalPossiblePoints;
 
         public Game()
         {
@@ -99,6 +99,31 @@ namespace SpellingBee
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
+
+            //Calculate totalPoints
+            for (int i = 0; i < validWords.Count(); ++i)
+            {
+                int uniqueLetterCount = validWords[i].Distinct().Count(); // Count of unique letters in the word
+                int wordLength = validWords[i].Count();
+                int points = 0;
+
+                if (wordLength == 4)
+                {
+                    points = 1;
+                }
+                else if (wordLength == 5 || wordLength == 6)
+                {
+                    points = wordLength;
+                }
+                else if (wordLength > 6)
+                {
+                    points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
+                }
+
+                totalPossiblePoints += points; // Add the points to the player's total score.
+            }
+
+            
         }
 
         private List<string> PangramList()
@@ -220,6 +245,15 @@ namespace SpellingBee
             totalPossiblePoints = 0;
         }
 
+        public bool Active()
+        {
+            if (baseWord.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Prints out the words found by the user, in one line
         /// </summary>
@@ -324,12 +358,11 @@ namespace SpellingBee
         /// Allows user to Guess a word 
         /// if valid saves it in foundWords, if invalid shows corresponding error message
         /// </summary>
-        public void Guess()
+        public void Guess(string word)
         {
-            Console.WriteLine("Enter a word: ");
             try
             {
-                String guess = Console.ReadLine();
+                String guess = word;
             
                 if (validWords.Contains(guess))
                 {
@@ -373,6 +406,7 @@ namespace SpellingBee
                 return;
             }
             fileName += ".json";
+            // found words
             var jsonString = JsonConvert.SerializeObject(this);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
         }
@@ -412,11 +446,10 @@ namespace SpellingBee
             Game temp = new Game();
             temp.requiredLetter = this.requiredLetter;
             temp.baseWord = this.baseWord;
-            var jsonString = JsonConvert.SerializeObject(this);
+            var jsonString = JsonConvert.SerializeObject(temp);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
         }
-
-        public void LoadPuzzle()
+        public void Load(ref Game game)
         {
             //Creates the save folder if it doesnt exist
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
@@ -429,7 +462,7 @@ namespace SpellingBee
                 return;
             }
 
-            Console.WriteLine("Which save file would you like to load?");
+            Console.WriteLine("Which save file id would you like to load?");
             int i = 0;
             //prints all files in the save folder
             foreach (string file in fileList)
@@ -445,13 +478,8 @@ namespace SpellingBee
                 StreamReader fileContents = new StreamReader(File.OpenRead(fileList[fileId]));
                 string openedFile = fileContents.ReadToEnd();
                 Console.WriteLine("Game successfully loaded");
-                Game temp = JsonConvert.DeserializeObject<Game>(openedFile);
-                this.NewPuzzleBaseWord(temp.baseWord.ToString());
-                this.requiredLetter = temp.requiredLetter;
-                if (temp.foundWords !=  null)
-                {
-                    this.foundWords = temp.foundWords;
-                }
+                game = JsonConvert.DeserializeObject<Game>(openedFile);
+                game.GenerateValidWords();
             }
             else
             {
@@ -459,5 +487,4 @@ namespace SpellingBee
             }
         }
     }
-    
 }
