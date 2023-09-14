@@ -10,15 +10,15 @@ namespace SpellingBee
 {
     internal class Game
     {
-        private List<char> baseWord;
-        private char requiredLetter;
+        [JsonProperty] private List<char> baseWord;
+        [JsonProperty] private List<string> foundWords;
+        [JsonProperty] private int playerPoints;
+        [JsonProperty] private char requiredLetter;
         private Random rand;
-        [JsonIgnore] private List<string> validWords;
-        private List<string> foundWords;
+        private List<string> validWords;
         private List<KeyValuePair<string, int>> statusTitles;
-        private int playerPoints;
-        private int totalPossiblePoints;
         private List<string> PangramWords;
+        private int totalPossiblePoints;
 
         public Game()
         {
@@ -48,17 +48,17 @@ namespace SpellingBee
         public void GenerateValidWords()
         {
             List<string> tableNames = new List<string> {"four_letter_words",
-                                                           "five_letter_words",
-                                                           "six_letter_words",
-                                                           "seven_letter_words",
-                                                           "eight_letter_words",
-                                                           "nine_letter_words",
-                                                           "ten_letter_words",
-                                                           "eleven_letter_words",
-                                                           "twelve_letter_words",
-                                                           "thirteen_letter_words",
-                                                           "fourteen_letter_words",
-                                                           "fifteen_letter_words"};
+                                                        "five_letter_words",
+                                                        "six_letter_words",
+                                                        "seven_letter_words",
+                                                        "eight_letter_words",
+                                                        "nine_letter_words",
+                                                        "ten_letter_words",
+                                                        "eleven_letter_words",
+                                                        "twelve_letter_words",
+                                                        "thirteen_letter_words",
+                                                        "fourteen_letter_words",
+                                                        "fifteen_letter_words"};
 
             StringBuilder queryBuilder = new StringBuilder();
             foreach (string tableName in tableNames)
@@ -122,8 +122,6 @@ namespace SpellingBee
 
                 totalPossiblePoints += points; // Add the points to the player's total score.
             }
-
-            
         }
 
         private List<string> PangramList()
@@ -364,7 +362,7 @@ namespace SpellingBee
             try
             {
                 String guess = Console.ReadLine();
-            
+
                 if (validWords.Contains(guess))
                 {
                     if (foundWords.Contains(guess))
@@ -383,14 +381,14 @@ namespace SpellingBee
                     Console.WriteLine($"{guess} is not a valid guess.");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            
+
         }
 
-        
+
         public void DisplayScore()
         {
             Console.WriteLine($"Your current score is: {playerPoints}");
@@ -407,6 +405,7 @@ namespace SpellingBee
                 return;
             }
             fileName += ".json";
+            // found words
             var jsonString = JsonConvert.SerializeObject(this);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
         }
@@ -446,8 +445,45 @@ namespace SpellingBee
             Game temp = new Game();
             temp.requiredLetter = this.requiredLetter;
             temp.baseWord = this.baseWord;
-            var jsonString = JsonConvert.SerializeObject(this);
+            var jsonString = JsonConvert.SerializeObject(temp);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+        }
+        public void Load(ref Game game)
+        {
+            //Creates the save folder if it doesnt exist
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
+            var fileList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
+
+            //makes sure there are saved files
+            if (fileList.Length == 0)
+            {
+                Console.WriteLine("No Saved Games");
+                return;
+            }
+
+            Console.WriteLine("Which save file id would you like to load?");
+            int i = 0;
+            //prints all files in the save folder
+            foreach (string file in fileList)
+            {
+                Console.WriteLine(i + ": " + Path.GetFileNameWithoutExtension(file));
+                ++i;
+            }
+            //reads user input as an integer
+            int fileId = Convert.ToInt32(Console.ReadLine());
+            //if it is a valid id then it loads the game
+            if (fileList.Length > fileId)
+            {
+                StreamReader fileContents = new StreamReader(File.OpenRead(fileList[fileId]));
+                string openedFile = fileContents.ReadToEnd();
+                Console.WriteLine("Game successfully loaded");
+                game = JsonConvert.DeserializeObject<Game>(openedFile);
+                game.GenerateValidWords();
+            }
+            else
+            {
+                Console.WriteLine("Invalid file Id");
+            }
         }
     }
 }
