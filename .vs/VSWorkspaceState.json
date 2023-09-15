@@ -1,12 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SetUpSpellingBee",
-    "\\SetUpSpellingBee\\bin",
-    "\\SetUpSpellingBee\\obj",
-    "\\SetUpSpellingBee\\src",
-    "\\SetUpSpellingBee\\src\\main"
+    "\\SpellingBee",
+    "\\SpellingBee\\bin",
+    "\\SpellingBee\\bin\\Debug",
+    "\\SpellingBee\\bin\\Debug\\net6.0",
+    "\\SpellingBee\\bin\\Debug\\net6.0\\saves"
   ],
-  "SelectedNode": "\\SetUpSpellingBee\\src\\SpellingBee.csproj",
+  "SelectedNode": "\\SpellingBee\\bin\\Debug\\net6.0\\saves\\sky.json",
   "PreviewInSolutionExplorer": false
 }

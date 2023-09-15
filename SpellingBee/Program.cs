@@ -11,24 +11,17 @@ internal class Program
         Batteries.Init();
 
         Game mainGame = new Game();
-
-        Console.WriteLine("Welcome to the Spelling Bee Puzzle Game!");
-        Console.WriteLine("Here are some commands to help you out:");
+        mainGame.BeginScreen();
         //Call help command here
-        mainGame.Help();
+        //mainGame.Help();
 
-        CreateDatabase db = new CreateDatabase();
-
-        
-
-        //While loop that keeps game running
+        //While loop that allows user to keep guessing
         while (true)
         {
-            string input = Console.ReadLine().Trim();
+            string input = Console.ReadLine().ToLower().Trim();
             CommandValidation(input, ref mainGame);
         }
     }
-
     /// <summary>
     /// Parses the commands entered by the player
     /// </summary>
@@ -39,6 +32,7 @@ internal class Program
         switch (input)
         {
             case "-help":
+            case "-Help":
                 mainGame.Help();
                 break;
 
@@ -69,6 +63,7 @@ internal class Program
                 break;
 
             case "-load puzzle":
+            case "Load":
                 mainGame.Load(ref mainGame);
                 break;
 
@@ -117,6 +112,7 @@ internal class Program
                 break;
 
             case "-new game":
+            case "New Game":
                 mainGame.NewPuzzle();
                 break;
 
