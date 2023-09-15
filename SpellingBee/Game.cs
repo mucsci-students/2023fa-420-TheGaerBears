@@ -478,9 +478,11 @@ namespace SpellingBee
             {
                 StreamReader fileContents = new StreamReader(File.OpenRead(fileList[fileId]));
                 string openedFile = fileContents.ReadToEnd();
-                Console.WriteLine("Game successfully loaded");
+                game.Reset();
                 game = JsonConvert.DeserializeObject<Game>(openedFile);
                 game.GenerateValidWords();
+                Console.WriteLine("This is the loaded puzzle");
+                game.ShowPuzzle();
             }
             else
             {
