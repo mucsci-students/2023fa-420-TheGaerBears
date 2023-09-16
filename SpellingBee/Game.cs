@@ -318,12 +318,14 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
-            Console.WriteLine("Shuffled letters:");
+            Console.WriteLine("Shuffled letters: ");
 
             foreach (char letter in baseWord)
             {
                 Console.Write(letter + " ");
             }
+            Console.WriteLine("\n");
+            Console.WriteLine("Required Letter: " + requiredLetter);
             Console.WriteLine("\n");
         }
         public void ShowStatus()
