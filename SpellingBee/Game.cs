@@ -190,6 +190,9 @@ namespace SpellingBee
             //Choose required letter
             requiredLetter = q[0];
             ShowPuzzle();
+            Console.WriteLine();
+            Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
+            Console.WriteLine();
             GenerateValidWords();
         }
 
@@ -229,10 +232,11 @@ namespace SpellingBee
 
             //Choose required letter
             requiredLetter = q[0];
-            GenerateValidWords();
             ShowPuzzle();
-            foundWords.Add(bWord);
-            PuzzleRank();
+            Console.WriteLine();
+            Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
+            Console.WriteLine();
+            GenerateValidWords();
         }
 
         private void Reset()
@@ -292,7 +296,6 @@ namespace SpellingBee
                 "-save puzzle: Saves the game with no progress.\n" +
                 "-save current: Saves the game along with progress.\n" +
                 "-load puzzle: Loads a previously saved game.\n" +
-                "-guess: Allows you to guess a word to check if it is valid.\n" +
                 "-show puzzle: Displays letters and required letter of current puzzle.\n" +
                 "-show found words: Displays list of all words found so far\n" +
                 "-shuffle: Shuffles the order letters are displayed in.\n" +
@@ -341,6 +344,20 @@ namespace SpellingBee
 
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
+        }
+        public void BeginScreen()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            centerText("Spelling Bee Puzzle Game");
+            Console.WriteLine();
+            centerText("Enter a Command: (-New Game, -Load, -Help)");
+            Console.WriteLine();
+            Console.WriteLine();
         }
         public void ShowPuzzle()
         {
@@ -488,6 +505,12 @@ namespace SpellingBee
             {
                 Console.WriteLine("Invalid file Id");
             }
+        }
+
+        public void centerText(String text)
+        {
+            Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
+            Console.WriteLine(text);
         }
     }
 }
