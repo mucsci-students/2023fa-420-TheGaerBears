@@ -237,8 +237,6 @@ namespace SpellingBee
             Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
             Console.WriteLine();
             GenerateValidWords();
-            foundWords.Add(bWord);
-            PuzzleRank();
         }
 
         private void Reset()

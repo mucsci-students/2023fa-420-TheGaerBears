@@ -32,7 +32,6 @@ internal class Program
         switch (input)
         {
             case "-help":
-            case "-Help":
                 mainGame.Help();
                 break;
 
@@ -63,7 +62,7 @@ internal class Program
                 break;
 
             case "-load puzzle":
-            case "Load":
+            case "-load":
                 mainGame.Load(ref mainGame);
                 break;
 
@@ -112,7 +111,7 @@ internal class Program
                 break;
 
             case "-new game":
-            case "New Game":
+            case "-new":
                 mainGame.NewPuzzle();
                 break;
 
