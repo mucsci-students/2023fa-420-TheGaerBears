@@ -567,6 +567,7 @@ namespace SpellingBee
             {
                 StreamReader fileContents = new StreamReader(File.OpenRead(fileList[fileId]));
                 string openedFile = fileContents.ReadToEnd();
+                fileContents.Close();
                 game.Reset();
 
                 game = JsonConvert.DeserializeObject<Game>(openedFile);
