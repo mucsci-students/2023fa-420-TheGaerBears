@@ -353,6 +353,7 @@ namespace SpellingBee
 
         /// <summary>
         /// Shows the users current rank and points
+        /// Also display all of the ranks and the points needed to reach them
         /// </summary>
         public void ShowStatus()
         {
@@ -372,6 +373,17 @@ namespace SpellingBee
 
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
+
+            //Show the points needed for each rank
+            Console.WriteLine("\n");
+            Console.WriteLine("        Rank:                             Points needed:");
+            Console.WriteLine("        ================================================");
+            foreach (var rank in statusTitles)
+            {
+                int pointsPrint = (int)(rank.Value * .01 * totalPossiblePoints);
+                string space = String.Concat(Enumerable.Repeat(" ", (40 - rank.Key.Length - (pointsPrint.ToString().Length / 2) + (pointsPrint.ToString().Length % 2 == 0 ? 1 : 0 ))));
+                Console.WriteLine("        " + rank.Key + space + pointsPrint);
+            }
         }
 
         /// <summary>
