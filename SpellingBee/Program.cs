@@ -71,6 +71,7 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
+            case "-found words":
             case "-show found words":
                 if (mainGame.Active())
                 {
@@ -81,6 +82,7 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
+            case "-puzzle":
             case "-show puzzle":
                 if (mainGame.Active())
                 {
@@ -91,6 +93,7 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
+            case "-status":
             case "-show status":
                 if (mainGame.Active())
                 {
