@@ -19,6 +19,7 @@ namespace SpellingBee
         private List<KeyValuePair<string, int>> statusTitles;
         private List<string> PangramWords;
         private int totalPossiblePoints;
+        private int lines;
 
         public Game()
         {
@@ -43,6 +44,7 @@ namespace SpellingBee
             playerPoints = 0;
             totalPossiblePoints = 0;
             PangramWords = PangramList();
+            lines = 0;
         }
 
         /// <summary>
@@ -201,7 +203,6 @@ namespace SpellingBee
             // Choose required letter
             requiredLetter = baseWord[0];
             ShowPuzzle();
-            Console.WriteLine();
             Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
             Console.WriteLine();
             GenerateValidWords();
@@ -245,7 +246,6 @@ namespace SpellingBee
             // Choose required letter
             requiredLetter = baseWord[0];
             ShowPuzzle();
-            Console.WriteLine();
             Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
             Console.WriteLine();
             GenerateValidWords();
@@ -291,6 +291,8 @@ namespace SpellingBee
                 else
                     Console.WriteLine(word);
             }
+            Console.WriteLine();
+            ++lines;
         }
 
         /// <summary>
@@ -306,6 +308,7 @@ namespace SpellingBee
         /// </summary>
         public void Help()
         {
+            Console.WriteLine();
             Console.WriteLine("" +
                 "How to Play: enter a word containing letters from the 7 given letters.\n" +
                 "This word must be at least 4 letters long, and contain the indicated required letter.\n" +
@@ -321,6 +324,7 @@ namespace SpellingBee
                 "-show status:        Shows the player their current rank.\n" +
                 "-new game:           Generates a game with a random board without saving.\n" +
                 "-new game from word: Generates a game with a board based on an entered pangram.");
+            Console.WriteLine();
             ShowPuzzle();
         }
 
@@ -341,6 +345,7 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
+            Console.WriteLine();
             Console.WriteLine("Shuffled letters: ");
 
             foreach (char letter in baseWord)
@@ -350,6 +355,7 @@ namespace SpellingBee
             Console.WriteLine("\n");
             Console.WriteLine("Required Letter: " + requiredLetter);
             Console.WriteLine("\n");
+            ++lines;
         }
 
         /// <summary>
@@ -372,6 +378,8 @@ namespace SpellingBee
                 }
             }
 
+            Console.WriteLine();
+
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
 
@@ -385,6 +393,8 @@ namespace SpellingBee
                 string space = String.Concat(Enumerable.Repeat(" ", (40 - rank.Key.Length - (pointsPrint.ToString().Length / 2) + (pointsPrint.ToString().Length % 2 == 0 ? 1 : 0 ))));
                 Console.WriteLine("        " + rank.Key + space + pointsPrint);
             }
+            Console.WriteLine();
+            ShowPuzzle();
         }
 
         /// <summary>
@@ -418,6 +428,7 @@ namespace SpellingBee
             Console.WriteLine();
 
             Console.WriteLine($"The required letter is: {requiredLetter}");
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -434,18 +445,23 @@ namespace SpellingBee
                 {
                     if (foundWords.Contains(guess))
                     {
-                        Console.WriteLine($"You have already found the word \"{guess}\"!");
+                        Console.WriteLine($"You have already found the word \"{guess}\"!\n");
                     }
                     else
                     {
-                        Console.WriteLine("Word found!");
+                        Console.WriteLine("Word found!\n");
                         foundWords.Add(guess);
                         PuzzleRank();
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"{guess} is not a valid guess.");
+                    Console.WriteLine($"\"{guess}\" is not a valid guess.\n");
+                }
+                ++lines;
+                if (lines % 7 == 0)
+                {
+                    ShowPuzzle();
                 }
             }
             catch(Exception e)
