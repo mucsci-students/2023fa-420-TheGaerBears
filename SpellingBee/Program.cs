@@ -7,15 +7,15 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        // Initialize SQLitePCL
+        //Initialize SQLitePCL
         Batteries.Init();
 
         Game mainGame = new Game();
-        mainGame.BeginScreen();
-        //Call help command here
-        //mainGame.Help();
 
-        //While loop that allows user to keep guessing
+        //Intro Screen
+        mainGame.BeginScreen();
+
+        //While loop that allows the game to keep going
         while (true)
         {
             string input = Console.ReadLine().ToLower().Trim();
@@ -31,14 +31,26 @@ internal class Program
     {
         switch (input)
         {
-            case "-help":
-                mainGame.Help();
-                break;
-
             case "-exit":
                 mainGame.Exit();
                 break;
+            case "-help":
+                mainGame.Help();
+                break;
+            case "-load":
+            case "-load puzzle":
+                mainGame.Load(ref mainGame);
+                break;
+            case "-new":
+            case "-new game":
+                mainGame.NewPuzzle();
+                break;
+            case "-new game from word":
+                Console.WriteLine("Please enter a valid pangram: ");
 
+                string pang = Console.ReadLine().Trim();
+                mainGame.NewPuzzleBaseWord(pang);
+                break;
             case "-save current":
                 if (mainGame.Active())
                 {
@@ -49,7 +61,6 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
-
             case "-save puzzle":
                 if (mainGame.Active())
                 {
@@ -60,23 +71,6 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
-
-            case "-load puzzle":
-            case "-load":
-                mainGame.Load(ref mainGame);
-                break;
-
-            case "-show puzzle":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowPuzzle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-
             case "-show found words":
                 if (mainGame.Active())
                 {
@@ -87,18 +81,16 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
-
-            case "-shuffle":
+            case "-show puzzle":
                 if (mainGame.Active())
                 {
-                    mainGame.Shuffle();
+                    mainGame.ShowPuzzle();
                 }
                 else
                 {
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
-
             case "-show status":
                 if (mainGame.Active())
                 {
@@ -109,19 +101,16 @@ internal class Program
                     Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
                 }
                 break;
-
-            case "-new game":
-            case "-new":
-                mainGame.NewPuzzle();
+            case "-shuffle":
+                if (mainGame.Active())
+                {
+                    mainGame.Shuffle();
+                }
+                else
+                {
+                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
+                }
                 break;
-
-            case "-new game from word":
-                Console.WriteLine("Please enter a valid pangram: ");
-
-                string pang = Console.ReadLine().Trim();
-                mainGame.NewPuzzleBaseWord(pang);
-                break;
-
             default:
                 if (mainGame.Active())
                 {

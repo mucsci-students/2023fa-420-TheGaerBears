@@ -28,42 +28,49 @@ namespace SpellingBee
             validWords = new List<string>();
             foundWords = new List<string>();
             statusTitles = new List<KeyValuePair<string, int>>()
-                {
-                    new KeyValuePair<string, int>("Beginner", 0),
-                    new KeyValuePair<string, int>("Good Start", 2),
-                    new KeyValuePair<string, int>("Moving Up", 5),
-                    new KeyValuePair<string, int>("Good", 8),
-                    new KeyValuePair<string, int>("Solid", 15),
-                    new KeyValuePair<string, int>("Nice", 25),
-                    new KeyValuePair<string, int>("Great", 40),
-                    new KeyValuePair<string, int>("Amazing", 50),
-                    new KeyValuePair<string, int>("Genius", 70),
-                    new KeyValuePair<string, int>("Queen Bee", 100)
-                };
+            {
+                new KeyValuePair<string, int>("Beginner", 0),
+                new KeyValuePair<string, int>("Good Start", 2),
+                new KeyValuePair<string, int>("Moving Up", 5),
+                new KeyValuePair<string, int>("Good", 8),
+                new KeyValuePair<string, int>("Solid", 15),
+                new KeyValuePair<string, int>("Nice", 25),
+                new KeyValuePair<string, int>("Great", 40),
+                new KeyValuePair<string, int>("Amazing", 50),
+                new KeyValuePair<string, int>("Genius", 70),
+                new KeyValuePair<string, int>("Queen Bee", 100)
+            };
             playerPoints = 0;
             totalPossiblePoints = 0;
             PangramWords = PangramList();
         }
 
+        /// <summary>
+        /// At game start, generates the list of valid words from the baseword and required letter
+        /// </summary>
         public void GenerateValidWords()
         {
-            List<string> tableNames = new List<string> {"four_letter_words",
-                                                           "five_letter_words",
-                                                           "six_letter_words",
-                                                           "seven_letter_words",
-                                                           "eight_letter_words",
-                                                           "nine_letter_words",
-                                                           "ten_letter_words",
-                                                           "eleven_letter_words",
-                                                           "twelve_letter_words",
-                                                           "thirteen_letter_words",
-                                                           "fourteen_letter_words",
-                                                           "fifteen_letter_words"};
+            List<string> tableNames = new List<string> 
+            {
+                "four_letter_words",
+                "five_letter_words",
+                "six_letter_words",
+                "seven_letter_words",
+                "eight_letter_words",
+                "nine_letter_words",
+                "ten_letter_words",
+                "eleven_letter_words",
+                "twelve_letter_words",
+                "thirteen_letter_words",
+                "fourteen_letter_words",
+                "fifteen_letter_words"
+            };
 
             StringBuilder queryBuilder = new StringBuilder();
             foreach (string tableName in tableNames)
             {
-                queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' AND word NOT GLOB '*[^{(new string(baseWord.ToArray()))}]*'");
+                queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' " +
+                    $"AND word NOT GLOB '*[^{(new string(baseWord.ToArray()))}]*'");
 
                 // Add UNION between queries, except for the last one
                 if (tableNames.IndexOf(tableName) < tableNames.Count - 1)
@@ -100,10 +107,11 @@ namespace SpellingBee
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
 
-            //Calculate totalPoints
+            // Calculate totalPoints
             for (int i = 0; i < validWords.Count(); ++i)
-            {
-                int uniqueLetterCount = validWords[i].Distinct().Count(); // Count of unique letters in the word
+            { 
+                // Count of unique letters in the word
+                int uniqueLetterCount = validWords[i].Distinct().Count(); 
                 int wordLength = validWords[i].Count();
                 int points = 0;
 
@@ -119,13 +127,16 @@ namespace SpellingBee
                 {
                     points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
                 }
-
-                totalPossiblePoints += points; // Add the points to the player's total score.
+                // Add the points to the player's total score.
+                totalPossiblePoints += points; 
             }
 
             
         }
 
+        /// <summary>
+        /// Adds the database pangrams table to a list of pangrams
+        /// </summary>
         private List<string> PangramList()
         {
             string query = $"select word from pangrams";
@@ -160,20 +171,20 @@ namespace SpellingBee
 
         /// <summary>
         /// Creates a new puzzle when called
-        /// Selects a random Pangram
+        /// Selects a random pangram and required letter, shows it to the user
+        /// GenerateValidWords() is called
         /// </summary>
         public void NewPuzzle()
         {
-            //Reset the values for the new puzzle
+            // Reset the values for the new puzzle
             Reset();
-            //Picks a random pangram
+            // Picks a random pangram
             string selectedWord = PangramWords[rand.Next(PangramWords.Count())];
-
 
             char[] q = selectedWord.Distinct().ToArray();
             baseWord = new List<char>(q);
 
-            //Shuffles the letters without printing them
+            // Shuffles the letters without printing them
             int n = baseWord.Count();
 
             for (int i = n - 1; i > 0; i--)
@@ -187,7 +198,7 @@ namespace SpellingBee
                 baseWord[j] = temp;
             }
 
-            //Choose required letter
+            // Choose required letter
             requiredLetter = baseWord[0];
             ShowPuzzle();
             Console.WriteLine();
@@ -200,10 +211,11 @@ namespace SpellingBee
         /// Takes a starting word for the puzzle and checks its validity
         /// If valid it starts the puzzle with the pangrams letters
         /// If not it asks for a new word
+        /// GenerateValidWords() is called
         /// </summary>
         public void NewPuzzleBaseWord(string word)
         {
-            //Reset the values for the new puzzle
+            // Reset the values for the new puzzle
             Reset();
 
             string bWord = word.ToLower();
@@ -216,7 +228,7 @@ namespace SpellingBee
             char[] q = bWord.Distinct().ToArray();
             baseWord = new List<char>(q);
 
-            //Shuffles the letters without printing them
+            // Shuffles the letters without printing them
             int n = baseWord.Count();
 
             for (int i = n - 1; i > 0; i--)
@@ -230,7 +242,7 @@ namespace SpellingBee
                 baseWord[j] = temp;
             }
 
-            //Choose required letter
+            // Choose required letter
             requiredLetter = baseWord[0];
             ShowPuzzle();
             Console.WriteLine();
@@ -239,6 +251,9 @@ namespace SpellingBee
             GenerateValidWords();
         }
 
+        /// <summary>
+        /// Resets the values of baseWord, requiredLetter, validWords, foundWords, playerPoints, and totalPossiblePoints
+        /// </summary>
         private void Reset()
         {
             baseWord = new List<char>();
@@ -249,6 +264,9 @@ namespace SpellingBee
             totalPossiblePoints = 0;
         }
 
+        /// <summary>
+        /// Checks if a game is running or not
+        /// </summary>
         public bool Active()
         {
             if (baseWord.Count > 0)
@@ -274,6 +292,7 @@ namespace SpellingBee
                     Console.WriteLine(word);
             }
         }
+
         /// <summary>
         /// Exits the console app
         /// </summary>
@@ -283,7 +302,7 @@ namespace SpellingBee
         }
 
         /// <summary>
-        /// Displays help information for player
+        /// Displays command information for player
         /// </summary>
         public void Help()
         {
@@ -304,6 +323,9 @@ namespace SpellingBee
                 "-new game from word: Generates a game with a board based on an entered pangram.\n");
         }
 
+        /// <summary>
+        /// Changes the order of the baseword letters and reprints in a new order, along with required letter
+        /// </summary>
         public void Shuffle()
         {
             int n = baseWord.Count;
@@ -328,6 +350,10 @@ namespace SpellingBee
             Console.WriteLine("Required Letter: " + requiredLetter);
             Console.WriteLine("\n");
         }
+
+        /// <summary>
+        /// Shows the users current rank and points
+        /// </summary>
         public void ShowStatus()
         {
             double ratio = (double)playerPoints / totalPossiblePoints;
@@ -347,6 +373,10 @@ namespace SpellingBee
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
         }
+
+        /// <summary>
+        /// Prints the intro page for the game
+        /// </summary>
         public void BeginScreen()
         {
             Console.WriteLine();
@@ -361,6 +391,10 @@ namespace SpellingBee
             Console.WriteLine();
             Console.WriteLine();
         }
+
+        /// <summary>
+        /// Displays the baseword letters and the required letter to the user
+        /// </summary>
         public void ShowPuzzle()
         {
             Console.Write("Puzzle Letters: ");
@@ -375,7 +409,7 @@ namespace SpellingBee
 
         /// <summary>
         /// Allows user to Guess a word 
-        /// if valid saves it in foundWords, if invalid shows corresponding error message
+        /// If valid saves it in foundWords, if invalid shows corresponding error message
         /// </summary>
         public void Guess(string word)
         {
@@ -408,30 +442,37 @@ namespace SpellingBee
             
         }
 
-        
-        public void DisplayScore()
-        {
-            Console.WriteLine($"Your current score is: {playerPoints}");
-        }
+        /// <summary>
+        /// Saves the current state of the game
+        /// </summary>
         public void SaveCurrent()
         {
-            //Creates the save folder if it doesnt exist
+            // Creates the save folder if it doesnt exist
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+
             Console.WriteLine("Enter new save name");
             string fileName = Console.ReadLine();
+
             if (fileName == null)
             {
                 Console.WriteLine("Error: no file name");
                 return;
             }
+
             fileName += ".json";
             var jsonString = JsonConvert.SerializeObject(this);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+
             Console.WriteLine("Successfully saved game with progress");
         }
+
+        /// <summary>
+        /// Calculates the points for each word and adds it to the players total playerPoints
+        /// </summary>
         public void PuzzleRank()
         {
-            int uniqueLetterCount = foundWords.Last().Distinct().Count(); // Count of unique letters in the word
+            // Count of unique letters in the word
+            int uniqueLetterCount = foundWords.Last().Distinct().Count(); 
             int wordLength = foundWords.Last().Length;
             int points = 0;
 
@@ -447,35 +488,48 @@ namespace SpellingBee
             {
                 points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
             }
-
-            playerPoints += points; // Add the points to the player's total score.
+            // Add the points to the player's total score.
+            playerPoints += points;
         }
+
+        /// <summary>
+        /// Saves only the puzzle with no progress
+        /// </summary>
         public void SavePuzzle()
         {
-            //Creates the save folder if it doesnt exist
+            // Creates the save folder if it doesnt exist
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+
             Console.WriteLine("Enter new save name");
             string fileName = Console.ReadLine();
+
             if (fileName == null)
             {
                 Console.WriteLine("Error: no file name");
                 return;
             }
+
             fileName += ".json";
             Game temp = new Game();
             temp.requiredLetter = this.requiredLetter;
             temp.baseWord = this.baseWord;
             var jsonString = JsonConvert.SerializeObject(this);
+
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+
             Console.WriteLine("Successfully saved puzzle");
         }
+
+        /// <summary>
+        /// Loads a saved game from a saved folder
+        /// </summary>
         public void Load(ref Game game)
         {
-            //Creates the save folder if it doesnt exist
+            // Creates the save folder if it doesnt exist
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
             var fileList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
 
-            //makes sure there are saved files
+            // Makes sure there are saved files
             if (fileList.Length == 0)
             {
                 Console.WriteLine("No Saved Games");
@@ -483,23 +537,28 @@ namespace SpellingBee
             }
 
             Console.WriteLine("Which save file id would you like to load?");
+
             int i = 0;
-            //prints all files in the save folder
+            // Prints all files in the save folder
             foreach (string file in fileList)
             {
                 Console.WriteLine(i + ": " + Path.GetFileNameWithoutExtension(file));
                 ++i;
             }
-            //reads user input as an integer
+
+            // Reads user input as an integer
             int fileId = Convert.ToInt32(Console.ReadLine());
-            //if it is a valid id then it loads the game
+
+            // If it is a valid id then it loads the game
             if (fileList.Length > fileId)
             {
                 StreamReader fileContents = new StreamReader(File.OpenRead(fileList[fileId]));
                 string openedFile = fileContents.ReadToEnd();
                 game.Reset();
+
                 game = JsonConvert.DeserializeObject<Game>(openedFile);
                 game.GenerateValidWords();
+
                 Console.WriteLine("This is the loaded puzzle");
                 game.ShowPuzzle();
             }
@@ -509,6 +568,9 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Centers the text on the screen
+        /// </summary>
         public void centerText(String text)
         {
             Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
