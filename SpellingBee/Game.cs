@@ -188,7 +188,7 @@ namespace SpellingBee
             }
 
             //Choose required letter
-            requiredLetter = q[0];
+            requiredLetter = baseWord[0];
             ShowPuzzle();
             Console.WriteLine();
             Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
@@ -231,7 +231,7 @@ namespace SpellingBee
             }
 
             //Choose required letter
-            requiredLetter = q[0];
+            requiredLetter = baseWord[0];
             ShowPuzzle();
             Console.WriteLine();
             Console.WriteLine("Guess a word followed by 'Enter'. Good Luck!");
