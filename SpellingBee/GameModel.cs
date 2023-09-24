@@ -48,11 +48,12 @@ namespace SpellingBee
         [JsonProperty] private List<string> foundWords;
         [JsonProperty] private int playerPoints;
         [JsonProperty] private char requiredLetter;
+        [JsonProperty] private int totalPossiblePoints;
         private Random rand;
         private List<string> validWords;
         private List<KeyValuePair<string, int>> statusTitles;
         private List<string> PangramWords;
-        private int totalPossiblePoints;
+        
 
         public List<char> BaseWord => baseWord;
         public char RequiredLetter => requiredLetter;
