@@ -318,8 +318,8 @@ namespace SpellingBee
 
         public GameModel LoadGameState(string fileId)
         {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
-            var fileList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            var fileList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
 
             if (fileList.Length == 0)
             {
@@ -344,8 +344,8 @@ namespace SpellingBee
 
         public List<string> GetAvailableSaveFiles()
         {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves"));
-            return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves")).ToList();
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves\\")).ToList();
         }
 
         public GameModel LoadGameStateFromFile(int fileId)
