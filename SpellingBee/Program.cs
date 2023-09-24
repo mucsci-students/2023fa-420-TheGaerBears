@@ -1,129 +1,61 @@
-﻿using SpellingBee.SetUpSpellingBee.src.main;
-using System;
-using SQLitePCL;
+﻿using SQLitePCL;
 using SpellingBee;
 
 internal class Program
 {
+/*
+ * Program Class - SpellingBee
+ * 
+ * Purpose:
+ * --------
+ * This class serves as the entry point for the Spelling Bee game. It sets up and manages the 
+ * primary game loop, accepting and handling user inputs until the game is terminated. 
+ * 
+ * Main Features:
+ * --------------
+ * - Initialize SQLitePCL: Ensures that SQLite functionalities are initialized and ready for use.
+ * - Game MVC Setup: Instantiates the Model-View-Controller classes for the game.
+ * - Game Loop: Continuously waits for and processes user inputs, facilitating gameplay.
+ * 
+ * Game Flow:
+ * ----------
+ * 1. SQLitePCL is initialized.
+ * 2. The core game components (Model, View, Controller) are instantiated.
+ * 3. The game's introduction screen is displayed.
+ * 4. The program enters a persistent loop, waiting for user inputs and handling them.
+ * 
+ * Dependencies:
+ * -------------
+ * This class relies on the GameController to process user inputs and on the GameView to 
+ * display feedback to the user. The GameModel contains the core game logic and data.
+ * 
+ * External Libraries:
+ * -------------------
+ * - SQLitePCL: Enables database operations, particularly for fetching word lists.
+ * 
+ * Usage:
+ * ------
+ * To start the game, execute this program. The user can then interact with the game 
+ * by entering commands when prompted.
+ */
+
     static void Main(string[] args)
     {
         //Initialize SQLitePCL
         Batteries.Init();
 
-        Game mainGame = new Game();
+        GameModel model = new GameModel();
+        GameView view = new GameView();
+        GameController gameController = new GameController(model, view);
 
         //Intro Screen
-        mainGame.BeginScreen();
+        gameController.BeginScreen();
 
         //While loop that allows the game to keep going
         while (true)
         {
             string input = Console.ReadLine().ToLower().Trim();
-            CommandValidation(input, ref mainGame);
-        }
-    }
-    /// <summary>
-    /// Parses the commands entered by the player
-    /// </summary>
-    /// <param name="input"></param> The command typed by the player
-    /// <param name="mainGame"></param> The Game object for the puzzle
-    static void CommandValidation(string input, ref Game mainGame)
-    {
-        switch (input)
-        {
-            case "-exit":
-                mainGame.Exit();
-                break;
-            case "-help":
-                mainGame.Help();
-                break;
-            case "-load":
-            case "-load puzzle":
-                mainGame.Load(ref mainGame);
-                break;
-            case "-new":
-            case "-new game":
-                mainGame.NewPuzzle();
-                break;
-            case "-new game from word":
-                Console.WriteLine("Please enter a valid pangram: ");
-
-                string pang = Console.ReadLine().Trim();
-                mainGame.NewPuzzleBaseWord(pang);
-                break;
-            case "-save current":
-                if (mainGame.Active())
-                {
-                    mainGame.SaveCurrent();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-save puzzle":
-                if (mainGame.Active())
-                {
-                    mainGame.SavePuzzle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-found words":
-            case "-show found words":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowFoundWords();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-puzzle":
-            case "-show puzzle":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowPuzzle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-status":
-            case "-show status":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowStatus();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-shuffle":
-                if (mainGame.Active())
-                {
-                    mainGame.Shuffle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            default:
-                if (mainGame.Active())
-                {
-                    mainGame.Guess(input);
-                }
-                else
-                {
-                    Console.WriteLine("This is not a valid command. Please use -help to see the list of commands.");
-                }
-                break;
+            gameController.HandleCommand(input);
         }
     }
 }
