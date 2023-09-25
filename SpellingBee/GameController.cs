@@ -223,7 +223,7 @@ namespace SpellingBee
                 case "-show status":
                     if (_model.Active())
                     {
-                        _view.ShowStatus(_model.PlayerPoints, _model.TotalPossiblePoints, _model.StatusTitles);
+                        _view.ShowStatus(_model.PlayerPoints, _model.GetMaxPoints(), _model.StatusTitles);
                     }
                     else
                     {
