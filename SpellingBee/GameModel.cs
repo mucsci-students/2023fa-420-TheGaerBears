@@ -62,6 +62,7 @@ namespace SpellingBee
         public IEnumerable<string> FoundWords => foundWords;
 
         private const string DatabaseConnectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+        private const string DatabaseConnectionString_Two = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db";
 
         public void Exit()
         {
@@ -101,7 +102,7 @@ namespace SpellingBee
         public List<string> PangramList()
         {
             string query = $"select word from pangrams";
-            string connectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = DatabaseConnectionString;
             List<string> words = new List<string>();
 
             try
@@ -125,7 +126,32 @@ namespace SpellingBee
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                //Nested try statement to attempt both connection strings
+                connectionString = DatabaseConnectionString_Two;
+                try
+                {
+                    using (SqliteConnection con = new SqliteConnection(connectionString))
+                    {
+                        con.Open();
+                        using (var cmd = con.CreateCommand())
+                        {
+                            cmd.CommandText = query;
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string word = reader.GetString(0);
+                                    words.Add(word);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch 
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}"); 
+                }
+                
             }
 
             return words;
@@ -153,7 +179,7 @@ namespace SpellingBee
             }
 
             string query = queryBuilder.ToString();
-            string connectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = DatabaseConnectionString;
 
             try
             {
@@ -176,7 +202,31 @@ namespace SpellingBee
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                //Nested try statement
+                connectionString = DatabaseConnectionString_Two;
+                try
+                {
+                    using (SqliteConnection con = new SqliteConnection(connectionString))
+                    {
+                        con.Open();
+                        using (var cmd = con.CreateCommand())
+                        {
+                            cmd.CommandText = query;
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    string word = reader.GetString(0);
+                                    validWords.Add(word);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             }
 
             // Calculate maxPoints based on validWords
