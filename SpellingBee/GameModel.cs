@@ -42,7 +42,7 @@ namespace SpellingBee
  * the MVC pattern and enable a complete game flow.
  */
 
-    internal class GameModel
+    public class GameModel
     {
         [JsonProperty] private List<char> baseWord;
         [JsonProperty] private List<string> foundWords;
@@ -59,10 +59,9 @@ namespace SpellingBee
         public char RequiredLetter => requiredLetter;
         public int PlayerPoints => playerPoints;
         public List<KeyValuePair<string, int>> StatusTitles => statusTitles;
-        public int TotalPossiblePoints => totalPossiblePoints;
         public IEnumerable<string> FoundWords => foundWords;
 
-        private const string DatabaseConnectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+        private const string DatabaseConnectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
 
         public void Exit()
         {
@@ -94,7 +93,7 @@ namespace SpellingBee
 
             requiredLetter = 'a'; // Default required letter
             playerPoints = 0;    // Starting player points
-            totalPossiblePoints = 0; // Initial total possible points
+            maxPoints = 0; // Initial total possible points
 
             PangramWords = PangramList(); // Fetch the list of pangrams from the database
         }
@@ -102,7 +101,7 @@ namespace SpellingBee
         public List<string> PangramList()
         {
             string query = $"select word from pangrams";
-            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
             List<string> words = new List<string>();
 
             try
@@ -154,7 +153,7 @@ namespace SpellingBee
             }
 
             string query = queryBuilder.ToString();
-            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
 
             try
             {
@@ -180,7 +179,7 @@ namespace SpellingBee
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
 
-            // Calculate totalPossiblePoints based on validWords
+            // Calculate maxPoints based on validWords
             foreach (var word in validWords)
             {
                 int uniqueLetterCount = word.Distinct().Count(); // Count of unique letters in the word
@@ -191,7 +190,7 @@ namespace SpellingBee
                 else if (wordLength == 5 || wordLength == 6) points = wordLength;
                 else if (wordLength > 6) points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
 
-                totalPossiblePoints += points;
+                maxPoints += points;
             }
         }
 
@@ -258,7 +257,7 @@ namespace SpellingBee
             validWords.Clear();
             foundWords.Clear();
             playerPoints = 0;
-            totalPossiblePoints = 0;
+            maxPoints = 0;
             PangramWords = PangramList();
         }
 
@@ -370,7 +369,12 @@ namespace SpellingBee
             playerPoints = loadedGame.playerPoints;
             requiredLetter = loadedGame.requiredLetter;
             validWords = new List<string>(loadedGame.validWords);
-            totalPossiblePoints = loadedGame.totalPossiblePoints;
+            maxPoints = loadedGame.maxPoints;
+        }
+
+        public int GetMaxPoints()
+        {
+            return maxPoints;
         }
     }
 }

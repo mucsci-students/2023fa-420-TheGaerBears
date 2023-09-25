@@ -49,9 +49,9 @@ namespace SpellingBee
         }
 
         // Display the player's status on the console
-        public void ShowStatus(int playerPoints, int totalPossiblePoints, List<KeyValuePair<string, int>> statusTitles)
+        public void ShowStatus(int playerPoints, int maxPoints, List<KeyValuePair<string, int>> statusTitles)
         {
-            double ratio = (double)playerPoints / totalPossiblePoints;
+            double ratio = (double)playerPoints / maxPoints;
             double percentageAsDecimal = ratio * 100;
             int percentage = (int)Math.Round(percentageAsDecimal);
 
