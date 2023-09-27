@@ -41,21 +41,30 @@ internal class Program
 
     static void Main(string[] args)
     {
-        //Initialize SQLitePCL
-        Batteries.Init();
-
-        GameModel model = new GameModel();
-        GameView view = new GameView();
-        GameController gameController = new GameController(model, view);
-
-        //Intro Screen
-        gameController.BeginScreen();
-
-        //While loop that allows the game to keep going
-        while (true)
+        if (args.Length == 0)
         {
-            string input = Console.ReadLine().ToLower().Trim();
-            gameController.HandleCommand(input);
+            //Run GUI
+        }
+        else if (args[0].Equals("-cli"))
+        {
+            //Run CLI version
+
+            //Initialize SQLitePCL
+            Batteries.Init();
+
+            GameModel model = new GameModel();
+            GameView view = new GameView();
+            GameController gameController = new GameController(model, view);
+
+            //Intro Screen
+            gameController.BeginScreen();
+
+            //While loop that allows the game to keep going
+            while (true)
+            {
+                string input = Console.ReadLine().ToLower().Trim();
+                gameController.HandleCommand(input);
+            }
         }
     }
 }
