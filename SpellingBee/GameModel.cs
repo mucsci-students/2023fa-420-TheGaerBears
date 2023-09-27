@@ -61,8 +61,8 @@ namespace SpellingBee
         public List<KeyValuePair<string, int>> StatusTitles => statusTitles;
         public IEnumerable<string> FoundWords => foundWords;
 
-        private const string DatabaseConnectionString = "Data Source=SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
-        private const string DatabaseConnectionString_Two = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db";
+        private const string DatabaseConnectionString = "Data Source=SetUpSpellingBee/Database/SpellingBeeWords.db;";
+        private const string DatabaseConnectionString_Two = "Data Source=../../../SetUpSpellingBee/Database/SpellingBeeWords.db";
 
         public void Exit()
         {
