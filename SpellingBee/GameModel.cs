@@ -55,12 +55,6 @@ namespace SpellingBee
         private List<string> PangramWords;
         
 
-        public List<char> BaseWord => baseWord;
-        public char RequiredLetter => requiredLetter;
-        public int PlayerPoints => playerPoints;
-        public List<KeyValuePair<string, int>> StatusTitles => statusTitles;
-        public IEnumerable<string> FoundWords => foundWords;
-
         private const string DatabaseConnectionString = "Data Source=SetUpSpellingBee/Database/SpellingBeeWords.db;";
         private const string DatabaseConnectionString_Two = "Data Source=../../../SetUpSpellingBee/Database/SpellingBeeWords.db";
 
@@ -420,6 +414,31 @@ namespace SpellingBee
             requiredLetter = loadedGame.requiredLetter;
             validWords = new List<string>(loadedGame.validWords);
             maxPoints = loadedGame.maxPoints;
+        }
+
+        public List<char> GetBaseWord()
+        {
+            return baseWord;
+        }
+
+        public char GetRequiredLetter()
+        {
+            return requiredLetter;
+        }
+
+        public int GetPlayerPoints()
+        {
+            return playerPoints;
+        }
+
+        public List<KeyValuePair<string, int>> GetStatusTitles()
+        {
+            return statusTitles;
+        }
+
+        public IEnumerable<string> GetFoundWords()
+        {
+            return foundWords;
         }
 
         public int GetMaxPoints()

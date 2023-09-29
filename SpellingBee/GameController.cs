@@ -47,7 +47,7 @@ namespace SpellingBee
         {
             _model.Reset();
             _model.SelectRandomWordForPuzzle();
-            _view.ShowPuzzle(_model.BaseWord, _model.RequiredLetter);
+            _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
             _model.GenerateValidWords();
         }
 
@@ -55,7 +55,7 @@ namespace SpellingBee
         {
             _model.Reset();
             _model.SetBaseWordForPuzzle(word);
-            _view.ShowPuzzle(_model.BaseWord, _model.RequiredLetter);
+            _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
             _model.GenerateValidWords();
         }
 
@@ -71,7 +71,7 @@ namespace SpellingBee
                 {
                     _view.DisplayMessage("Word found!");
                     _model.AddFoundWord(word);
-                    _view.DisplayScore(_model.PlayerPoints);
+                    _view.DisplayScore(_model.GetPlayerPoints());
                 }
             }
             else
@@ -83,7 +83,7 @@ namespace SpellingBee
         public void Shuffle()
         {
             _model.ShuffleBaseWord();
-            _view.ShowPuzzle(_model.BaseWord, _model.RequiredLetter);
+            _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
         }
 
         public void SaveCurrent()
@@ -132,7 +132,7 @@ namespace SpellingBee
             {
                 _model.AssignFrom(loadedGame);
                 _view.DisplayMessage("This is the loaded puzzle");
-                _view.ShowPuzzle(_model.BaseWord, _model.RequiredLetter);
+                _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
             }
             else
             {
@@ -199,7 +199,7 @@ namespace SpellingBee
                 case "-show found words":
                     if (_model.Active())
                     {
-                        _view.ShowFoundWords(_model.FoundWords);
+                        _view.ShowFoundWords(_model.GetFoundWords());
                     }
                     else
                     {
@@ -211,7 +211,7 @@ namespace SpellingBee
                 case "-show puzzle":
                     if (_model.Active())
                     {
-                        _view.ShowPuzzle(_model.BaseWord, _model.RequiredLetter);
+                        _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
                     }
                     else
                     {
@@ -223,7 +223,7 @@ namespace SpellingBee
                 case "-show status":
                     if (_model.Active())
                     {
-                        _view.ShowStatus(_model.PlayerPoints, _model.GetMaxPoints(), _model.StatusTitles);
+                        _view.ShowStatus(_model.GetPlayerPoints(), _model.GetMaxPoints(), _model.GetStatusTitles());
                     }
                     else
                     {
