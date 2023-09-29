@@ -1,70 +1,59 @@
-﻿using SQLitePCL;
+using Avalonia;
+using System;
+using System.IO;
+using SQLitePCL;
+using System.Diagnostics;
 using SpellingBee;
+using System.Collections.Generic;
 
-internal class Program
+namespace AvaTest
 {
-/*
- * Program Class - SpellingBee
- * 
- * Purpose:
- * --------
- * This class serves as the entry point for the Spelling Bee game. It sets up and manages the 
- * primary game loop, accepting and handling user inputs until the game is terminated. 
- * 
- * Main Features:
- * --------------
- * - Initialize SQLitePCL: Ensures that SQLite functionalities are initialized and ready for use.
- * - Game MVC Setup: Instantiates the Model-View-Controller classes for the game.
- * - Game Loop: Continuously waits for and processes user inputs, facilitating gameplay.
- * 
- * Game Flow:
- * ----------
- * 1. SQLitePCL is initialized.
- * 2. The core game components (Model, View, Controller) are instantiated.
- * 3. The game's introduction screen is displayed.
- * 4. The program enters a persistent loop, waiting for user inputs and handling them.
- * 
- * Dependencies:
- * -------------
- * This class relies on the GameController to process user inputs and on the GameView to 
- * display feedback to the user. The GameModel contains the core game logic and data.
- * 
- * External Libraries:
- * -------------------
- * - SQLitePCL: Enables database operations, particularly for fetching word lists.
- * 
- * Usage:
- * ------
- * To start the game, execute this program. The user can then interact with the game 
- * by entering commands when prompted.
- */
-
-    static void Main(string[] args)
+    internal class Program
     {
-        if (args.Length == 0)
+        // Initialization code. Don't use any Avalonia, third-party APIs or any
+        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        // yet and stuff might break.
+        public static void Main(string[] args)
         {
-            //Run GUI
-        }
-        else if (args[0].Equals("-cli"))
-        {
-            //Run CLI version
-
-            //Initialize SQLitePCL
-            Batteries.Init();
-
-            GameModel model = new GameModel();
-            GameView view = new GameView();
-            GameController gameController = new GameController(model, view);
-
-            //Intro Screen
-            gameController.BeginScreen();
-
-            //While loop that allows the game to keep going
-            while (true)
+            if (args.Length == 0)
             {
-                string input = Console.ReadLine().ToLower().Trim();
-                gameController.HandleCommand(input);
+                //Run GUI
+                string[] b = { "" };
+                Main2(b);
+            }
+            else if (args[0].Equals("-cli"))
+            {
+                //Run CLI version
+
+                //Initialize SQLitePCL
+                Batteries.Init();
+
+                GameModel model = new GameModel();
+                GameView view = new GameView();
+                GameController gameController = new GameController(model, view);
+
+                //Intro Screen
+                gameController.BeginScreen();
+
+                //While loop that allows the game to keep going
+                while (true)
+                {
+                    string input = Console.ReadLine().ToLower().Trim();
+                    gameController.HandleCommand(input);
+                }
             }
         }
+
+
+        [STAThread]
+        public static void Main2(string[] args) => BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace();
     }
 }
