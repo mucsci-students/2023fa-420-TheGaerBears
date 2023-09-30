@@ -7660,23 +7660,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\skyfa\\.nuget\\packages\\": {},
+    "C:\\Users\\noahi\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\skyfa\\Source\\Repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
+      "projectUniqueName": "C:\\Users\\noahi\\source\\repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
       "projectName": "SpellingBee",
-      "projectPath": "C:\\Users\\skyfa\\Source\\Repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
-      "packagesPath": "C:\\Users\\skyfa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\skyfa\\Source\\Repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\obj\\",
+      "projectPath": "C:\\Users\\noahi\\source\\repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
+      "packagesPath": "C:\\Users\\noahi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\noahi\\source\\repos\\2023fa-420-TheGaerBears\\SpellingBee\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\skyfa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\noahi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
