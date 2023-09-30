@@ -32,7 +32,7 @@ namespace SpellingBee
  * This class is typically instantiated with a GameModel and GameView, and then it listens to user input to handle various game commands.
  */
 
-    internal class GameController
+    public class GameController
     {
         private readonly GameModel _model;
         private readonly GameView _view;
