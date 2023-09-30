@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/TestSpellingBee/bin/Debug/net6.0/zh-Hans
+/TestSpellingBee/bin/Debug/net6.0/zh-Hant
+/TestSpellingBee/bin/Debug/net6.0/ja
+/TestSpellingBee/bin/Debug/net6.0/ko
+/TestSpellingBee/bin/Debug/net6.0/it
+/TestSpellingBee/bin/Debug/net6.0/fr
+/TestSpellingBee/bin/Debug/net6.0/de
+/TestSpellingBee/bin/Debug/net6.0/es
+/TestSpellingBee/bin/Debug/net6.0/ru

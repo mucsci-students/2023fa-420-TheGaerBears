@@ -34,7 +34,7 @@ namespace SpellingBee
  * GameView should be instantiated and used along with GameModel and GameController to enable a complete game flow.
  */
 
-    internal class GameView
+    public class GameView
     {
         // This function center-aligns text on the console
         public void CenterText(string text)
