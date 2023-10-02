@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[11.0.2, )"
             },
+            "Avalonia.ReactiveUI": {
+              "target": "Package",
+              "version": "[11.0.2, )"
+            },
             "Avalonia.Themes.Fluent": {
               "target": "Package",
               "version": "[11.0.2, )"
@@ -80,10 +84,6 @@
             "SQLitePCLRaw.bundle_e_sqlite3": {
               "target": "Package",
               "version": "[2.1.6, )"
-            },
-            "xunit.extensibility.core": {
-              "target": "Package",
-              "version": "[2.5.1, )"
             }
           },
           "imports": [
