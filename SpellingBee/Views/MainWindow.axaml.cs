@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaTest
+namespace SpellingBee.Views
 {
     public partial class MainWindow : Window
     {
