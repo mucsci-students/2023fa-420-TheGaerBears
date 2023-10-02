@@ -445,6 +445,11 @@ namespace SpellingBee
         {
             return maxPoints;
         }
+        
+        public List<String> GetValidWords()
+        {
+            return validWords;
+        }
     }
 }
 

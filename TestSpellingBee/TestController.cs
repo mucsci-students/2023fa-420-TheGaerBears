@@ -9,21 +9,18 @@ namespace TestSpellingBee
         [Fact]
         public void ValidateShuffle()
         {
-            // Arrange
-            var model = new GameModel(); // Instantiate the actual GameModel
-            var view = new GameView();   // Instantiate the actual GameView
+           
+            var model = new GameModel(); 
+            var view = new GameView(); 
             var controller = new GameController(model, view);
             var counter = 0;
-            // Save the original base word
+  
             var originalBaseWord = model.GetBaseWord();
 
-            // Act
             controller.Shuffle();
 
-            // Assert
             var shuffledBaseWord = model.GetBaseWord();
-
-          // Verify that the elements in the collections are the same, but their order is different
+         
             foreach (var sLetter in shuffledBaseWord)
             {
                 foreach (var oLetter in originalBaseWord)
@@ -40,7 +37,6 @@ namespace TestSpellingBee
         [Fact]
         public void NewPuzzleResetsBaseWord()
         {
-
             var model = new GameModel();
             var view = new GameView();
             var controller = new GameController(model, view);
@@ -50,7 +46,6 @@ namespace TestSpellingBee
             controller.NewPuzzle();
             var b2 = model.GetBaseWord();
             Assert.NotEqual(b1, b2);
-
         }
 
         [Fact]
@@ -68,7 +63,6 @@ namespace TestSpellingBee
         [Fact]
         public void NewPuzzleFromBaseWord()
         {
-
             var model = new GameModel();
             var view = new GameView();
             var controller = new GameController(model, view);
@@ -92,5 +86,37 @@ namespace TestSpellingBee
             }
             Assert.True(testing);
         }
+
+        [Fact]
+        public void GuessValid()
+        {
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new GameController(model, view);
+            controller.NewPuzzleBaseWord("codable");
+
+            Assert.Contains("codable", model.GetValidWords());
+
+            controller.Guess("codable");
+
+            Assert.NotEqual(0, model.GetPlayerPoints());
+        }
+
+        [Fact]
+        public void GuessInvalid()
+        {
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new GameController(model, view);
+
+            controller.NewPuzzleBaseWord("codable");
+
+            Assert.DoesNotContain("false", model.GetValidWords());
+
+            controller.Guess("false");
+
+            Assert.Equal(0, model.GetPlayerPoints());
+        }
+      
     }
 }
