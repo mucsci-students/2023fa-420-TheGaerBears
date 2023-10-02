@@ -56,7 +56,7 @@ namespace SpellingBee
         
 
         private const string DatabaseConnectionString = "Data Source=../../../../SpellingBee/SetUpSpellingBee/Database/SpellingBeeWords.db;";
-        private const string DatabaseConnectionString_Two = "Data Source=../../../SetUpSpellingBee/Database/SpellingBeeWords.db";
+        private const string DatabaseConnectionString_Two = "Data Source=./SetUpSpellingBee/Database/SpellingBeeWords.db";
 
         public void Exit()
         {
@@ -246,18 +246,18 @@ namespace SpellingBee
             requiredLetter = baseWord[0];
         }
 
-        public void SetBaseWordForPuzzle(string word)
+        public bool SetBaseWordForPuzzle(string word)
         {
             string bWord = word.ToLower();
-            while (!PangramWords.Contains(bWord))
+            if (!PangramWords.Contains(bWord))
             {
-                Console.WriteLine("This word is not valid. Please enter a new word: ");
-                bWord = Console.ReadLine().ToLower();
+                return false;
             }
 
             baseWord = new List<char>(bWord.Distinct().ToArray());
             ShuffleBaseWord();
             requiredLetter = baseWord[0];
+            return true;
         }
 
         public void ShuffleBaseWord()
