@@ -55,7 +55,7 @@ namespace SpellingBee
         private List<string> PangramWords;
         
 
-        private const string DatabaseConnectionString = "Data Source=SetUpSpellingBee/Database/SpellingBeeWords.db;";
+        private const string DatabaseConnectionString = "Data Source=../../../../SpellingBee/SetUpSpellingBee/Database/SpellingBeeWords.db;";
         private const string DatabaseConnectionString_Two = "Data Source=../../../SetUpSpellingBee/Database/SpellingBeeWords.db";
 
         public void Exit()
