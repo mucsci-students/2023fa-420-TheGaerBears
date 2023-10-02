@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia.Controls.Documents;
+using System;
 
 namespace SpellingBee
 {
@@ -54,7 +55,12 @@ namespace SpellingBee
         public void NewPuzzleBaseWord(string word)
         {
             _model.Reset();
-            _model.SetBaseWordForPuzzle(word);
+            string bWord = word;
+            while (!_model.SetBaseWordForPuzzle(bWord))
+            {
+                Console.WriteLine("This word is not valid. Please enter a new word: ");
+                bWord = Console.ReadLine().ToLower();
+            }
             _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
             _model.GenerateValidWords();
         }
