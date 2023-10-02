@@ -23,7 +23,7 @@ namespace TestSpellingBee
                     break;
                 }
             }
-
+            Assert.True(pangramList.Count() == 40222);
             Assert.True(tester);
         }
     }
