@@ -73,5 +73,29 @@ namespace TestSpellingBee
             Assert.True(reqTest);
             Assert.True(testing);
         }
+
+        [Fact]
+        public void SaveVerify()
+        {
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new GameController(model, view);
+
+            controller.NewPuzzleBaseWord("codable");
+            controller.Guess("codable");
+
+            model.SaveCurrentGameState("test");
+
+            String filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                string content = reader.ReadToEnd();
+
+                Assert.Contains("codable", content);
+            }
+
+        }
+
     }
 }
