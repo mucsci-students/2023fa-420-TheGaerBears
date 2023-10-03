@@ -1,78 +1,78 @@
-	 <Window xmlns="https://github.com/avaloniaui"
-			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			xmlns:vm="using:SpellingBee.ViewModels"
-			xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			x:Class="SpellingBee.Views.MainWindow"
-			x:DataType="vm:MainWindowViewModel"
-			Icon="/Assets/avalonia-logo.ico"
-			Title="SpellingBee">
-		 <Grid>
+<Window xmlns="https://github.com/avaloniaui"
+	   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	   xmlns:vm="using:SpellingBee.ViewModels"
+	   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+	   x:Class="SpellingBee.Views.MainWindow"
+	   x:DataType="vm:MainWindowViewModel"
+	   Icon="/Assets/avalonia-logo.ico"
+	   Title="SpellingBee">
+	<Grid>
 
-			 <Grid.ColumnDefinitions>
-				 <ColumnDefinition Width="2*"/>
-				 <ColumnDefinition Width="1*"/>
-			 </Grid.ColumnDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
 
-			 <Grid.RowDefinitions>
-				 <RowDefinition Height="3*"/>
-				 <RowDefinition Height="1*"/>
-			 </Grid.RowDefinitions>
-			 <Label Content="{Binding rightText}" Grid.Column="1"/>
-			 <Label  Content="{Binding lowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
-			 <Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
-				 <Grid.ColumnDefinitions>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-				 </Grid.ColumnDefinitions>
-				 <Grid.RowDefinitions>
-					 <RowDefinition Height="*"/>
-					 <RowDefinition Height="*"/>
-					 <RowDefinition Height="*"/>
-					 <RowDefinition Height="*"/>
-				 </Grid.RowDefinitions>
-				 <Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
-				 <Button Content="{Binding letter1}" Grid.Column="0" Grid.Row="1" Command=""/>
-				 <Button Content="{Binding letter2}" Grid.Column="1" Grid.Row="1" Command=""/>
-				 <Button Content="{Binding letter3}" Grid.Column="2" Grid.Row="1" Command=""/>
-				 <Button Content="{Binding letter4}" Grid.Column="3" Grid.Row="1" Command=""/>
-				 <Button Content="{Binding letter5}" Grid.Column="4" Grid.Row="1" Command=""/>
-				 <Button Content="{Binding letter6}" Grid.Column="5" Grid.Row="1" Command=""/>
-				 <Button Content="{Binding letter7}" Grid.Column="6" Grid.Row="1" Command=""/>
-				 <Label Content="     ^&#x0a;Required&#x0a;  Letter" Grid.Column="3" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-				 <Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"/>
-			 </Grid>
-			 <Grid Grid.Row="1" Grid.Column="1">
-				 <!--adjust buttons here-->
-				 <Grid.Resources>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+		<Label Content="{Binding Path=rightText}" Grid.Column="1"/>
+		<Label  Content="{Binding Path=lowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+		<Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
+			<Button Content="{Binding Path=letter1}" Grid.Column="0" Grid.Row="1" Command=""/>
+			<Button Content="{Binding Path=letter2}" Grid.Column="1" Grid.Row="1" Command=""/>
+			<Button Content="{Binding Path=letter3}" Grid.Column="2" Grid.Row="1" Command=""/>
+			<Button Content="{Binding Path=letter4}" Grid.Column="3" Grid.Row="1" Command=""/>
+			<Button Content="{Binding Path=letter5}" Grid.Column="4" Grid.Row="1" Command=""/>
+			<Button Content="{Binding Path=letter6}" Grid.Column="5" Grid.Row="1" Command=""/>
+			<Button Content="{Binding Path=letter7}" Grid.Column="6" Grid.Row="1" Command=""/>
+			<Label Content="     ^&#x0a;Required&#x0a;  Letter" Grid.Column="3" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+			<Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"/>
+		</Grid>
+		<Grid Grid.Row="1" Grid.Column="1">
+			<!--adjust buttons here-->
+			<Grid.Resources>
 
-				 </Grid.Resources>
+			</Grid.Resources>
 
-				 <Grid.ColumnDefinitions>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
-					 <ColumnDefinition Width="*"/>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
 
-				 </Grid.ColumnDefinitions>
-				 <Grid.RowDefinitions>
-					 <RowDefinition Height="*"/>
-					 <RowDefinition Height="*"/>
-				 </Grid.RowDefinitions>
-				 <Button Content="Save&#x0a;Puzzle"          Grid.Column="0" Grid.Row="0" Command=""/>
-				 <Button Content="Save&#x0a;Word"            Grid.Column="1" Grid.Row="0" Command=""/>
-				 <Button Content="Load&#x0a;Game"            Grid.Column="2" Grid.Row="0" Command=""/>
-				 <Button Content="New Game&#x0a;From Word"   Grid.Column="3" Grid.Row="0" Command=""/>
-				 <Button Content="Found&#x0a;Words"          Grid.Column="0" Grid.Row="1" Command=""/>
-				 <Button Content="Help"                      Grid.Column="1" Grid.Row="1" Command=""/>
-				 <Button Content="Shuffle"                   Grid.Column="2" Grid.Row="1" Command=""/>
-				 <Button Content="New Game"                  Grid.Column="3" Grid.Row="1" Command=""/>
-			 </Grid>
-		 </Grid>
-	 </Window>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Button Content="Save&#x0a;Puzzle"          Grid.Column="0" Grid.Row="0" Command=""/>
+			<Button Content="Save&#x0a;Word"            Grid.Column="1" Grid.Row="0" Command=""/>
+			<Button Content="Load&#x0a;Game"            Grid.Column="2" Grid.Row="0" Command=""/>
+			<Button Content="New Game&#x0a;From Word"   Grid.Column="3" Grid.Row="0" Command=""/>
+			<Button Content="Found&#x0a;Words"          Grid.Column="0" Grid.Row="1" Command=""/>
+			<Button Content="Help"                      Grid.Column="1" Grid.Row="1" Command=""/>
+			<Button Content="Shuffle"                   Grid.Column="2" Grid.Row="1" Command=""/>
+			<Button Content="New Game"                  Grid.Column="3" Grid.Row="1" Command=""/>
+		</Grid>
+	</Grid>
+</Window>
