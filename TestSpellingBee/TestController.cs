@@ -3,9 +3,14 @@ using System.Collections.Immutable;
 
 namespace TestSpellingBee
 {
+    /// <summary>
+    /// Tests for the GameController class.
+    /// </summary>
     public class TestController
     {
-
+        /// <summary>
+        /// Verifies that Shuffle function changes the order of the letters in baseword
+        /// </summary>
         [Fact]
         public void ValidateShuffle()
         {
@@ -34,6 +39,9 @@ namespace TestSpellingBee
             Assert.True(counter != 7);
         }
 
+        /// <summary>
+        /// Verifies that NewPuzzle function changes the baseword
+        /// </summary>
         [Fact]
         public void NewPuzzleResetsBaseWord()
         {
@@ -48,6 +56,9 @@ namespace TestSpellingBee
             Assert.NotEqual(b1, b2);
         }
 
+        /// <summary>
+        /// Verifies that NewPuzzle resets the player points
+        /// </summary>
         [Fact]
         public void NewPuzzleResetsPoints()
         {
@@ -59,7 +70,10 @@ namespace TestSpellingBee
 
             Assert.True(model.GetPlayerPoints() == 0);
         }
-        
+
+        /// <summary>
+        /// Verifies that NewPuzzleFromBaseword sets the baseword as the inputted word and resets points
+        /// </summary>
         [Fact]
         public void NewPuzzleFromBaseWord()
         {
@@ -87,6 +101,9 @@ namespace TestSpellingBee
             Assert.True(testing);
         }
 
+        /// <summary>
+        /// Verifies that Guess function adds a valid guess to foundWords and adds points
+        /// </summary>
         [Fact]
         public void GuessValid()
         {
@@ -102,6 +119,9 @@ namespace TestSpellingBee
             Assert.NotEqual(0, model.GetPlayerPoints());
         }
 
+        /// <summary>
+        /// Verifies that the Guess function does not add an invalid word to foundWords nor adds points
+        /// </summary>
         [Fact]
         public void GuessInvalid()
         {

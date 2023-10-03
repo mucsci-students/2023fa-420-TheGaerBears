@@ -5,8 +5,14 @@ using System.Collections.Immutable;
 
 namespace TestSpellingBee
 {
+    /// <summary>
+    /// Tests for the GameModel class.
+    /// </summary>
     public class TestModel
     {
+        /// <summary>
+        /// Verifies that PangramList function creates a list of pangrams from our dictionary (words with unique letters)
+        /// </summary>
         [Fact]
         public void ValidatePangramList()
         {
@@ -31,6 +37,9 @@ namespace TestSpellingBee
             Assert.True(tester);
         }
 
+        /// <summary>
+        /// Verifies that GenerateValidWords function creates a list of words with required letter and contained in base word
+        /// </summary>
         [Fact]
         public void ValidateGenerateValidWords()
         {
@@ -76,6 +85,9 @@ namespace TestSpellingBee
             Assert.True(testing);
         }
 
+        /// <summary>
+        /// Verifies that the Save functions save state (baseword, required letter, points) to a json file
+        /// </summary>
         [Fact]
         public void SaveVerify()
         {
@@ -83,8 +95,13 @@ namespace TestSpellingBee
             var view = new GameView();
             var controller = new GameController(model, view);
 
-            controller.NewPuzzleBaseWord("codable");
-            controller.Guess("codable");
+            string oWord = "codable";
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+            char oReqLetter = model.GetRequiredLetter();
+            IEnumerable<string> oFoundWords = new List<string>(model.GetFoundWords());
+            int oPlayerPoints = model.GetPlayerPoints();
+            int oMaxPoints = model.GetMaxPoints();
 
             model.SaveCurrentGameState("test");
 
@@ -94,11 +111,16 @@ namespace TestSpellingBee
             {
                 string content = reader.ReadToEnd();
 
-                Assert.Contains("codable", content);
+                Assert.Contains(oWord, content);
+                Assert.Contains(oReqLetter, content);
+                Assert.Contains(oPlayerPoints.ToString(), content);
+                Assert.Contains(oMaxPoints.ToString(), content);
             }
-
         }
 
+        /// <summary>
+        /// Verifies that the Load function loads a saved game from a json file
+        /// </summary>
         [Fact]
         public void LoadVerify()
         {
@@ -145,6 +167,28 @@ namespace TestSpellingBee
 
             //Checks the max points
             Assert.Equal(model.GetMaxPoints(), oMaxPoints);
+        }
+        /// <summary>
+        /// Verifies that the PlayerPoints updates when there is a valid word and doesn't update on invalid word
+        /// </summary>
+        [Fact]
+        public void PlayerPointsUpdate()
+        {
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new GameController(model, view);
+
+            string oWord = "codable";
+
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+
+            Assert.Equal(14, model.GetPlayerPoints());
+
+            controller.Guess("false");
+
+            Assert.Equal(14, model.GetPlayerPoints());
+
         }
 
     }
