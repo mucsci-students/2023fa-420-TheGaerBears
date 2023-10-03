@@ -60,7 +60,6 @@ namespace SpellingBee
 
         public void Exit()
         {
-            Console.WriteLine("Thank you for playing Spelling Bee. Goodbye!");
             System.Environment.Exit(0);
         }
 
@@ -253,7 +252,7 @@ namespace SpellingBee
             {
                 return false;
             }
-
+            Reset();
             baseWord = new List<char>(bWord.Distinct().ToArray());
             ShuffleBaseWord();
             requiredLetter = baseWord[0];
@@ -326,28 +325,27 @@ namespace SpellingBee
             return baseWord.Count > 0;
         }
 
-        public void SaveCurrentGameState(string saveName)
+        public bool SaveCurrentGameState(string saveName)
         {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
             string fileName = saveName;
             if (string.IsNullOrEmpty(fileName))
             {
-                Console.WriteLine("Error: no file name");
-                return;
+                return false;
             }
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
             fileName += ".json";
             var jsonString = JsonConvert.SerializeObject(this);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+            return true;
         }
 
-        public void SaveCurrentPuzzleState(string saveName)
+        public bool SaveCurrentPuzzleState(string saveName)
         {
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
             string fileName = saveName;
             if (string.IsNullOrEmpty(fileName))
             {
-                Console.WriteLine("Error: no file name");
-                return;
+                return false;
             }
             fileName += ".json";
             GameModel temp = new GameModel
@@ -357,6 +355,7 @@ namespace SpellingBee
             };
             var jsonString = JsonConvert.SerializeObject(temp);
             File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+            return true;
         }
 
         public GameModel LoadGameState(string fileId)

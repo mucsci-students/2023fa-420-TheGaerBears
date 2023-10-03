@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls.Documents;
+using DynamicData.Kernel;
 using System;
 
 namespace SpellingBee
@@ -54,12 +55,10 @@ namespace SpellingBee
 
         public void NewPuzzleBaseWord(string word)
         {
-            _model.Reset();
-            string bWord = word;
-            while (!_model.SetBaseWordForPuzzle(bWord))
+            if (!_model.SetBaseWordForPuzzle(word))
             {
-                Console.WriteLine("This word is not valid. Please enter a new word: ");
-                bWord = Console.ReadLine().ToLower();
+                _view.DisplayMessage("This is not a valid pangram");
+                return;
             }
             _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
             _model.GenerateValidWords();
@@ -94,28 +93,24 @@ namespace SpellingBee
 
         public void SaveCurrent()
         {
-            Console.WriteLine("Enter a name for your save file:");
-            string saveName = Console.ReadLine().Trim();
-            if (string.IsNullOrEmpty(saveName))
-            {
-                _view.DisplayMessage("Invalid save name. Please try again.");
-                return;  // or loop until a valid name is given
-            }
-            _model.SaveCurrentGameState(saveName);
-            _view.DisplayMessage("Successfully saved game with progress");
+            _view.DisplayMessage("Enter Save File Name:");
+            string saveName = _view.GetInput();
+
+            if (_model.SaveCurrentGameState(saveName))
+                _view.DisplayMessage("Successfully saved game with progress");
+            else
+                _view.DisplayMessage("Error: No file name");
         }
 
         public void SavePuzzle()
         {
-            Console.WriteLine("Enter a name for your puzzle save file:");
-            string saveName = Console.ReadLine().Trim();
-            if (string.IsNullOrEmpty(saveName))
-            {
-                _view.DisplayMessage("Invalid save name. Please try again.");
-                return;  // or loop until a valid name is given
-            }
-            _model.SaveCurrentPuzzleState(saveName);
-            _view.DisplayMessage("Successfully saved puzzle");
+            _view.DisplayMessage("Enter Save File Name:");
+            string saveName = _view.GetInput();
+
+            if (_model.SaveCurrentGameState(saveName))
+                _view.DisplayMessage("Successfully saved game with progress");
+            else
+                _view.DisplayMessage("Error: No file name");
         }
 
         public void Load()
@@ -156,6 +151,7 @@ namespace SpellingBee
             switch (input)
             {
                 case "-exit":
+                    _view.Exit();
                     _model.Exit();
                     break;
 
@@ -174,8 +170,8 @@ namespace SpellingBee
                     break;
 
                 case "-new game from word":
-                    Console.WriteLine("Please enter a valid pangram: ");
-                    string pang = Console.ReadLine().Trim();
+                    _view.DisplayMessage("Please enter a valid pangram: ");
+                    string pang = _view.GetInput();
                     NewPuzzleBaseWord(pang);
                     break;
 
@@ -249,7 +245,7 @@ namespace SpellingBee
                     break;
 
                 default:
-                    if (_model.Active())
+                    if (_model.Active() && !input[0].Equals('-'))
                     {
                         Guess(input);
                     }

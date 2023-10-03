@@ -21,8 +21,10 @@ namespace SpellingBee
  * - ShowPuzzle: Presents the current puzzle letters and the required letter.
  * - DisplaySaveFilesList: Shows the list of available saved games for loading.
  * - GetFileIdFromUser: Asks the user to select a saved game from the list.
+ * - GetInput: Gets input from user.
  * - DisplayMessage: Outputs a generic message to the console.
  * - Help: Lists all the available commands and instructions for the game.
+ * - Exit: Displays exiting message for the game.
  * 
  * Dependencies:
  * -------------
@@ -129,6 +131,12 @@ namespace SpellingBee
             return -1; 
         }
 
+        public string GetInput()
+        {
+            return Console.ReadLine().ToLower().Trim();
+        }
+
+
         public void DisplayMessage(string message)
         {
             Console.WriteLine(message);
@@ -150,6 +158,11 @@ namespace SpellingBee
             Console.WriteLine("-exit: Exit the game.");
             Console.WriteLine("You can also simply type in a word to make a guess.");
             Console.WriteLine("Remember, all words must contain the required letter!");
+        }
+
+        public void Exit()
+        {
+            Console.WriteLine("Thank you for playing Spelling Bee. Goodbye!");
         }
     }
 }
