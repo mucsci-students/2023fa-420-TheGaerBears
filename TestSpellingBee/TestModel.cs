@@ -1,4 +1,6 @@
-﻿using SpellingBee;
+﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
+using SpellingBee;
+using System;
 using System.Collections.Immutable;
 
 namespace TestSpellingBee
@@ -95,6 +97,54 @@ namespace TestSpellingBee
                 Assert.Contains("codable", content);
             }
 
+        }
+
+        [Fact]
+        public void LoadVerify()
+        {
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new GameController(model, view);
+
+            string oWord = "codable";
+
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+            
+
+            model.SaveCurrentGameState("test");
+
+            //Copy old data of puzzle to compare
+            List<char> oBaseWord = new List<char>(model.GetBaseWord());
+            char oReqLetter = model.GetRequiredLetter();
+            IEnumerable<string> oFoundWords = new List<string>(model.GetFoundWords());
+            int oPlayerPoints = model.GetPlayerPoints();
+            int oMaxPoints = model.GetMaxPoints();
+
+            //Verify load
+            controller.NewPuzzleBaseWord("companion");
+
+            model = model.LoadGameStateFromFile(0);
+
+            oBaseWord.Sort();
+
+            List<char> bWord = model.GetBaseWord();
+            bWord.Sort();
+
+            //Checks to make sure word is same
+            Assert.Equal(bWord, oBaseWord);
+
+            //Checks to make sure required letter is same
+            Assert.Equal(model.GetRequiredLetter(), oReqLetter);
+            
+            //Checks to make sure points are the same
+            Assert.Equal(model.GetFoundWords(), oFoundWords);
+
+            //Checks the player points
+            Assert.Equal(model.GetPlayerPoints(), oPlayerPoints);
+
+            //Checks the max points
+            Assert.Equal(model.GetMaxPoints(), oMaxPoints);
         }
 
     }
