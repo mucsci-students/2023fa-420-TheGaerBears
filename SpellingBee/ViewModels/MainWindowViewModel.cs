@@ -2,15 +2,18 @@
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private string _letter1;
-        private string _letter2;
-        private string _letter3;
-        private string _letter4;
-        private string _letter5;
-        private string _letter6;
-        private string _letter7;
-        private string _rightText;
-        private string _lowerText;
+        private string _letter1 = "";
+        private string _letter2 = "";
+        private string _letter3 = "";
+        private string _letter4 = "";
+        private string _letter5 = "";
+        private string _letter6 = "";
+        private string _letter7 = "";
+        private string _rightText = "";
+        private string _lowerText = "";
+        private int _points = 0;
+        private string _rank = "";
+        private int _nextRank = 0;
 
         public string letter1
         {
@@ -57,6 +60,20 @@
             get { return _lowerText; }
             set { _lowerText = value; }
         }
-        public string Greeting => "Welcome to Avalonia!";
+        public int points
+        {
+            get { return _points; }
+            set { _points = value; }
+        }
+        public string rank
+        {
+            get { return _rank; }
+            set { _rank = value; }
+        }
+        public int nextRank 
+        { 
+            get { return _nextRank; } 
+            set { _nextRank = value; }
+        }
     }
 }
