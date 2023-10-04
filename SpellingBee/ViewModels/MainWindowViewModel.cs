@@ -20,6 +20,7 @@ namespace SpellingBee.ViewModels
         private int _nextRank = 0;
 
         private readonly GUIController _gameController;
+        private readonly GameModel _model;
 
         public ReactiveCommand<Unit, Unit> NewPuzzleCommand { get; }
         public ReactiveCommand<Unit, Unit> AppendLetter1Command { get; }
@@ -102,7 +103,7 @@ namespace SpellingBee.ViewModels
         private void SavePuzzle()
         {
             _gameController.SavePuzzle();
-            FeedbackMessage = "Puzzle saved successfully!";
+            FeedbackMessage = _gameController.GetLastMessage();
         }
 
         private void SaveCurrent()
