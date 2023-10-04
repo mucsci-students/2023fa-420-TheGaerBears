@@ -38,7 +38,6 @@ namespace SpellingBee
     public class GUIController
     {
         private readonly GameModel _model;
-        private readonly GameView _view;
         private string _lastMessage = "";
 
         public GUIController(GameModel model)
@@ -58,9 +57,9 @@ namespace SpellingBee
 
             if (!_model.SetBaseWordForPuzzle(word))
             {
+                _lastMessage = "Not a valid pangram";
                 return;
             }
-            _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
             _model.GenerateValidWords();
         }
 
@@ -122,7 +121,7 @@ namespace SpellingBee
             }
         }
 
-        public void SaveCurrent()
+        public void SaveCurrent(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -130,13 +129,12 @@ namespace SpellingBee
             }
             else
             {
-                string saveName = _view.GetInput();
-
+                _lastMessage = "Enter Save File Name:";
                 _model.SaveCurrentGameState(saveName);
             }
         }
 
-        public void SavePuzzle()
+        public void SavePuzzle(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -144,8 +142,7 @@ namespace SpellingBee
             }
             else
             {
-                _view.DisplayMessage("Enter Save File Name:");
-                string saveName = _view.GetInput();
+                _lastMessage = "Enter Save File Name:";
 
                 _model.SaveCurrentGameState(saveName);
             }
@@ -196,22 +193,22 @@ namespace SpellingBee
         public string GetHelp()
         {
             return @"
-                Welcome to the Spelling Bee game!
+Welcome to the Spelling Bee game!
 
-                -new game: Starts a new puzzle game.
-                -new game from word: Starts a new puzzle game with your word.
-                -load: Load a saved game or puzzle.
-                -save current: Save the current game with progress.
-                -save puzzle: Save the current puzzle.
-                -show found words: Display the words you have found.
-                -show puzzle: Display the puzzle letters.
-                -show status: Display your current game status.
-                -shuffle: Shuffle the puzzle letters.
-                -help: Show this list of commands.
-                -exit: Exit the game.
+-new game: Starts a new puzzle game.
+-new game from word: Starts a new puzzle game with your word.
+-load: Load a saved game or puzzle.
+-save current: Save the current game with progress.
+-save puzzle: Save the current puzzle.
+-show found words: Display the words you have found.
+-show puzzle: Display the puzzle letters.
+-show status: Display your current game status.
+-shuffle: Shuffle the puzzle letters.
+-help: Show this list of commands.
+-exit: Exit the game.
 
-                You can also simply type in a word to make a guess.
-                Remember, all words must contain the required letter!";
+You can also simply type in a word to make a guess.
+Remember, all words must contain the required letter!";
         }
 
         public string GetNthLetter(int n)
