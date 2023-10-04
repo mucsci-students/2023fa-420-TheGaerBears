@@ -18,6 +18,7 @@ namespace SpellingBee.ViewModels
         private int _points = 0;
         private string _rank = "";
         private int _nextRank = 0;
+        private bool _loadVisible = false;
 
         private readonly GUIController _gameController;
         private readonly GameModel _model;
@@ -89,9 +90,11 @@ namespace SpellingBee.ViewModels
         {
             _gameController.Guess(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
-            points = _gameController.GetCurrentScore();
-            rank = _gameController.GetCurrentRank();
-
+            if (FeedbackMessage.Equals("Word Found"))
+            {
+                points = _gameController.GetCurrentScore();
+                rank = _gameController.GetCurrentRank();
+            }
             lowerText = "";
 
         }
@@ -102,20 +105,23 @@ namespace SpellingBee.ViewModels
         }
         private void SavePuzzle()
         {
-            _gameController.SavePuzzle();
+            _gameController.SavePuzzle(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
+            lowerText = "";
         }
 
         private void SaveCurrent()
         {
-            _gameController.SaveCurrent();
+            _gameController.SaveCurrent(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
+            lowerText = "";
         }
 
         private void Load()
         {
             _gameController.Load();
             FeedbackMessage = _gameController.GetLastMessage();
+
         }
 
         private void ShowFoundWords()
@@ -127,15 +133,21 @@ namespace SpellingBee.ViewModels
 
         private void NewGameFromWord()
         {
-            // so how to actaully get this word...
-            string word = lowerText;
-            _gameController.NewPuzzleBaseWord(word);
+            _gameController.NewPuzzleBaseWord(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
+
+            letter1 = _gameController.GetNthLetter(0);
+            letter2 = _gameController.GetNthLetter(1);
+            letter3 = _gameController.GetNthLetter(2);
+            letter4 = _gameController.GetNthLetter(3);
+            letter5 = _gameController.GetNthLetter(4);
+            letter6 = _gameController.GetNthLetter(5);
+            letter7 = _gameController.GetNthLetter(6);
+            lowerText = "";
         }
 
         private void ShowHelp()
         {
-            //_gameController.HandleCommand("-help");
             FeedbackMessage = _gameController.GetHelp();
         }
 
@@ -217,7 +229,12 @@ namespace SpellingBee.ViewModels
         public int nextRank 
         { 
             get { return _nextRank; } 
-            set { _nextRank = value; }
+            set { this.RaiseAndSetIfChanged(ref _nextRank, value); }
+        }
+        public bool loadVisible
+        {
+            get { return _loadVisible; }
+            set { this.RaiseAndSetIfChanged(ref _loadVisible, value); }
         }
     }
 }
