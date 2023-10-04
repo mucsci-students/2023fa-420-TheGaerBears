@@ -6,6 +6,7 @@
 	   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 	   x:Class="SpellingBee.Views.MainWindow"
 	   x:DataType="vm:MainWindowViewModel"
+	   KeyDown="KeyInput_KeyDown"
 	   Icon="/Assets/avalonia-logo.ico"
 	   Title="SpellingBee">
 	<Grid>

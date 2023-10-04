@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Input;
+using ReactiveUI;
 
 namespace SpellingBee.ViewModels
 {
