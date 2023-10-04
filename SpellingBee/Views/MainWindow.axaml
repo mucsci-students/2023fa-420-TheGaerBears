@@ -22,7 +22,7 @@
 		<ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left">
 			<TextBlock Grid.Row="0" Text="{Binding FeedbackMessage}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="18"/>
 		</ScrollViewer>
-		<Label Content="{Binding Path=rightText}" Grid.Column="1"/>
+		
 		<Label  Content="{Binding Path=lowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
 		<Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
 			<Grid.ColumnDefinitions>
@@ -52,11 +52,15 @@
 			<Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"
 					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-					Command="{Binding GuessCommand}"/>
-			<!--<Button Content="Load Game" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30" -->
-			<!--HorizontalAlignment="Stretch" VerticalAlignment="Stretch"-->
-			<!--VerticalContentAlignment="Center" HorizontalContentAlignment="Center"-->
-			<!--Command="{Binding GuessCommand}"/> -->
+					Command="{Binding GuessCommand}" IsVisible="{Binding guessVisible}"/>
+			<Button Content="Load Game" Grid.ColumnSpan="7" IsVisible="{Binding loadVisible}" Grid.Row="3" FontSize="30"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+					Command="{Binding LoadCommand}"/> 
+			<Button Content="Save Game" Grid.ColumnSpan="7" IsVisible="{Binding saveVisible}" Grid.Row="3" FontSize="30"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+					Command="{Binding SaveCommand}"/> 
 			<Grid Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>

@@ -13,12 +13,13 @@ namespace SpellingBee.ViewModels
         private string _letter5 = "";
         private string _letter6 = "";
         private string _letter7 = "";
-        private string _rightText = "";
         private string _lowerText = "";
         private int _points = 0;
         private string _rank = "";
         private int _nextRank = 0;
         private bool _loadVisible = false;
+        private bool _guessVisible = true;
+        private bool _saveVisible = false;
 
         private readonly GUIController _gameController;
         private readonly GameModel _model;
@@ -206,11 +207,6 @@ namespace SpellingBee.ViewModels
             get { return _letter7; }
             set { this.RaiseAndSetIfChanged(ref _letter7, value); }
         }
-        public string rightText
-        {
-            get { return _rightText; }
-            set { _rightText = value; }
-        }
         public string lowerText
         {
             get { return _lowerText; }
@@ -235,6 +231,16 @@ namespace SpellingBee.ViewModels
         {
             get { return _loadVisible; }
             set { this.RaiseAndSetIfChanged(ref _loadVisible, value); }
+        }
+        public bool guessVisible
+        {
+            get { return _guessVisible; }
+            set { this.RaiseAndSetIfChanged(ref _guessVisible, value); }
+        }
+        public bool saveVisible
+        {
+            get { return _saveVisible; }
+            set { this.RaiseAndSetIfChanged(ref _saveVisible, value); }
         }
     }
 }
