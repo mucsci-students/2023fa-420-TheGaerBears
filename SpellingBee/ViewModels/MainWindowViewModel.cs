@@ -19,7 +19,7 @@ namespace SpellingBee.ViewModels
         private string _rank = "";
         private int _nextRank = 0;
 
-        private readonly GameController _gameController;
+        private readonly GUIController _gameController;
 
         public ReactiveCommand<Unit, Unit> NewPuzzleCommand { get; }
         public ReactiveCommand<Unit, Unit> AppendLetter1Command { get; }
@@ -43,7 +43,8 @@ namespace SpellingBee.ViewModels
 
         public MainWindowViewModel()
         {
-            _gameController = new GameController(new GameModel(), new GameView());
+            //_gameController = new GameController(new GameModel(), new GameView());
+            _gameController = new GUIController(new GameModel());
             NewPuzzleCommand = ReactiveCommand.Create(StartNewPuzzle);
             AppendLetter1Command = ReactiveCommand.Create(() => AppendLetter(letter1));
             AppendLetter2Command = ReactiveCommand.Create(() => AppendLetter(letter2));
@@ -83,7 +84,7 @@ namespace SpellingBee.ViewModels
             UpdateLetters();
         }
 
-        private void ExecuteGuess()
+        public void ExecuteGuess()
         {
             _gameController.Guess(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
@@ -126,15 +127,15 @@ namespace SpellingBee.ViewModels
         private void NewGameFromWord()
         {
             // so how to actaully get this word...
-            string word = "example";
+            string word = lowerText;
             _gameController.NewPuzzleBaseWord(word);
             FeedbackMessage = _gameController.GetLastMessage();
         }
 
         private void ShowHelp()
         {
-            _gameController.HandleCommand("-help");
-            FeedbackMessage = _gameController.GetLastMessage();
+            //_gameController.HandleCommand("-help");
+            FeedbackMessage = _gameController.GetHelp();
         }
 
         private void StartNewPuzzle()

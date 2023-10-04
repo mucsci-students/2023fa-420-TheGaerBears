@@ -22,4 +22,11 @@
 *.opensdf
 *.tlog
 *.log
+*.v2
+*.vsidx
+*.so
+*.a
+*.dylib
+/SpellingBee/obj/Debug/net6.0/SpellingBee.csproj.CopyComplete
+/SpellingBee/obj/Debug/net6.0/SpellingBee.csproj.BuildWithSkipAnalyzers
 Version.c
