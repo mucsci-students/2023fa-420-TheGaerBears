@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls.Documents;
 using DynamicData.Kernel;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SpellingBee
 {
@@ -38,12 +40,15 @@ namespace SpellingBee
     {
         private readonly GameModel _model;
         private readonly GameView _view;
+        private string _lastMessage = "";
 
         public GameController(GameModel model, GameView view)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _view = view ?? throw new ArgumentNullException(nameof(view));
         }
+
+
 
         public void NewPuzzle()
         {
@@ -70,19 +75,37 @@ namespace SpellingBee
             {
                 if (_model.IsWordAlreadyFound(word))
                 {
-                    _view.DisplayMessage($"You have already found the word \"{word}\"!");
+                    _lastMessage = $"You have already found the word \"{word}\"!";
                 }
                 else
                 {
-                    _view.DisplayMessage("Word found!");
+                    _lastMessage = "Word found!";
                     _model.AddFoundWord(word);
                     _view.DisplayScore(_model.GetPlayerPoints());
                 }
             }
             else
             {
-                _view.DisplayMessage($"{word} is not a valid guess.");
+                _lastMessage = $"{word} is not a valid guess.";
             }
+
+            _view.DisplayMessage(_lastMessage);
+        }
+
+
+        public string GetLastMessage()
+        {
+            return _lastMessage;
+        }
+
+        public void ShuffleBaseWord()
+        {
+            _model.ShuffleBaseWord();
+        }
+
+        public List<char> GetBaseWord()
+        {
+            return _model.GetBaseWord();
         }
 
         public void Shuffle()
@@ -141,9 +164,38 @@ namespace SpellingBee
             }
         }
 
+        public List<string> GetFoundWords()
+        {
+            return _model.GetFoundWords().ToList();
+        }
+
+        public string GetCurrentRank()
+        {
+            int currentPoints = _model.GetPlayerPoints(); 
+            foreach (var rankPair in _model.GetStatusTitles())
+            {
+                if (currentPoints >= rankPair.Value)
+                {
+                    return rankPair.Key;
+                }
+            }
+            return "Beginner";
+        }
+
+
+        public string GetNthLetter(int n)
+        {
+            return _model.GetBaseWord()[n].ToString();
+        }
+
         public void BeginScreen()
         {
             _view.BeginScreen();
+        }
+
+        public int GetCurrentScore()
+        {
+            return _model.GetCurrentScore();
         }
 
         public void HandleCommand(string input)
@@ -157,6 +209,8 @@ namespace SpellingBee
 
                 case "-help":
                     _view.Help();
+                    _lastMessage = _view.Help();
+
                     break;
 
                 case "-load":

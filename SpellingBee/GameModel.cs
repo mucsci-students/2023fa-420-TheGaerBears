@@ -58,6 +58,11 @@ namespace SpellingBee
         private const string DatabaseConnectionString = "Data Source=../../../../SpellingBee/SetUpSpellingBee/Database/SpellingBeeWords.db;";
         private const string DatabaseConnectionString_Two = "Data Source=./SetUpSpellingBee/Database/SpellingBeeWords.db";
 
+        public int GetCurrentScore()
+        {
+            return playerPoints; 
+        }
+
         public void Exit()
         {
             System.Environment.Exit(0);
@@ -85,7 +90,6 @@ namespace SpellingBee
         new KeyValuePair<string, int>("Queen Bee", 100)
     };
 
-            requiredLetter = 'a'; // Default required letter
             playerPoints = 0;    // Starting player points
             maxPoints = 0; // Initial total possible points
 
@@ -245,6 +249,7 @@ namespace SpellingBee
             requiredLetter = baseWord[0];
         }
 
+
         public bool SetBaseWordForPuzzle(string word)
         {
             string bWord = word.ToLower();
@@ -272,7 +277,19 @@ namespace SpellingBee
                 baseWord[i] = baseWord[j];
                 baseWord[j] = temp;
             }
+
+            // Ensure the required letter is at the 0th index
+            int requiredIndex = baseWord.IndexOf(requiredLetter);
+            if (requiredIndex != 0 && requiredIndex >= 0 && baseWord.Count > 1)
+            {
+                char temp = baseWord[0];
+                baseWord[0] = baseWord[requiredIndex];
+                baseWord[requiredIndex] = temp;
+            }
         }
+
+
+
 
         public bool IsValidWord(string word)
         {
@@ -296,7 +313,6 @@ namespace SpellingBee
         public void Reset()
         {
             baseWord.Clear();
-            requiredLetter = 'a';
             validWords.Clear();
             foundWords.Clear();
             playerPoints = 0;
