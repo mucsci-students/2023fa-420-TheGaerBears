@@ -9,8 +9,7 @@ namespace SpellingBee
     /*
      * GameController Class - SpellingBee
      * 
-     * Purpose:
-     * --------
+     * Purpose:     * --------
      * This class is responsible for controlling the game flow and interaction between the GameModel and GameView.
      * It acts as a mediator that handles user commands, processes game logic, and updates the view accordingly.
      * 
@@ -47,8 +46,6 @@ namespace SpellingBee
             _model = model ?? throw new ArgumentNullException(nameof(model));
         }
 
-
-
         public void NewPuzzle()
         {
             _model.Reset();
@@ -58,6 +55,7 @@ namespace SpellingBee
 
         public void NewPuzzleBaseWord(string word)
         {
+
             if (!_model.SetBaseWordForPuzzle(word))
             {
                 return;
@@ -67,8 +65,12 @@ namespace SpellingBee
         }
 
         public void Guess(string word)
-        {
-            if (_model.IsValidWord(word))
+        {  
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else if (_model.IsValidWord(word))
             {
                 if (_model.IsWordAlreadyFound(word))
                 {
@@ -84,9 +86,7 @@ namespace SpellingBee
             {
                 _lastMessage = $"{word} is not a valid guess.";
             }
-
         }
-
 
         public string GetLastMessage()
         {
@@ -95,7 +95,14 @@ namespace SpellingBee
 
         public void ShuffleBaseWord()
         {
-            _model.ShuffleBaseWord();
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else
+            {
+                _model.ShuffleBaseWord();
+            }
         }
 
         public List<char> GetBaseWord()
@@ -105,22 +112,43 @@ namespace SpellingBee
 
         public void Shuffle()
         {
-            _model.ShuffleBaseWord();
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else
+            {
+                _model.ShuffleBaseWord();
+            }
         }
 
         public void SaveCurrent()
         {
-            string saveName = _view.GetInput();
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else
+            {
+                string saveName = _view.GetInput();
 
-            _model.SaveCurrentGameState(saveName);
+                _model.SaveCurrentGameState(saveName);
+            }
         }
 
         public void SavePuzzle()
         {
-            _view.DisplayMessage("Enter Save File Name:");
-            string saveName = _view.GetInput();
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else
+            {
+                _view.DisplayMessage("Enter Save File Name:");
+                string saveName = _view.GetInput();
 
-            _model.SaveCurrentGameState(saveName);
+                _model.SaveCurrentGameState(saveName);
+            }
         }
 
         public void Load()
@@ -148,12 +176,12 @@ namespace SpellingBee
         }
 
         public List<string> GetFoundWords()
-        {
+        { 
             return _model.GetFoundWords().ToList();
         }
 
         public string GetCurrentRank()
-        {
+        {   
             int currentPoints = _model.GetPlayerPoints();
             foreach (var rankPair in _model.GetStatusTitles())
             {
@@ -168,22 +196,23 @@ namespace SpellingBee
         public string GetHelp()
         {
             return @"
-Welcome to the Spelling Bee game!
--new game: Starts a new puzzle game.
--new game from word: Starts a new puzzle game with your word.
--load: Load a saved game or puzzle.
--save current: Save the current game with progress.
--save puzzle: Save the current puzzle.
--show found words: Display the words you have found.
--show puzzle: Display the puzzle letters.
--show status: Display your current game status.
--shuffle: Shuffle the puzzle letters.
--help: Show this list of commands.
--exit: Exit the game.
-You can also simply type in a word to make a guess.
-Remember, all words must contain the required letter!";
-        }
+                Welcome to the Spelling Bee game!
 
+                -new game: Starts a new puzzle game.
+                -new game from word: Starts a new puzzle game with your word.
+                -load: Load a saved game or puzzle.
+                -save current: Save the current game with progress.
+                -save puzzle: Save the current puzzle.
+                -show found words: Display the words you have found.
+                -show puzzle: Display the puzzle letters.
+                -show status: Display your current game status.
+                -shuffle: Shuffle the puzzle letters.
+                -help: Show this list of commands.
+                -exit: Exit the game.
+
+                You can also simply type in a word to make a guess.
+                Remember, all words must contain the required letter!";
+        }
 
         public string GetNthLetter(int n)
         {
