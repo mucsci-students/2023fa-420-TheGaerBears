@@ -142,23 +142,24 @@ namespace SpellingBee
             Console.WriteLine(message);
         }
 
-        public string Help()
+        public void Help()
         {
-            return @"
-Welcome to the Spelling Bee game!
--new game: Starts a new puzzle game.
--new game from word: Starts a new puzzle game with your word.
--load: Load a saved game or puzzle.
--save current: Save the current game with progress.
--save puzzle: Save the current puzzle.
--show found words: Display the words you have found.
--show puzzle: Display the puzzle letters.
--show status: Display your current game status.
--shuffle: Shuffle the puzzle letters.
--help: Show this list of commands.
--exit: Exit the game.
-You can also simply type in a word to make a guess.
-Remember, all words must contain the required letter!";
+            Console.WriteLine (
+                @"
+                -new game:           Starts a new puzzle game.
+                -new game from word: Starts a new puzzle game with your word.
+                -load:               Load a saved game or puzzle.
+                -save current:       Save the current game with progress.
+                -save puzzle:        Save the current puzzle.
+                -show found words:   Display the words you have found.
+                -show puzzle:        Display the puzzle letters.
+                -show status:        Display your current game status.
+                -shuffle:            Shuffle the puzzle letters.
+                -help:               Show this list of commands.
+                -exit:               Exit the game.
+
+                Simply type in a word to make a guess.
+                Remember, all words must contain the required letter!");
         }
 
 
