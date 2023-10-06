@@ -53,14 +53,11 @@
 					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
 					Command="{Binding GuessCommand}" IsVisible="{Binding guessVisible}"/>
-			<Button Content="Load Game" Grid.ColumnSpan="7" IsVisible="{Binding loadVisible}" Grid.Row="3" FontSize="30"
-					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-					Command="{Binding LoadCommand}"/> 
-			<Button Content="Save Game" Grid.ColumnSpan="7" IsVisible="{Binding saveVisible}" Grid.Row="3" FontSize="30"
-					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-					Command="{Binding SaveCommand}"/> 
+			<!--<Button Content="Save Game" Grid.ColumnSpan="7" IsVisible="{Binding saveVisible}" Grid.Row="3" FontSize="30"-->
+			<!--HorizontalAlignment="Stretch" VerticalAlignment="Stretch" -->
+			<!--VerticalContentAlignment="Center" HorizontalContentAlignment="Center" -->
+			<!--Command="{Binding SaveCommand}"/> -->
+
 			<Grid Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>

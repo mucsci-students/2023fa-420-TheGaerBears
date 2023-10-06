@@ -60,6 +60,7 @@ namespace SpellingBee
                 _lastMessage = "Not a valid pangram";
                 return;
             }
+            _lastMessage = "";
             _model.GenerateValidWords();
         }
 
@@ -100,8 +101,14 @@ namespace SpellingBee
             }
             else
             {
+                _lastMessage = "";
                 _model.ShuffleBaseWord();
             }
+        }
+
+        public bool GameStarted()
+        {
+            return !(_model.GetBaseWord().Count == 0);
         }
 
         public List<char> GetBaseWord()
@@ -129,7 +136,7 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage = "Enter Save File Name:";
+                _lastMessage = "File saved";
                 _model.SaveCurrentGameState(saveName);
             }
         }
@@ -142,34 +149,37 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage = "Enter Save File Name:";
+                _lastMessage = "File saved";
 
                 _model.SaveCurrentGameState(saveName);
             }
         }
 
-        public void Load()
-        {
-            var fileList = _model.GetAvailableSaveFiles();
 
-            if (fileList.Count == 0)
+        public void Load(string fileName)
+        {
+            int fileId = -1;
+            var files = _model.GetAvailableSaveFiles();
+            for (int i = 0; i < files.Count; i++)
             {
-                return;
+                if (System.IO.Path.GetFileNameWithoutExtension(files[i]).Equals(System.IO.Path.GetFileNameWithoutExtension(fileName)))
+                {
+                    fileId = i;
+                    break;
+                }
             }
 
-
-            //int fileId = _view.GetFileIdFromUser();
-
-            //GameModel loadedGame = _model.LoadGameStateFromFile(fileId);
-            /*
+            GameModel loadedGame = _model.LoadGameStateFromFile(fileId);
+            
             if (loadedGame != null)
             {
                 _model.AssignFrom(loadedGame);
+                _lastMessage = "File Loaded";
             }
             else
             {
-                _view.DisplayMessage("Invalid file Id");
-            }*/
+                _lastMessage ="Invalid file Id";
+            }
         }
 
         public List<string> GetFoundWords()
@@ -180,14 +190,15 @@ namespace SpellingBee
         public string GetCurrentRank()
         {   
             int currentPoints = _model.GetPlayerPoints();
+            string rank = "Beginner";
             foreach (var rankPair in _model.GetStatusTitles())
             {
-                if (currentPoints >= rankPair.Value)
+                if (currentPoints >= (int)(rankPair.Value * _model.GetMaxPoints() * .01))
                 {
-                    return rankPair.Key;
+                    rank = rankPair.Key;
                 }
             }
-            return "Beginner";
+            return rank;
         }
 
         public string GetHelp()
@@ -219,6 +230,11 @@ Remember, all words must contain the required letter!";
         public int GetCurrentScore()
         {
             return _model.GetCurrentScore();
+        }
+
+        public int GetNextRank()
+        {
+            return _model.PointsToNextRank();
         }
 
     }

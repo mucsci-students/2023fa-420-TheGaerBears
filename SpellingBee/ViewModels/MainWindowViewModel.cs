@@ -1,6 +1,14 @@
-﻿using ReactiveUI;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI;
+using SpellingBee.Services;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive;
+using System.Threading.Tasks;
+using System.Threading;
+using System.IO.Enumeration;
+using Avalonia.Controls;
 
 namespace SpellingBee.ViewModels
 {
@@ -70,6 +78,12 @@ namespace SpellingBee.ViewModels
 
         private void UpdateLetters()
         {
+            FeedbackMessage = "";
+            if (!_gameController.GameStarted())
+            {
+                FeedbackMessage = "Game Not Started";
+                return;
+            }
             List<char> updatedLetters = _gameController.GetBaseWord();
 
             letter1 = updatedLetters[0].ToString();
@@ -79,22 +93,40 @@ namespace SpellingBee.ViewModels
             letter5 = updatedLetters[4].ToString();
             letter6 = updatedLetters[5].ToString();
             letter7 = updatedLetters[6].ToString();
+
+            //Updating game in general
+            points = _gameController.GetCurrentScore();
+            rank = _gameController.GetCurrentRank();
+            nextRank = _gameController.GetNextRank();
         }
 
         private void ShuffleLetters()
         {
+            FeedbackMessage = "";
+            if (!_gameController.GameStarted())
+            {
+                FeedbackMessage = "Game Not Started";
+                return;
+            }
             _gameController.ShuffleBaseWord();
             UpdateLetters();
         }
 
         public void ExecuteGuess()
         {
+            FeedbackMessage = "";
+            if (!_gameController.GameStarted())
+            {
+                FeedbackMessage = "Game Not Started";
+                return;
+            }
             _gameController.Guess(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
-            if (FeedbackMessage.Equals("Word Found"))
+            if (FeedbackMessage.Equals("Word found!"))
             {
                 points = _gameController.GetCurrentScore();
                 rank = _gameController.GetCurrentRank();
+                nextRank = _gameController.GetNextRank();
             }
             lowerText = "";
 
@@ -106,6 +138,12 @@ namespace SpellingBee.ViewModels
         }
         private void SavePuzzle()
         {
+            FeedbackMessage = "";
+            if (!_gameController.GameStarted())
+            {
+                FeedbackMessage = "Game Not Started";
+                return;
+            }
             _gameController.SavePuzzle(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
             lowerText = "";
@@ -113,20 +151,59 @@ namespace SpellingBee.ViewModels
 
         private void SaveCurrent()
         {
+            FeedbackMessage = "";
+            if (!_gameController.GameStarted())
+            {
+                FeedbackMessage = "Game Not Started";
+                return;
+            }
             _gameController.SaveCurrent(lowerText);
             FeedbackMessage = _gameController.GetLastMessage();
             lowerText = "";
         }
 
-        private void Load()
+        private void SaveCommand()
         {
-            _gameController.Load();
+
+        }
+
+        private async void Load()
+        {
+            FeedbackMessage = "";
+            var fileName = await OpenFile();
+            if (fileName == null) return;
+            try
+            {
+                _gameController.Load(fileName);
+                UpdateLetters();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid File");
+            }
             FeedbackMessage = _gameController.GetLastMessage();
 
         }
 
+        private async Task<string> OpenFile()
+        {
+                var filesService = App.Current?.Services?.GetService<IFilesService>();
+                
+                if (filesService is null) throw new NullReferenceException("Missing File Service instance.");
+
+                var file = await filesService.OpenFileAsync();
+                if (file is null) return null;
+                return file.Name;
+        }
+
         private void ShowFoundWords()
         {
+            FeedbackMessage = "";
+            if (!_gameController.GameStarted())
+            {
+                FeedbackMessage = "Game Not Started";
+                return;
+            }
             var foundWords = _gameController.GetFoundWords();
             FeedbackMessage = foundWords.Count > 0 ? string.Join("\n", foundWords) : "No words found!";
         }
@@ -134,16 +211,12 @@ namespace SpellingBee.ViewModels
 
         private void NewGameFromWord()
         {
+            FeedbackMessage = "";
             _gameController.NewPuzzleBaseWord(lowerText);
-            FeedbackMessage = _gameController.GetLastMessage();
 
-            letter1 = _gameController.GetNthLetter(0);
-            letter2 = _gameController.GetNthLetter(1);
-            letter3 = _gameController.GetNthLetter(2);
-            letter4 = _gameController.GetNthLetter(3);
-            letter5 = _gameController.GetNthLetter(4);
-            letter6 = _gameController.GetNthLetter(5);
-            letter7 = _gameController.GetNthLetter(6);
+            FeedbackMessage = _gameController.GetLastMessage();
+            if (!FeedbackMessage.Equals("Not a valid pangram"))
+                UpdateLetters();
             lowerText = "";
         }
 
@@ -154,8 +227,10 @@ namespace SpellingBee.ViewModels
 
         private void StartNewPuzzle()
         {
+            FeedbackMessage = "";
             _gameController.NewPuzzle();
-
+            UpdateLetters();
+            /*
             letter1 = _gameController.GetNthLetter(0);
             letter2 = _gameController.GetNthLetter(1);
             letter3 = _gameController.GetNthLetter(2);
@@ -163,6 +238,7 @@ namespace SpellingBee.ViewModels
             letter5 = _gameController.GetNthLetter(4);
             letter6 = _gameController.GetNthLetter(5);
             letter7 = _gameController.GetNthLetter(6);
+            */
         }
         private string _feedbackMessage = "";
 
