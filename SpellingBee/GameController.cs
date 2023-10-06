@@ -209,7 +209,7 @@ namespace SpellingBee
 
                 case "-help":
                     _view.Help();
-                    _lastMessage = _view.Help();
+                    //_lastMessage = _view.Help();
 
                     break;
 
