@@ -381,10 +381,10 @@ namespace SpellingBee
             {
                 return false;
             }
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             fileName += ".json";
             var jsonString = JsonConvert.SerializeObject(this);
-            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;
         }
 
