@@ -12,7 +12,6 @@
 /TestSpellingBee/bin/Debug/net6.0/es
 /TestSpellingBee/bin/Debug/net6.0/ru
 *.cache
-*.dll
 *.exe
 *.pdb
 /build/

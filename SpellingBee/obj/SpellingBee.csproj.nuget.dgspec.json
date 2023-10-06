@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex\\420\\SpellingBee\\SpellingBee.csproj": {}
+    "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex\\420\\SpellingBee\\SpellingBee.csproj": {
+    "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\420\\SpellingBee\\SpellingBee.csproj",
+        "projectUniqueName": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
         "projectName": "SpellingBee",
-        "projectPath": "C:\\Users\\Alex\\420\\SpellingBee\\SpellingBee.csproj",
-        "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\420\\SpellingBee\\obj\\",
+        "projectPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
+        "packagesPath": "C:\\Users\\noahi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\noahi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -73,6 +73,10 @@
               "target": "Package",
               "version": "[7.0.10, )"
             },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Moq": {
               "target": "Package",
               "version": "[4.20.69, )"
@@ -102,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
