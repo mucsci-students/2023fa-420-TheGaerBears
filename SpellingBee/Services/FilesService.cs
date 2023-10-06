@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -18,7 +19,11 @@ namespace SpellingBee.Services
         public async Task<IStorageFile?> OpenFileAsync()
         {
             var storageProvider = TopLevel.GetTopLevel(_target)!.StorageProvider;
-            IStorageFolder? options = await storageProvider.TryGetFolderFromPathAsync("../../../saves/");
+
+
+            IStorageFolder? options = await storageProvider.TryGetFolderFromPathAsync(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
+
+
             var files = await _target.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
             {
                 Title = "Open Save File",
