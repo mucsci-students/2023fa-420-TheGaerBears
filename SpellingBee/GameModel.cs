@@ -77,18 +77,18 @@ namespace SpellingBee
 
             // Status titles with associated point thresholds
             statusTitles = new List<KeyValuePair<string, int>>
-    {
-        new KeyValuePair<string, int>("Beginner", 0),
-        new KeyValuePair<string, int>("Good Start", 2),
-        new KeyValuePair<string, int>("Moving Up", 5),
-        new KeyValuePair<string, int>("Good", 8),
-        new KeyValuePair<string, int>("Solid", 15),
-        new KeyValuePair<string, int>("Nice", 25),
-        new KeyValuePair<string, int>("Great", 40),
-        new KeyValuePair<string, int>("Amazing", 50),
-        new KeyValuePair<string, int>("Genius", 70),
-        new KeyValuePair<string, int>("Queen Bee", 100)
-    };
+            {
+                new KeyValuePair<string, int>("Beginner", 0),
+                new KeyValuePair<string, int>("Good Start", 2),
+                new KeyValuePair<string, int>("Moving Up", 5),
+                new KeyValuePair<string, int>("Good", 8),
+                new KeyValuePair<string, int>("Solid", 15),
+                new KeyValuePair<string, int>("Nice", 25),
+                new KeyValuePair<string, int>("Great", 40),
+                new KeyValuePair<string, int>("Amazing", 50),
+                new KeyValuePair<string, int>("Genius", 70),
+                new KeyValuePair<string, int>("Queen Bee", 100)
+            };
 
             playerPoints = 0;    // Starting player points
             maxPoints = 0; // Initial total possible points
@@ -157,11 +157,11 @@ namespace SpellingBee
         public void GenerateValidWords()
         {
             List<string> tableNames = new List<string>
-    {
-        "four_letter_words", "five_letter_words", "six_letter_words", "seven_letter_words",
-        "eight_letter_words", "nine_letter_words", "ten_letter_words", "eleven_letter_words",
-        "twelve_letter_words", "thirteen_letter_words", "fourteen_letter_words", "fifteen_letter_words"
-    };
+            {
+                "four_letter_words", "five_letter_words", "six_letter_words", "seven_letter_words",
+                "eight_letter_words", "nine_letter_words", "ten_letter_words", "eleven_letter_words",
+                "twelve_letter_words", "thirteen_letter_words", "fourteen_letter_words", "fifteen_letter_words"
+            };
 
             StringBuilder queryBuilder = new StringBuilder();
             foreach (string tableName in tableNames)
@@ -302,10 +302,6 @@ namespace SpellingBee
                 baseWord[requiredIndex] = temp;
             }
         }
-
-
-
-
         public bool IsValidWord(string word)
         {
             return validWords.Contains(word);
@@ -324,7 +320,6 @@ namespace SpellingBee
                 UpdatePlayerPointsForFoundWord(word);
             }
         }
-
         public void Reset()
         {
             baseWord.Clear();

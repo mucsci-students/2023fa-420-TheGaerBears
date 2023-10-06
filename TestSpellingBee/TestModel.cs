@@ -93,7 +93,7 @@ namespace TestSpellingBee
         {
             var model = new GameModel();
             var view = new GameView();
-            var controller = new GameController(model, view);
+            var controller = new CliController(model, view);
 
             string oWord = "codable";
             controller.NewPuzzleBaseWord(oWord);
@@ -126,7 +126,7 @@ namespace TestSpellingBee
         {
             var model = new GameModel();
             var view = new GameView();
-            var controller = new GameController(model, view);
+            var controller = new CliController(model, view);
 
             string oWord = "codable";
 
@@ -176,7 +176,7 @@ namespace TestSpellingBee
         {
             var model = new GameModel();
             var view = new GameView();
-            var controller = new GameController(model, view);
+            var controller = new CliController(model, view);
 
             string oWord = "codable";
 
