@@ -259,9 +259,24 @@ namespace SpellingBee
             }
             Reset();
             baseWord = new List<char>(bWord.Distinct().ToArray());
-            ShuffleBaseWord();
+            ShuffleNewWord();
             requiredLetter = baseWord[0];
             return true;
+        }
+
+        private void ShuffleNewWord()
+        {
+            int n = baseWord.Count;
+            for (int i = n - 1; i > 0; i--)
+            {
+                // Get a random index up to i inclusive
+                int j = rand.Next(i + 1);
+
+                // Swap elements
+                char temp = baseWord[i];
+                baseWord[i] = baseWord[j];
+                baseWord[j] = temp;
+            }
         }
 
         public void ShuffleBaseWord()
@@ -318,6 +333,29 @@ namespace SpellingBee
             playerPoints = 0;
             maxPoints = 0;
             PangramWords = PangramList();
+        }
+
+        public int PointsToNextRank()
+        {
+            double ratio = (double)playerPoints / maxPoints;
+            double percentageAsDecimal = ratio * 100;
+            int percentage = (int)Math.Round(percentageAsDecimal);
+
+
+            int status = 0; // Default status
+
+            for (int i = 0; i < statusTitles.Count; ++i)
+            {
+                if (playerPoints >= (int)(statusTitles[i].Value * maxPoints* .01))
+                {
+                    if (i == statusTitles.Count - 1)
+                        status = GetMaxPoints();
+                    else 
+                        status = (int)(statusTitles[i + 1].Value * maxPoints * .01);
+                }
+            }
+            return (status - playerPoints);
+
         }
 
         private void UpdatePlayerPointsForFoundWord(string word)
@@ -409,7 +447,6 @@ namespace SpellingBee
         public GameModel LoadGameStateFromFile(int fileId)
         {
             var fileList = GetAvailableSaveFiles();
-
             if (fileList.Count > fileId)
             {
                 string filePath = fileList[fileId];
@@ -427,7 +464,8 @@ namespace SpellingBee
             foundWords = new List<string>(loadedGame.foundWords);
             playerPoints = loadedGame.playerPoints;
             requiredLetter = loadedGame.requiredLetter;
-            validWords = new List<string>(loadedGame.validWords);
+            //validWords = new List<string>(loadedGame.validWords);
+            GenerateValidWords();
             maxPoints = loadedGame.maxPoints;
         }
 

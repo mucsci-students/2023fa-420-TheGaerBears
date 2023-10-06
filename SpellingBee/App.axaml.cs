@@ -1,8 +1,11 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using SpellingBee.Services;
 using SpellingBee.ViewModels;
 using SpellingBee.Views;
+using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SpellingBee
 {
@@ -21,9 +24,21 @@ namespace SpellingBee
                 {
                     DataContext = new MainWindowViewModel(),
                 };
+
+                var services = new ServiceCollection();
+
+                services.AddSingleton<IFilesService>(x => new FilesService(desktop.MainWindow));
+
+                Services = services.BuildServiceProvider();
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+        public new static App? Current => Application.Current as App;
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider? Services { get; private set; }
     }
 }
