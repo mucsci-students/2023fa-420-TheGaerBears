@@ -155,13 +155,13 @@ namespace TestSpellingBee
             //Checks to make sure required letter is same
             Assert.Equal(model.GetRequiredLetter(), oReqLetter);
             
-            //Checks to make sure Points are the same
+            //Checks to make sure points are the same
             Assert.Equal(model.GetFoundWords(), oFoundWords);
 
-            //Checks the player Points
+            //Checks the player points
             Assert.Equal(model.GetPlayerPoints(), oPlayerPoints);
 
-            //Checks the max Points
+            //Checks the max points
             Assert.Equal(model.GetMaxPoints(), oMaxPoints);
         }
 
