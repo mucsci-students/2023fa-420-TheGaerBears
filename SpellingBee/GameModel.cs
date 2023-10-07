@@ -27,7 +27,7 @@ namespace SpellingBee
  * 
  * Dependencies:
  * -------------
- * This class interacts with the GameView to provide visual feedback and with the GameController
+ * This class interacts with the GameView to provide visual feedback and with the CliController
  * to process user commands. It also interfaces with an SQLite database to fetch word lists and
  * validate puzzle words.
  * 
@@ -38,7 +38,7 @@ namespace SpellingBee
  * 
  * Usage:
  * ------
- * GameModel should be instantiated and used along with GameView and GameController to form
+ * GameModel should be instantiated and used along with GameView and CliController to form
  * the MVC pattern and enable a complete game flow.
  */
 

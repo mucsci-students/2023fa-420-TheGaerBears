@@ -7,7 +7,7 @@ using System.Linq;
 namespace SpellingBee
 {
     /*
-     * GameController Class - SpellingBee
+     * GuiController Class - SpellingBee
      * 
      * Purpose:     * --------
      * This class is responsible for controlling the game flow and interaction between the GameModel and GameView.
