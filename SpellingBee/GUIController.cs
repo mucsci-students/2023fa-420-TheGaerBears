@@ -1,50 +1,39 @@
-﻿using Avalonia.Controls.Documents;
-using DynamicData.Kernel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SpellingBee
 {
-    /*
-     * GuiController Class - SpellingBee
-     * 
-     * Purpose:     * --------
-     * This class is responsible for controlling the game flow and interaction between the GameModel and GameView.
-     * It acts as a mediator that handles user commands, processes game logic, and updates the view accordingly.
-     * 
-     * Main Features:
-     * --------------
-     * - BeginScreen: Displays the initial screen of the game.
-     * - NewPuzzle: Initiates a new puzzle with random pangram word.
-     * - NewPuzzleBaseWord: Initiates a new puzzle with a given base word.
-     * - Guess: Allows the user to guess a word and checks its validity.
-     * - Shuffle: Shuffles the letters in the current puzzle.
-     * - SaveCurrent: Saves the current game state to a file.
-     * - SavePuzzle: Saves only the current puzzle (without found words) to a file.
-     * - Load: Loads a saved game or puzzle state from a file.
-     * - HandleCommand: Processes various user commands like starting a new game, saving/loading, shuffling letters, and guessing words.
-     * 
-     * Dependencies:
-     * -------------
-     * - GameModel: Holds the data and game logic.
-     * - GameView: Responsible for displaying game data to the user.
-     * 
-     * Usage:
-     * ------
-     * This class is typically instantiated with a GameModel and GameView, and then it listens to user input to handle various game commands.
-     */
-
+    /// <summary>
+    /// Class <c>GUIController</c> is responsible for controlling the game flow and 
+    /// interaction between the GameModel and the GUI.
+    /// </summary>
     public class GUIController
     {
+        // A GameModel object used by the GUIController.
         private readonly GameModel _model;
+
+        // A string used to store a message and which is used by <c>MainWindowViewModel</c>.
         private string _lastMessage = "";
 
+        /// <summary>
+        /// This constructor initializes a <c>GuiController</c> from 
+        /// a <c>GameModel</c> as long as model is not null.
+        /// /// <param name="model">the GameModel to initialize the GuiController.</param>
+        /// </summary>
         public GUIController(GameModel model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
         }
 
+        /// <summary>
+        /// Method <c>NewPuzzle</c> starts a new puzzle game.
+        /// <para>
+        /// Calls <c>Reset</c> to clear progress, then
+        /// gets, shuffles, and displays a valid pangram, then
+        /// generates valid words to guess from.
+        /// </para>
+        /// </summary>
         public void NewPuzzle()
         {
             _model.Reset();
@@ -52,6 +41,15 @@ namespace SpellingBee
             _model.GenerateValidWords();
         }
 
+        /// <summary>
+        /// Method <c>NewPuzzleBaseWord</c> starts a new puzzle game from an inputted baseword.
+        /// <para>
+        /// Calls <c>Reset</c> to clear progress, then
+        /// gets, shuffles, and displays a valid pangram, then
+        /// generates valid words from the new baseword to guess from.
+        /// </para>
+        /// <param name="word">the new baseword to start the puzzle.</param>
+        /// </summary>
         public void NewPuzzleBaseWord(string word)
         {
 
@@ -64,6 +62,18 @@ namespace SpellingBee
             _model.GenerateValidWords();
         }
 
+        /// <summary>
+        /// Method <c>Guess</c> allows the user to guess a word.
+        /// <para>
+        /// A new game must be started to guess. 
+        /// If a guess is invalid, message "invalid guess" is displayed.
+        /// If the guess is valid and not a duplicate: 
+        /// the word is added to the <c>foundWords</c> list,
+        /// the equivalent points are added to <c>playerPoints</c>,
+        /// and the points used in the calculating <c>pointsToNextRank</c>.
+        /// </para>
+        /// <param name="word">the word guessed by the user.</param>
+        /// </summary>
         public void Guess(string word)
         {  
             if (_model.GetBaseWord().Count == 0)
@@ -88,11 +98,20 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Method <c>GetLastMessage</c> returns the string currently stored in <c>_lastMessage</c>. 
+        /// <returns>The string message.</returns>
+        /// </summary>
         public string GetLastMessage()
         {
             return _lastMessage;
         }
 
+        /// <summary>
+        /// Method <c>ShuffleBaseWord</c> is used in the creation of a new game
+        /// to shuffle the letters of the pangram before displaying them.
+        /// A game must be started.
+        /// </summary>
         public void ShuffleBaseWord()
         {
             if (_model.GetBaseWord().Count == 0)
@@ -106,16 +125,31 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Method <c>GameStarted</c> returns whether a game has started or not. 
+        /// Used in <c>MainWindowViewModel</c> to ensure some methods are only
+        /// ran when a game has started.
+        /// <returns>True if the baseword has letters in it, false otherwise.</returns>
+        /// </summary>
         public bool GameStarted()
         {
             return !(_model.GetBaseWord().Count == 0);
         }
 
+        /// <summary>
+        /// Method <c>GetBaseWord</c> returns the baseword of the puzzle.
+        /// /// <returns>The list of characters that make up the baseword.</returns>
+        /// </summary>
         public List<char> GetBaseWord()
         {
             return _model.GetBaseWord();
         }
 
+        /// <summary>
+        /// Method <c>Shuffle</c> swaps the letters of the baseword while
+        /// a game is in progress. 
+        /// A game must be started.
+        /// </summary>
         public void Shuffle()
         {
             if (_model.GetBaseWord().Count == 0)
@@ -128,6 +162,15 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Method <c>SaveCurrent</c> allows the user to save the current game state.
+        /// <para>
+        /// The name of the save file is first typed in,
+        /// and then the user clicks "Save Current" to save the game
+        /// into that save file. 
+        /// </para>
+        /// <param name="saveName">the name of the save file the user types.</param>
+        /// </summary>
         public void SaveCurrent(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
@@ -141,6 +184,15 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Method <c>SavePuzzle</c> allows the user to save the current puzzle without progress.
+        /// <para>
+        /// The name of the save file is first typed in,
+        /// and then the user clicks "Save Puzzle" to save the game
+        /// into that save file. 
+        /// </para>
+        /// <param name="saveName">the name of the save file the user types.</param>
+        /// </summary>
         public void SavePuzzle(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
@@ -155,7 +207,10 @@ namespace SpellingBee
             }
         }
 
-
+        /// <summary>
+        /// Method <c>Load</c> allows the user to load a saved puzzle or game.
+        /// <param name="saveName">the name of the saved file.</param>
+        /// </summary>
         public void Load(string fileName)
         {
             int fileId = -1;
@@ -178,15 +233,24 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage ="Invalid file Id";
+                _lastMessage = "Invalid file Id";
             }
         }
 
+        /// <summary>
+        /// Method <c>GetFoundWords</c> returns a list of the valid words guessed so far.
+        /// <return>A list of the valid found words.</return>
+        /// </summary>
         public List<string> GetFoundWords()
         { 
             return _model.GetFoundWords().ToList();
         }
 
+        /// <summary>
+        /// Method <c>GetCurrentRank</c> returns the user's rank calculated from 
+        /// their <c>playerPoints</c> and the <c>MaxPoints</c> of the current puzzle.
+        /// <returns>A string representing their current rank.</returns>
+        /// </summary>
         public string GetCurrentRank()
         {   
             int currentPoints = _model.GetPlayerPoints();
@@ -201,41 +265,56 @@ namespace SpellingBee
             return rank;
         }
 
+        /// <summary>
+        /// Method <c>Help</c> displays an explanation of the available buttons.
+        /// <return>The description of the buttons.</return>
+        /// </summary>
         public string GetHelp()
         {
             return @"
-Welcome to the Spelling Bee game!
+                Welcome to the Spelling Bee game!
 
--new game: Starts a new puzzle game.
--new game from word: Starts a new puzzle game with your word.
--load: Load a saved game or puzzle.
--save current: Save the current game with progress.
--save puzzle: Save the current puzzle.
--show found words: Display the words you have found.
--show puzzle: Display the puzzle letters.
--show status: Display your current game status.
--shuffle: Shuffle the puzzle letters.
--help: Show this list of commands.
--exit: Exit the game.
+                -new game: Starts a new puzzle game.
+                -new game from word: Starts a new puzzle game with your word.
+                -load: Load a saved game or puzzle.
+                -save current: Save the current game with progress.
+                -save puzzle: Save the current puzzle.
+                -show found words: Display the words you have found.
+                -show puzzle: Display the puzzle letters.
+                -show status: Display your current game status.
+                -shuffle: Shuffle the puzzle letters.
+                -help: Show this list of commands.
+                -exit: Exit the game.
 
-You can also simply type in a word to make a guess.
-Remember, all words must contain the required letter!";
+                You can also simply type in a word to make a guess.
+                Remember, all words must contain the required letter!";
         }
 
+        //// Method can be removed during after next code review, since it is not being implemented
+        /// originally implemented <c>MainWindowViewModel</c>
         public string GetNthLetter(int n)
         {
             return _model.GetBaseWord()[n].ToString();
         }
 
+        /// <summary>
+        /// Method <c>GetCurrentScore</c> is used in <c>MainWindowViewModel</c> to update the
+        /// player's current score.
+        /// <return>The int current score.</return>
+        /// </summary>
         public int GetCurrentScore()
         {
             return _model.GetCurrentScore();
         }
 
+        /// <summary>
+        /// Method <c>GetNextRank</c> is used in <c>MainWindowViewModel</c> to update the
+        /// player's points until their next rank.
+        /// <return>The int points until the next rank.</return>
+        /// </summary>
         public int GetNextRank()
         {
             return _model.PointsToNextRank();
         }
-
     }
 }
