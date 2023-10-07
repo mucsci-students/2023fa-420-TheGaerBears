@@ -49,13 +49,13 @@
 			</Grid.RowDefinitions>
 			<!--Title at the top of the screen-->
 			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
-			<Button Content="{Binding Path=letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="Red"/>
-			<Button Content="{Binding Path=letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="Green"/>
-			<Button Content="{Binding Path=letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="Green"/>
-			<Button Content="{Binding Path=letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="Green"/>
-			<Button Content="{Binding Path=letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="Green"/>
-			<Button Content="{Binding Path=letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="Green"/>
-			<Button Content="{Binding Path=letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="Green"/>
+			<Button Content="{Binding Path=letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding color1}"/>
+			<Button Content="{Binding Path=letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding color2}"/>
+			<Button Content="{Binding Path=letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="{Binding color1}"/>
+			<Button Content="{Binding Path=letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="{Binding color2}"/>
+			<Button Content="{Binding Path=letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="{Binding color1}"/>
+			<Button Content="{Binding Path=letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="{Binding color2}"/>
+			<Button Content="{Binding Path=letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="{Binding color1}"/>
 			<!--required letter text which will hopefully be changed soon-->
 			<Label Content="     ^&#x0a;Required&#x0a;  Letter" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 			<!--Guess button-->
@@ -68,6 +68,9 @@
 			<!--VerticalContentAlignment="Center" HorizontalContentAlignment="Center" -->
 			<!--Command="{Binding SaveCommand}"/> -->
 
+			<!--colorblind mode-->
+			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}"/>
+			
 			<!--displays the points rank and -->
 			<Grid Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>

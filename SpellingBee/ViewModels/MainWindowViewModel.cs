@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO.Enumeration;
 using Avalonia.Controls;
+using Newtonsoft.Json.Linq;
+using Avalonia.Threading;
 
 namespace SpellingBee.ViewModels
 {
@@ -28,6 +30,10 @@ namespace SpellingBee.ViewModels
         private bool _loadVisible = false;
         private bool _guessVisible = true;
         private bool _saveVisible = false;
+        private string _color1 = "Red";
+        private string _color2 = "Green";
+        private bool _colorThread = true;
+
 
         private readonly GUIController _guiController;
         private readonly GameModel _model;
@@ -48,7 +54,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> NewGameFromWordCommand { get; }
         public ReactiveCommand<Unit, Unit> ShowFoundWordsCommand { get; }
         public ReactiveCommand<Unit, Unit> HelpCommand { get; }
-
+        public ReactiveCommand<Unit,Unit> ToggleColorblind { get; }
 
 
 
@@ -68,14 +74,45 @@ namespace SpellingBee.ViewModels
             GuessCommand = ReactiveCommand.Create(ExecuteGuess);
             SavePuzzleCommand = ReactiveCommand.Create(SavePuzzle);
             SaveCurrentCommand = ReactiveCommand.Create(SaveCurrent);
-            LoadCommand = ReactiveCommand.Create(Load); 
+            LoadCommand = ReactiveCommand.Create(Load);
             NewGameFromWordCommand = ReactiveCommand.Create(NewGameFromWord);
             ShowFoundWordsCommand = ReactiveCommand.Create(ShowFoundWords);
             HelpCommand = ReactiveCommand.Create(ShowHelp);
-
-
+            ToggleColorblind = ReactiveCommand.Create(ToggleColor);
         }
-
+        private void ToggleColor()
+        {
+            if (color1 == "Green")
+            {
+                color1 = "Blue";
+                return;
+            }
+            else if (color2 == "Green")
+            {
+                color2 = "Blue";
+                return;
+            }
+            if (color1 == "Blue")
+            {
+                color1 = "Green";
+                return;
+            }
+            else
+            {
+                color2 = "Green";
+                return;
+            }
+        }
+        private async void SwapColors()
+        {
+            while (true)
+            {
+                string temp = color1;
+                color1 = color2;
+                color2 = temp;
+                await Task.Delay(1500);
+            }
+        }
         private void UpdateLetters()
         {
             FeedbackMessage = "";
@@ -169,6 +206,12 @@ namespace SpellingBee.ViewModels
 
         private async void Load()
         {
+            if(_colorThread)
+            {
+                Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
+                _colorThread = false;
+            }
+
             FeedbackMessage = "";
             var fileName = await OpenFile();
             if (fileName == null) return;
@@ -187,13 +230,13 @@ namespace SpellingBee.ViewModels
 
         private async Task<string> OpenFile()
         {
-                var filesService = App.Current?.Services?.GetService<IFilesService>();
-                
-                if (filesService is null) throw new NullReferenceException("Missing File Service instance.");
+            var filesService = App.Current?.Services?.GetService<IFilesService>();
 
-                var file = await filesService.OpenFileAsync();
-                if (file is null) return null;
-                return file.Name;
+            if (filesService is null) throw new NullReferenceException("Missing File Service instance.");
+
+            var file = await filesService.OpenFileAsync();
+            if (file is null) return null;
+            return file.Name;
         }
 
         private void ShowFoundWords()
@@ -211,6 +254,12 @@ namespace SpellingBee.ViewModels
 
         private void NewGameFromWord()
         {
+            if (_colorThread)
+            {
+                Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
+                _colorThread = false;
+            }
+
             FeedbackMessage = "";
             _guiController.NewPuzzleBaseWord(lowerText);
 
@@ -227,6 +276,12 @@ namespace SpellingBee.ViewModels
 
         private void StartNewPuzzle()
         {
+            if (_colorThread)
+            {
+                Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
+                _colorThread = false;
+            }
+
             FeedbackMessage = "";
             _guiController.NewPuzzle();
             UpdateLetters();
@@ -298,9 +353,9 @@ namespace SpellingBee.ViewModels
             get { return _rank; }
             set { this.RaiseAndSetIfChanged(ref _rank, value); }
         }
-        public int nextRank 
-        { 
-            get { return _nextRank; } 
+        public int nextRank
+        {
+            get { return _nextRank; }
             set { this.RaiseAndSetIfChanged(ref _nextRank, value); }
         }
         public bool loadVisible
@@ -318,5 +373,16 @@ namespace SpellingBee.ViewModels
             get { return _saveVisible; }
             set { this.RaiseAndSetIfChanged(ref _saveVisible, value); }
         }
+        public string color1
+        {
+            get { return _color1; }
+            set { this.RaiseAndSetIfChanged(ref _color1, value); }
+        }
+        public string color2
+        {
+            get { return _color2; }
+            set { this.RaiseAndSetIfChanged(ref _color2, value); }
+
+        }
+      }
     }
-}
