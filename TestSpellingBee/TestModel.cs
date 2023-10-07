@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
-using SpellingBee;
-using System;
-using System.Collections.Immutable;
+﻿using SpellingBee;
 
 namespace TestSpellingBee
 {
@@ -11,7 +8,7 @@ namespace TestSpellingBee
     public class TestModel
     {
         /// <summary>
-        /// Verifies that PangramList function creates a list of pangrams from our dictionary (words with unique letters)
+        /// Verifies that the <c>PangramList</c> function creates a list of pangrams from our dictionary (words with unique letters)
         /// </summary>
         [Fact]
         public void ValidatePangramList()
@@ -38,7 +35,7 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that GenerateValidWords function creates a list of words with required letter and contained in base word
+        /// Verifies that the <c>GenerateValidWords</c> function creates a list of words with required letter and contained in base word.
         /// </summary>
         [Fact]
         public void ValidateGenerateValidWords()
@@ -86,7 +83,7 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that the Save functions save state (baseword, required letter, points) to a json file
+        /// Verifies that the <c>Save</c> function saves state to a JSON file.
         /// </summary>
         [Fact]
         public void SaveVerify()
@@ -99,7 +96,6 @@ namespace TestSpellingBee
             controller.NewPuzzleBaseWord(oWord);
             controller.Guess(oWord);
             char oReqLetter = model.GetRequiredLetter();
-            IEnumerable<string> oFoundWords = new List<string>(model.GetFoundWords());
             int oPlayerPoints = model.GetPlayerPoints();
             int oMaxPoints = model.GetMaxPoints();
 
@@ -119,7 +115,7 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that the Load function loads a saved game from a json file
+        /// Verifies that the <c>Load</c> function loads a saved game from a JSON file.
         /// </summary>
         [Fact]
         public void LoadVerify()
@@ -159,17 +155,18 @@ namespace TestSpellingBee
             //Checks to make sure required letter is same
             Assert.Equal(model.GetRequiredLetter(), oReqLetter);
             
-            //Checks to make sure points are the same
+            //Checks to make sure Points are the same
             Assert.Equal(model.GetFoundWords(), oFoundWords);
 
-            //Checks the player points
+            //Checks the player Points
             Assert.Equal(model.GetPlayerPoints(), oPlayerPoints);
 
-            //Checks the max points
+            //Checks the max Points
             Assert.Equal(model.GetMaxPoints(), oMaxPoints);
         }
+
         /// <summary>
-        /// Verifies that the PlayerPoints updates when there is a valid word and doesn't update on invalid word
+        /// Verifies that <c>PlayerPoints</c> updates when there is a valid word and doesn't update on invalid word.
         /// </summary>
         [Fact]
         public void PlayerPointsUpdate()
@@ -188,7 +185,6 @@ namespace TestSpellingBee
             controller.Guess("false");
 
             Assert.Equal(14, model.GetPlayerPoints());
-
         }
 
     }

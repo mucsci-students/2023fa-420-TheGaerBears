@@ -24,86 +24,86 @@ namespace SpellingBee.Views
                     vm.ExecuteGuess();
                     break;
                 case Key.Back:
-                    if (vm.lowerText.Length > 0)
-                        vm.lowerText = vm.lowerText.Substring(0, vm.lowerText.Length - 1);
+                    if (vm.LowerText.Length > 0)
+                        vm.LowerText = vm.LowerText.Substring(0, vm.LowerText.Length - 1);
                     break;
                 case Key.A:
-                    vm.lowerText += "a";
+                    vm.LowerText += "a";
                     break;
                 case Key.B:
-                    vm.lowerText += "b";
+                    vm.LowerText += "b";
                     break;
                 case Key.C:
-                    vm.lowerText += "c";
+                    vm.LowerText += "c";
                     break;
                 case Key.D:
-                    vm.lowerText += "d";
+                    vm.LowerText += "d";
                     break;
                 case Key.E:
-                    vm.lowerText += "e";
+                    vm.LowerText += "e";
                     break;
                 case Key.F:
-                    vm.lowerText += "f";
+                    vm.LowerText += "f";
                     break;
                 case Key.G:
-                    vm.lowerText += "g";
+                    vm.LowerText += "g";
                     break;
                 case Key.H:
-                    vm.lowerText += "h";
+                    vm.LowerText += "h";
                     break;
                 case Key.I:
-                    vm.lowerText += "i";
+                    vm.LowerText += "i";
                     break;
                 case Key.J:
-                    vm.lowerText += "j";
+                    vm.LowerText += "j";
                     break;
                 case Key.K:
-                    vm.lowerText += "k";
+                    vm.LowerText += "k";
                     break;
                 case Key.L:
-                    vm.lowerText += "l";
+                    vm.LowerText += "l";
                     break;
                 case Key.M:
-                    vm.lowerText += "m";
+                    vm.LowerText += "m";
                     break;
                 case Key.N:
-                    vm.lowerText += "n";
+                    vm.LowerText += "n";
                     break;
                 case Key.O:
-                    vm.lowerText += "o";
+                    vm.LowerText += "o";
                     break;
                 case Key.P:
-                    vm.lowerText += "p";
+                    vm.LowerText += "p";
                     break;
                 case Key.Q:
-                    vm.lowerText += "q";
+                    vm.LowerText += "q";
                     break;
                 case Key.R:
-                    vm.lowerText += "r";
+                    vm.LowerText += "r";
                     break;
                 case Key.S:
-                    vm.lowerText += "s";
+                    vm.LowerText += "s";
                     break;
                 case Key.T:
-                    vm.lowerText += "t";
+                    vm.LowerText += "t";
                     break;
                 case Key.U:
-                    vm.lowerText += "u";
+                    vm.LowerText += "u";
                     break;
                 case Key.V:
-                    vm.lowerText += "v";
+                    vm.LowerText += "v";
                     break;
                 case Key.W:
-                    vm.lowerText += "w";
+                    vm.LowerText += "w";
                     break;
                 case Key.X:
-                    vm.lowerText += "x";
+                    vm.LowerText += "x";
                     break;
                 case Key.Y:
-                    vm.lowerText += "y";
+                    vm.LowerText += "y";
                     break;
                 case Key.Z:
-                    vm.lowerText += "z";
+                    vm.LowerText += "z";
                     break;
             }
         }

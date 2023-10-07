@@ -3,13 +3,8 @@ using ReactiveUI;
 using SpellingBee.Services;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reactive;
 using System.Threading.Tasks;
-using System.Threading;
-using System.IO.Enumeration;
-using Avalonia.Controls;
-using Newtonsoft.Json.Linq;
 using Avalonia.Threading;
 
 namespace SpellingBee.ViewModels
@@ -35,8 +30,9 @@ namespace SpellingBee.ViewModels
         private bool _colorThread = true;
 
 
-        private readonly GUIController _guiController;
-        private readonly GameModel _model;
+        private readonly GuiController _guiController;
+        // Unused and can be deleted//
+       // private readonly GameModel _model;
 
         public ReactiveCommand<Unit, Unit> NewPuzzleCommand { get; }
         public ReactiveCommand<Unit, Unit> AppendLetter1Command { get; }
@@ -61,15 +57,15 @@ namespace SpellingBee.ViewModels
         public MainWindowViewModel()
         {
             //_guiController = new GuiController(new GameModel(), new GameView());
-            _guiController = new GUIController(new GameModel());
+            _guiController = new GuiController(new GameModel());
             NewPuzzleCommand = ReactiveCommand.Create(StartNewPuzzle);
-            AppendLetter1Command = ReactiveCommand.Create(() => AppendLetter(letter1));
-            AppendLetter2Command = ReactiveCommand.Create(() => AppendLetter(letter2));
-            AppendLetter3Command = ReactiveCommand.Create(() => AppendLetter(letter3));
-            AppendLetter4Command = ReactiveCommand.Create(() => AppendLetter(letter4));
-            AppendLetter5Command = ReactiveCommand.Create(() => AppendLetter(letter5));
-            AppendLetter6Command = ReactiveCommand.Create(() => AppendLetter(letter6));
-            AppendLetter7Command = ReactiveCommand.Create(() => AppendLetter(letter7));
+            AppendLetter1Command = ReactiveCommand.Create(() => AppendLetter(Letter1));
+            AppendLetter2Command = ReactiveCommand.Create(() => AppendLetter(Letter2));
+            AppendLetter3Command = ReactiveCommand.Create(() => AppendLetter(Letter3));
+            AppendLetter4Command = ReactiveCommand.Create(() => AppendLetter(Letter4));
+            AppendLetter5Command = ReactiveCommand.Create(() => AppendLetter(Letter5));
+            AppendLetter6Command = ReactiveCommand.Create(() => AppendLetter(Letter6));
+            AppendLetter7Command = ReactiveCommand.Create(() => AppendLetter(Letter7));
             ShuffleCommand = ReactiveCommand.Create(ShuffleLetters);
             GuessCommand = ReactiveCommand.Create(ExecuteGuess);
             SavePuzzleCommand = ReactiveCommand.Create(SavePuzzle);
@@ -82,24 +78,24 @@ namespace SpellingBee.ViewModels
         }
         private void ToggleColor()
         {
-            if (color1 == "Green")
+            if (Color1 == "Green")
             {
-                color1 = "Blue";
+                Color1 = "Blue";
                 return;
             }
-            else if (color2 == "Green")
+            else if (Color2 == "Green")
             {
-                color2 = "Blue";
+                Color2 = "Blue";
                 return;
             }
-            if (color1 == "Blue")
+            if (Color1 == "Blue")
             {
-                color1 = "Green";
+                Color1 = "Green";
                 return;
             }
             else
             {
-                color2 = "Green";
+                Color2 = "Green";
                 return;
             }
         }
@@ -107,9 +103,9 @@ namespace SpellingBee.ViewModels
         {
             while (true)
             {
-                string temp = color1;
-                color1 = color2;
-                color2 = temp;
+                string temp = Color1;
+                Color1 = Color2;
+                Color2 = temp;
                 await Task.Delay(1500);
             }
         }
@@ -123,18 +119,18 @@ namespace SpellingBee.ViewModels
             }
             List<char> updatedLetters = _guiController.GetBaseWord();
 
-            letter1 = updatedLetters[0].ToString();
-            letter2 = updatedLetters[1].ToString();
-            letter3 = updatedLetters[2].ToString();
-            letter4 = updatedLetters[3].ToString();
-            letter5 = updatedLetters[4].ToString();
-            letter6 = updatedLetters[5].ToString();
-            letter7 = updatedLetters[6].ToString();
+            Letter1 = updatedLetters[0].ToString();
+            Letter2 = updatedLetters[1].ToString();
+            Letter3 = updatedLetters[2].ToString();
+            Letter4 = updatedLetters[3].ToString();
+            Letter5 = updatedLetters[4].ToString();
+            Letter6 = updatedLetters[5].ToString();
+            Letter7 = updatedLetters[6].ToString();
 
             //Updating game in general
-            points = _guiController.GetCurrentScore();
-            rank = _guiController.GetCurrentRank();
-            nextRank = _guiController.GetNextRank();
+            Points = _guiController.GetCurrentScore();
+            Rank = _guiController.GetCurrentRank();
+            NextRank = _guiController.GetNextRank();
         }
 
         private void ShuffleLetters()
@@ -157,21 +153,21 @@ namespace SpellingBee.ViewModels
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _guiController.Guess(lowerText);
+            _guiController.Guess(LowerText);
             FeedbackMessage = _guiController.GetLastMessage();
             if (FeedbackMessage.Equals("Word found!"))
             {
-                points = _guiController.GetCurrentScore();
-                rank = _guiController.GetCurrentRank();
-                nextRank = _guiController.GetNextRank();
+                Points = _guiController.GetCurrentScore();
+                Rank = _guiController.GetCurrentRank();
+                NextRank = _guiController.GetNextRank();
             }
-            lowerText = "";
+            LowerText = "";
 
         }
 
         private void AppendLetter(string letter)
         {
-            lowerText += letter;
+            LowerText += letter;
         }
         private void SavePuzzle()
         {
@@ -181,9 +177,9 @@ namespace SpellingBee.ViewModels
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _guiController.SavePuzzle(lowerText);
+            _guiController.SavePuzzle(LowerText);
             FeedbackMessage = _guiController.GetLastMessage();
-            lowerText = "";
+            LowerText = "";
         }
 
         private void SaveCurrent()
@@ -194,15 +190,16 @@ namespace SpellingBee.ViewModels
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _guiController.SaveCurrent(lowerText);
+            _guiController.SaveCurrent(LowerText);
             FeedbackMessage = _guiController.GetLastMessage();
-            lowerText = "";
+            LowerText = "";
         }
 
-        private void SaveCommand()
+        //Unused Method can be deleted
+       /* private void SaveCommand()
         {
 
-        }
+        }*/
 
         private async void Load()
         {
@@ -222,7 +219,7 @@ namespace SpellingBee.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid File");
+                Console.WriteLine("Invalid File. " + ex);
             }
             FeedbackMessage = _guiController.GetLastMessage();
 
@@ -261,12 +258,12 @@ namespace SpellingBee.ViewModels
             }
 
             FeedbackMessage = "";
-            _guiController.NewPuzzleBaseWord(lowerText);
+            _guiController.NewPuzzleBaseWord(LowerText);
 
             FeedbackMessage = _guiController.GetLastMessage();
             if (!FeedbackMessage.Equals("Not a valid pangram"))
                 UpdateLetters();
-            lowerText = "";
+            LowerText = "";
         }
 
         private void ShowHelp()
@@ -286,13 +283,13 @@ namespace SpellingBee.ViewModels
             _guiController.NewPuzzle();
             UpdateLetters();
             /*
-            letter1 = _guiController.GetNthLetter(0);
-            letter2 = _guiController.GetNthLetter(1);
-            letter3 = _guiController.GetNthLetter(2);
-            letter4 = _guiController.GetNthLetter(3);
-            letter5 = _guiController.GetNthLetter(4);
-            letter6 = _guiController.GetNthLetter(5);
-            letter7 = _guiController.GetNthLetter(6);
+            Letter1 = _guiController.GetNthLetter(0);
+            Letter2 = _guiController.GetNthLetter(1);
+            Letter3 = _guiController.GetNthLetter(2);
+            Letter4 = _guiController.GetNthLetter(3);
+            Letter5 = _guiController.GetNthLetter(4);
+            Letter6 = _guiController.GetNthLetter(5);
+            Letter7 = _guiController.GetNthLetter(6);
             */
         }
         private string _feedbackMessage = "";
@@ -303,82 +300,82 @@ namespace SpellingBee.ViewModels
             set { this.RaiseAndSetIfChanged(ref _feedbackMessage, value); }
         }
 
-        public string letter1
+        public string Letter1
         {
             get { return _letter1; }
             set { this.RaiseAndSetIfChanged(ref _letter1, value); }
         }
-        public string letter2
+        public string Letter2
         {
             get { return _letter2; }
             set { this.RaiseAndSetIfChanged(ref _letter2, value); }
         }
-        public string letter3
+        public string Letter3
         {
             get { return _letter3; }
             set { this.RaiseAndSetIfChanged(ref _letter3, value); }
         }
-        public string letter4
+        public string Letter4
         {
             get { return _letter4; }
             set { this.RaiseAndSetIfChanged(ref _letter4, value); }
         }
-        public string letter5
+        public string Letter5
         {
             get { return _letter5; }
             set { this.RaiseAndSetIfChanged(ref _letter5, value); }
         }
-        public string letter6
+        public string Letter6
         {
             get { return _letter6; }
             set { this.RaiseAndSetIfChanged(ref _letter6, value); }
         }
-        public string letter7
+        public string Letter7
         {
             get { return _letter7; }
             set { this.RaiseAndSetIfChanged(ref _letter7, value); }
         }
-        public string lowerText
+        public string LowerText
         {
             get { return _lowerText; }
             set { this.RaiseAndSetIfChanged(ref _lowerText, value); }
         }
-        public int points
+        public int Points
         {
             get { return _points; }
             set { this.RaiseAndSetIfChanged(ref _points, value); }
         }
-        public string rank
+        public string Rank
         {
             get { return _rank; }
             set { this.RaiseAndSetIfChanged(ref _rank, value); }
         }
-        public int nextRank
+        public int NextRank
         {
             get { return _nextRank; }
             set { this.RaiseAndSetIfChanged(ref _nextRank, value); }
         }
-        public bool loadVisible
+        public bool LoadVisible
         {
             get { return _loadVisible; }
             set { this.RaiseAndSetIfChanged(ref _loadVisible, value); }
         }
-        public bool guessVisible
+        public bool GuessVisible
         {
             get { return _guessVisible; }
             set { this.RaiseAndSetIfChanged(ref _guessVisible, value); }
         }
-        public bool saveVisible
+        public bool SaveVisible
         {
             get { return _saveVisible; }
             set { this.RaiseAndSetIfChanged(ref _saveVisible, value); }
         }
-        public string color1
+        public string Color1
         {
             get { return _color1; }
             set { this.RaiseAndSetIfChanged(ref _color1, value); }
         }
-        public string color2
+        public string Color2
         {
             get { return _color2; }
             set { this.RaiseAndSetIfChanged(ref _color2, value); }

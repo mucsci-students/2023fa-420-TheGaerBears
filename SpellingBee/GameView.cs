@@ -68,7 +68,7 @@ namespace SpellingBee
                 }
             }
 
-            Console.WriteLine($"Your current points: {playerPoints}");
+            Console.WriteLine($"Your current Points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
         }
 

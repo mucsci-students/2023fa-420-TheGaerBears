@@ -21,7 +21,7 @@ namespace SpellingBee
  * --------------
  * - GenerateValidWords: Fetches valid words for the current puzzle from the database.
  * - SelectRandomWordForPuzzle: Chooses a random pangram to form a puzzle.
- * - AddFoundWord: Updates the list of found words and adjusts the player's points accordingly.
+ * - AddFoundWord: Updates the list of found words and adjusts the player's Points accordingly.
  * - SaveCurrentGameState/SaveCurrentPuzzleState: Allows game or puzzle state to be saved.
  * - LoadGameState: Retrieves saved game states.
  * 
@@ -49,9 +49,9 @@ namespace SpellingBee
         [JsonProperty] private int playerPoints;
         [JsonProperty] private char requiredLetter;
         [JsonProperty] private int maxPoints;
-        private Random rand;
-        private List<string> validWords;
-        private List<KeyValuePair<string, int>> statusTitles;
+        private readonly Random rand;
+        private readonly List<string> validWords;
+        private readonly List<KeyValuePair<string, int>> statusTitles;
         private List<string> PangramWords;
         
 
@@ -90,8 +90,8 @@ namespace SpellingBee
                 new KeyValuePair<string, int>("Queen Bee", 100)
             };
 
-            playerPoints = 0;    // Starting player points
-            maxPoints = 0; // Initial total possible points
+            playerPoints = 0;    // Starting player Points
+            maxPoints = 0; // Initial total possible Points
 
             PangramWords = PangramList(); // Fetch the list of pangrams from the database
         }
@@ -334,7 +334,8 @@ namespace SpellingBee
         {
             double ratio = (double)playerPoints / maxPoints;
             double percentageAsDecimal = ratio * 100;
-            int percentage = (int)Math.Round(percentageAsDecimal);
+           // unused and can be deleted
+            //int percentage = (int)Math.Round(percentageAsDecimal);
 
 
             int status = 0; // Default status
@@ -350,7 +351,6 @@ namespace SpellingBee
                 }
             }
             return (status - playerPoints);
-
         }
 
         private void UpdatePlayerPointsForFoundWord(string word)
@@ -366,7 +366,7 @@ namespace SpellingBee
             else if (wordLength > 6)
                 points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
 
-            playerPoints += points; // Add the points to the player's total score.
+            playerPoints += points; // Add the Points to the player's total score.
         }
 
         public bool Active()
