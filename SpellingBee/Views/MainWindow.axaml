@@ -11,7 +11,7 @@
 	   Title="SpellingBee">
 	<!--grid that contains everything-->
 	<Grid>
-		<!--defines columbs and rows of entire page-->
+		<!--defines columns and rows of entire page-->
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="2*"/>
 			<ColumnDefinition Width="1*"/>
@@ -31,7 +31,7 @@
 
 		<!--grid that contains all the letters and guess button-->
 		<Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
-			<!--defines rows and collumbs-->
+			<!--defines rows and columns-->
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
