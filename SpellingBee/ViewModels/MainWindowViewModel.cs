@@ -29,7 +29,7 @@ namespace SpellingBee.ViewModels
         private bool _guessVisible = true;
         private bool _saveVisible = false;
 
-        private readonly GUIController _gameController;
+        private readonly GUIController _guiController;
         private readonly GameModel _model;
 
         public ReactiveCommand<Unit, Unit> NewPuzzleCommand { get; }
@@ -54,8 +54,8 @@ namespace SpellingBee.ViewModels
 
         public MainWindowViewModel()
         {
-            //_gameController = new GameController(new GameModel(), new GameView());
-            _gameController = new GUIController(new GameModel());
+            //_guiController = new GuiController(new GameModel(), new GameView());
+            _guiController = new GUIController(new GameModel());
             NewPuzzleCommand = ReactiveCommand.Create(StartNewPuzzle);
             AppendLetter1Command = ReactiveCommand.Create(() => AppendLetter(letter1));
             AppendLetter2Command = ReactiveCommand.Create(() => AppendLetter(letter2));
@@ -79,12 +79,12 @@ namespace SpellingBee.ViewModels
         private void UpdateLetters()
         {
             FeedbackMessage = "";
-            if (!_gameController.GameStarted())
+            if (!_guiController.GameStarted())
             {
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            List<char> updatedLetters = _gameController.GetBaseWord();
+            List<char> updatedLetters = _guiController.GetBaseWord();
 
             letter1 = updatedLetters[0].ToString();
             letter2 = updatedLetters[1].ToString();
@@ -95,38 +95,38 @@ namespace SpellingBee.ViewModels
             letter7 = updatedLetters[6].ToString();
 
             //Updating game in general
-            points = _gameController.GetCurrentScore();
-            rank = _gameController.GetCurrentRank();
-            nextRank = _gameController.GetNextRank();
+            points = _guiController.GetCurrentScore();
+            rank = _guiController.GetCurrentRank();
+            nextRank = _guiController.GetNextRank();
         }
 
         private void ShuffleLetters()
         {
             FeedbackMessage = "";
-            if (!_gameController.GameStarted())
+            if (!_guiController.GameStarted())
             {
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _gameController.ShuffleBaseWord();
+            _guiController.ShuffleBaseWord();
             UpdateLetters();
         }
 
         public void ExecuteGuess()
         {
             FeedbackMessage = "";
-            if (!_gameController.GameStarted())
+            if (!_guiController.GameStarted())
             {
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _gameController.Guess(lowerText);
-            FeedbackMessage = _gameController.GetLastMessage();
+            _guiController.Guess(lowerText);
+            FeedbackMessage = _guiController.GetLastMessage();
             if (FeedbackMessage.Equals("Word found!"))
             {
-                points = _gameController.GetCurrentScore();
-                rank = _gameController.GetCurrentRank();
-                nextRank = _gameController.GetNextRank();
+                points = _guiController.GetCurrentScore();
+                rank = _guiController.GetCurrentRank();
+                nextRank = _guiController.GetNextRank();
             }
             lowerText = "";
 
@@ -139,26 +139,26 @@ namespace SpellingBee.ViewModels
         private void SavePuzzle()
         {
             FeedbackMessage = "";
-            if (!_gameController.GameStarted())
+            if (!_guiController.GameStarted())
             {
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _gameController.SavePuzzle(lowerText);
-            FeedbackMessage = _gameController.GetLastMessage();
+            _guiController.SavePuzzle(lowerText);
+            FeedbackMessage = _guiController.GetLastMessage();
             lowerText = "";
         }
 
         private void SaveCurrent()
         {
             FeedbackMessage = "";
-            if (!_gameController.GameStarted())
+            if (!_guiController.GameStarted())
             {
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _gameController.SaveCurrent(lowerText);
-            FeedbackMessage = _gameController.GetLastMessage();
+            _guiController.SaveCurrent(lowerText);
+            FeedbackMessage = _guiController.GetLastMessage();
             lowerText = "";
         }
 
@@ -174,14 +174,14 @@ namespace SpellingBee.ViewModels
             if (fileName == null) return;
             try
             {
-                _gameController.Load(fileName);
+                _guiController.Load(fileName);
                 UpdateLetters();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Invalid File");
             }
-            FeedbackMessage = _gameController.GetLastMessage();
+            FeedbackMessage = _guiController.GetLastMessage();
 
         }
 
@@ -199,12 +199,12 @@ namespace SpellingBee.ViewModels
         private void ShowFoundWords()
         {
             FeedbackMessage = "";
-            if (!_gameController.GameStarted())
+            if (!_guiController.GameStarted())
             {
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            var foundWords = _gameController.GetFoundWords();
+            var foundWords = _guiController.GetFoundWords();
             FeedbackMessage = foundWords.Count > 0 ? string.Join("\n", foundWords) : "No words found!";
         }
 
@@ -212,9 +212,9 @@ namespace SpellingBee.ViewModels
         private void NewGameFromWord()
         {
             FeedbackMessage = "";
-            _gameController.NewPuzzleBaseWord(lowerText);
+            _guiController.NewPuzzleBaseWord(lowerText);
 
-            FeedbackMessage = _gameController.GetLastMessage();
+            FeedbackMessage = _guiController.GetLastMessage();
             if (!FeedbackMessage.Equals("Not a valid pangram"))
                 UpdateLetters();
             lowerText = "";
@@ -222,22 +222,22 @@ namespace SpellingBee.ViewModels
 
         private void ShowHelp()
         {
-            FeedbackMessage = _gameController.GetHelp();
+            FeedbackMessage = _guiController.GetHelp();
         }
 
         private void StartNewPuzzle()
         {
             FeedbackMessage = "";
-            _gameController.NewPuzzle();
+            _guiController.NewPuzzle();
             UpdateLetters();
             /*
-            letter1 = _gameController.GetNthLetter(0);
-            letter2 = _gameController.GetNthLetter(1);
-            letter3 = _gameController.GetNthLetter(2);
-            letter4 = _gameController.GetNthLetter(3);
-            letter5 = _gameController.GetNthLetter(4);
-            letter6 = _gameController.GetNthLetter(5);
-            letter7 = _gameController.GetNthLetter(6);
+            letter1 = _guiController.GetNthLetter(0);
+            letter2 = _guiController.GetNthLetter(1);
+            letter3 = _guiController.GetNthLetter(2);
+            letter4 = _guiController.GetNthLetter(3);
+            letter5 = _guiController.GetNthLetter(4);
+            letter6 = _guiController.GetNthLetter(5);
+            letter7 = _guiController.GetNthLetter(6);
             */
         }
         private string _feedbackMessage = "";

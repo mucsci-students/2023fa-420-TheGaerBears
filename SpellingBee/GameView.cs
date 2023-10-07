@@ -28,12 +28,12 @@ namespace SpellingBee
  * 
  * Dependencies:
  * -------------
- * This class mainly interacts with the GameController and doesn't hold any game logic or data.
+ * This class mainly interacts with the CliController and doesn't hold any game logic or data.
  * Instead, it provides visualization based on data and commands given to it.
  * 
  * Usage:
  * ------
- * GameView should be instantiated and used along with GameModel and GameController to enable a complete game flow.
+ * GameView should be instantiated and used along with GameModel and CliController to enable a complete game flow.
  */
 
     public class GameView
