@@ -9,7 +9,9 @@
 	   KeyDown="KeyInput_KeyDown"
 	   Icon="/Assets/avalonia-logo.ico"
 	   Title="SpellingBee">
+	<!--grid that contains everything-->
 	<Grid>
+		<!--defines columbs and rows of entire page-->
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="2*"/>
 			<ColumnDefinition Width="1*"/>
@@ -19,12 +21,17 @@
 			<RowDefinition Height="3*"/>
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
+
+		<!--text block with scroll bar on right side-->
 		<ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left">
 			<TextBlock Grid.Row="0" Text="{Binding FeedbackMessage}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="18"/>
 		</ScrollViewer>
-		
+		<!--Text at the bottom of the screen-->
 		<Label  Content="{Binding Path=lowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+
+		<!--grid that contains all the letters and guess button-->
 		<Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
+			<!--defines rows and collumbs-->
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
@@ -40,15 +47,18 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
+			<!--Title at the top of the screen-->
 			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
-			<Button Content="{Binding Path=letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45"/>
-			<Button Content="{Binding Path=letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45"/>
-			<Button Content="{Binding Path=letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45"/>
-			<Button Content="{Binding Path=letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45"/>
-			<Button Content="{Binding Path=letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45"/>
-			<Button Content="{Binding Path=letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45"/>
-			<Button Content="{Binding Path=letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45"/>
+			<Button Content="{Binding Path=letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="Red"/>
+			<Button Content="{Binding Path=letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="Green"/>
+			<Button Content="{Binding Path=letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="Green"/>
+			<Button Content="{Binding Path=letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="Green"/>
+			<Button Content="{Binding Path=letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="Green"/>
+			<Button Content="{Binding Path=letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="Green"/>
+			<Button Content="{Binding Path=letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="Green"/>
+			<!--required letter text which will hopefully be changed soon-->
 			<Label Content="     ^&#x0a;Required&#x0a;  Letter" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+			<!--Guess button-->
 			<Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"
 					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
@@ -58,6 +68,7 @@
 			<!--VerticalContentAlignment="Center" HorizontalContentAlignment="Center" -->
 			<!--Command="{Binding SaveCommand}"/> -->
 
+			<!--displays the points rank and -->
 			<Grid Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
@@ -68,6 +79,7 @@
 				<Label Content="Rank: " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1"/>
 				<Label Content="Next Rank Points: " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2"/>
 			</Grid>
+			<!--the actual calls to get the values-->
 			<Grid Grid.Column="6" Grid.Row="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
@@ -79,6 +91,7 @@
 				<Label Content="{Binding Path=nextRank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2"/>
 			</Grid>
 		</Grid>
+		<!--defines buttons in bottom right-->
 		<Grid Grid.Row="1" Grid.Column="1">
 
 			<Grid>
@@ -109,4 +122,4 @@
 		</Grid>
 	</Grid>
 
-	</Window>
+</Window>
