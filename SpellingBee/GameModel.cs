@@ -21,7 +21,7 @@ namespace SpellingBee
  * --------------
  * - GenerateValidWords: Fetches valid words for the current puzzle from the database.
  * - SelectRandomWordForPuzzle: Chooses a random pangram to form a puzzle.
- * - AddFoundWord: Updates the list of found words and adjusts the player's Points accordingly.
+ * - AddFoundWord: Updates the list of found words and adjusts the player's points accordingly.
  * - SaveCurrentGameState/SaveCurrentPuzzleState: Allows game or puzzle state to be saved.
  * - LoadGameState: Retrieves saved game states.
  * 
@@ -90,8 +90,8 @@ namespace SpellingBee
                 new KeyValuePair<string, int>("Queen Bee", 100)
             };
 
-            playerPoints = 0;    // Starting player Points
-            maxPoints = 0; // Initial total possible Points
+            playerPoints = 0;    // Starting player points
+            maxPoints = 0; // Initial total possible points
 
             PangramWords = PangramList(); // Fetch the list of pangrams from the database
         }
@@ -366,7 +366,7 @@ namespace SpellingBee
             else if (wordLength > 6)
                 points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
 
-            playerPoints += points; // Add the Points to the player's total score.
+            playerPoints += points; // Add the points to the player's total score.
         }
 
         public bool Active()
