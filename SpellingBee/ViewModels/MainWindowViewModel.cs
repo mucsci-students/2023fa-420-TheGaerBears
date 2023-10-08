@@ -29,10 +29,7 @@ namespace SpellingBee.ViewModels
         private string _color2 = "Green";
         private bool _colorThread = true;
 
-
         private readonly GuiController _guiController;
-        // Unused and can be deleted//
-       // private readonly GameModel _model;
 
         public ReactiveCommand<Unit, Unit> NewPuzzleCommand { get; }
         public ReactiveCommand<Unit, Unit> AppendLetter1Command { get; }
@@ -56,9 +53,8 @@ namespace SpellingBee.ViewModels
 
         public MainWindowViewModel()
         {
-            //_guiController = new GuiController(new GameModel(), new GameView());
             _guiController = new GuiController(new GameModel());
-            NewPuzzleCommand = ReactiveCommand.Create(StartNewPuzzle);
+            
             AppendLetter1Command = ReactiveCommand.Create(() => AppendLetter(Letter1));
             AppendLetter2Command = ReactiveCommand.Create(() => AppendLetter(Letter2));
             AppendLetter3Command = ReactiveCommand.Create(() => AppendLetter(Letter3));
@@ -66,6 +62,8 @@ namespace SpellingBee.ViewModels
             AppendLetter5Command = ReactiveCommand.Create(() => AppendLetter(Letter5));
             AppendLetter6Command = ReactiveCommand.Create(() => AppendLetter(Letter6));
             AppendLetter7Command = ReactiveCommand.Create(() => AppendLetter(Letter7));
+
+            NewPuzzleCommand = ReactiveCommand.Create(StartNewPuzzle);
             ShuffleCommand = ReactiveCommand.Create(ShuffleLetters);
             GuessCommand = ReactiveCommand.Create(ExecuteGuess);
             SavePuzzleCommand = ReactiveCommand.Create(SavePuzzle);
