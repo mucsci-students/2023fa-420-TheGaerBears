@@ -153,7 +153,7 @@ namespace TestSpellingBee
         /// <summary>
         /// Verifies that the <c>Load</c> function loads a saved game from a JSON file.
         /// </summary>
-       /* [Fact]
+        [Fact]
         public void LoadVerify()
         {
             var model = new GameModel();
@@ -165,7 +165,7 @@ namespace TestSpellingBee
             controller.Guess(oWord);
 
 
-            model.SaveCurrentGameState("test");
+            model.SaveCurrentGameState("testGUI");
 
             //Copy old data of puzzle to compare
             List<char> oBaseWord = new List<char>(model.GetBaseWord());
@@ -177,7 +177,7 @@ namespace TestSpellingBee
             //Verify load
             controller.NewPuzzleBaseWord("companion");
 
-            model = model.LoadGameStateFromFile(0);
+            model = model.LoadGameStateFromFile(1);
 
             oBaseWord.Sort();
 
@@ -198,6 +198,6 @@ namespace TestSpellingBee
 
             //Checks the max points
             Assert.Equal(model.GetMaxPoints(), oMaxPoints);
-        }*/
+        }
     }
 }
