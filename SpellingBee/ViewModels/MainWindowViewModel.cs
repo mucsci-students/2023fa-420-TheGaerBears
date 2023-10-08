@@ -9,6 +9,9 @@ using Avalonia.Threading;
 
 namespace SpellingBee.ViewModels
 {
+    /// <summary>
+    /// Class <c>MainWindowViewModel</c> 
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
         private string _letter1 = "";
@@ -28,6 +31,7 @@ namespace SpellingBee.ViewModels
         private string _color1 = "Red";
         private string _color2 = "Green";
         private bool _colorThread = true;
+        private string _feedbackMessage = "";
 
         private readonly GuiController _guiController;
 
@@ -49,8 +53,10 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> HelpCommand { get; }
         public ReactiveCommand<Unit,Unit> ToggleColorblind { get; }
 
-
-
+        /// <summary>
+        /// Instantiates the <c>MainWindowViewModel</c> with <c>GuiController</c> and <c>GameModel</c> 
+        /// and sets up the button commands.
+        /// </summary>
         public MainWindowViewModel()
         {
             _guiController = new GuiController(new GameModel());
@@ -72,9 +78,21 @@ namespace SpellingBee.ViewModels
             NewGameFromWordCommand = ReactiveCommand.Create(NewGameFromWord);
             ShowFoundWordsCommand = ReactiveCommand.Create(ShowFoundWords);
             HelpCommand = ReactiveCommand.Create(ShowHelp);
-            ToggleColorblind = ReactiveCommand.Create(ToggleColor);
+            ToggleColorblind = ReactiveCommand.Create(ToggleColors);
         }
-        private void ToggleColor()
+
+        /// <summary>
+        /// Method <c>AppendLetter</c> 
+        /// </summary>
+        private void AppendLetter(string letter)
+        {
+            LowerText += letter;
+        }
+
+        /// <summary>
+        /// Method <c>ToggleColors</c> chooses the background colors of the letters.
+        /// </summary>
+        private void ToggleColors()
         {
             if (Color1 == "Green")
             {
@@ -97,16 +115,24 @@ namespace SpellingBee.ViewModels
                 return;
             }
         }
+
+        /// <summary>
+        /// Method <c>SwapColors</c> alternates the pair of colors during gameplay.
+        /// </summary>
         private async void SwapColors()
         {
             while (true)
             {
-                // Use tuple to swap colors.
+               // Use tuple to swap colors.
                (Color1, Color2) = (Color2, Color1);
                await Task.Delay(1500);
             }
         }
-        private void UpdateLetters()
+
+        /// <summary>
+        /// Method <c>UpdateState</c> displays the generated letters, points, rank, and next rank.
+        /// </summary>
+        private void UpdateState()
         {
             FeedbackMessage = "";
             if (!_guiController.GameStarted())
@@ -130,6 +156,9 @@ namespace SpellingBee.ViewModels
             NextRank = _guiController.GetNextRank();
         }
 
+        /// <summary>
+        /// Method <c>ShuffleLetters</c> shuffles the displayed letters.
+        /// </summary>
         private void ShuffleLetters()
         {
             FeedbackMessage = "";
@@ -139,9 +168,13 @@ namespace SpellingBee.ViewModels
                 return;
             }
             _guiController.ShuffleBaseWord();
-            UpdateLetters();
+            UpdateState();
         }
 
+        /// <summary>
+        /// Method <c>ExecuteGuess</c> allows the word entered by the user to be checked against
+        /// <c>validWords</c> when the Guess button is clicked or the Enter key is pressed.
+        /// </summary>
         public void ExecuteGuess()
         {
             FeedbackMessage = "";
@@ -159,13 +192,12 @@ namespace SpellingBee.ViewModels
                 NextRank = _guiController.GetNextRank();
             }
             LowerText = "";
-
         }
 
-        private void AppendLetter(string letter)
-        {
-            LowerText += letter;
-        }
+        /// <summary>
+        /// Method <c>SavePuzzle</c> allows the user to click the SavePuzzle button to save state
+        /// as long as a game has started.
+        /// </summary>
         private void SavePuzzle()
         {
             FeedbackMessage = "";
@@ -179,6 +211,10 @@ namespace SpellingBee.ViewModels
             LowerText = "";
         }
 
+        /// <summary>
+        /// Method <c>SaveCurrent</c> allows the user to click the SaveCurrent button to save state
+        /// as long as a game has started.
+        /// </summary>
         private void SaveCurrent()
         {
             FeedbackMessage = "";
@@ -192,6 +228,10 @@ namespace SpellingBee.ViewModels
             LowerText = "";
         }
 
+        /// <summary>
+        /// Method <c>Load</c> allows the user to click the Load button to load a saved game
+        /// or puzzle.
+        /// </summary>
         private async void Load()
         {
             if(_colorThread)
@@ -206,7 +246,7 @@ namespace SpellingBee.ViewModels
             try
             {
                 _guiController.Load(fileName);
-                UpdateLetters();
+                UpdateState();
             }
             catch (Exception ex)
             {
@@ -216,6 +256,11 @@ namespace SpellingBee.ViewModels
 
         }
 
+        /// <summary>
+        /// Method <c>OpenFile</c> allows loading a specific save file as long as
+        /// it is not null.
+        /// <return>The filename to open.</return>
+        /// </summary>
         private async Task<string?> OpenFile()
         {
             var filesService = (App.Current?.Services?.GetService<IFilesService>()) ?? throw new NullReferenceException("Missing File Service instance.");
@@ -224,6 +269,9 @@ namespace SpellingBee.ViewModels
             return file.Name;
         }
 
+        /// <summary>
+        /// Method <c>ShowFoundWords</c> displays the words found by the user so far.
+        /// </summary>
         private void ShowFoundWords()
         {
             FeedbackMessage = "";
@@ -236,7 +284,10 @@ namespace SpellingBee.ViewModels
             FeedbackMessage = foundWords.Count > 0 ? string.Join("\n", foundWords) : "No words found!";
         }
 
-
+        /// <summary>
+        /// Method <c>NewGameFromWord</c> allows the user to start a new game from the word
+        /// typed into the textbox as long as it is a valid pangram.
+        /// </summary>
         private void NewGameFromWord()
         {
             if (_colorThread)
@@ -250,15 +301,21 @@ namespace SpellingBee.ViewModels
 
             FeedbackMessage = _guiController.GetLastMessage();
             if (!FeedbackMessage.Equals("Not a valid pangram"))
-                UpdateLetters();
+                UpdateState();
             LowerText = "";
         }
 
+        /// <summary>
+        /// Method <c>ShowHelp</c> displays the description of commands.
+        /// </summary>
         private void ShowHelp()
         {
             FeedbackMessage = _guiController.GetHelp();
         }
 
+        /// <summary>
+        /// Method <c>StartNewPuzzle</c> resets the puzzle and state of the game.
+        /// </summary>
         private void StartNewPuzzle()
         {
             if (_colorThread)
@@ -266,12 +323,10 @@ namespace SpellingBee.ViewModels
                 Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
                 _colorThread = false;
             }
-
             FeedbackMessage = "";
             _guiController.NewPuzzle();
-            UpdateLetters();
+            UpdateState();
         }
-        private string _feedbackMessage = "";
 
         public string FeedbackMessage
         {
@@ -284,81 +339,95 @@ namespace SpellingBee.ViewModels
             get { return _letter1; }
             set { this.RaiseAndSetIfChanged(ref _letter1, value); }
         }
+
         public string Letter2
         {
             get { return _letter2; }
             set { this.RaiseAndSetIfChanged(ref _letter2, value); }
         }
+
         public string Letter3
         {
             get { return _letter3; }
             set { this.RaiseAndSetIfChanged(ref _letter3, value); }
         }
+
         public string Letter4
         {
             get { return _letter4; }
             set { this.RaiseAndSetIfChanged(ref _letter4, value); }
         }
+
         public string Letter5
         {
             get { return _letter5; }
             set { this.RaiseAndSetIfChanged(ref _letter5, value); }
         }
+
         public string Letter6
         {
             get { return _letter6; }
             set { this.RaiseAndSetIfChanged(ref _letter6, value); }
         }
+
         public string Letter7
         {
             get { return _letter7; }
             set { this.RaiseAndSetIfChanged(ref _letter7, value); }
         }
+
         public string LowerText
         {
             get { return _lowerText; }
             set { this.RaiseAndSetIfChanged(ref _lowerText, value); }
         }
+
         public int Points
         {
             get { return _points; }
             set { this.RaiseAndSetIfChanged(ref _points, value); }
         }
+
         public string Rank
         {
             get { return _rank; }
             set { this.RaiseAndSetIfChanged(ref _rank, value); }
         }
+
         public int NextRank
         {
             get { return _nextRank; }
             set { this.RaiseAndSetIfChanged(ref _nextRank, value); }
         }
+
         public bool LoadVisible
         {
             get { return _loadVisible; }
             set { this.RaiseAndSetIfChanged(ref _loadVisible, value); }
         }
+
         public bool GuessVisible
         {
             get { return _guessVisible; }
             set { this.RaiseAndSetIfChanged(ref _guessVisible, value); }
         }
+
         public bool SaveVisible
         {
             get { return _saveVisible; }
             set { this.RaiseAndSetIfChanged(ref _saveVisible, value); }
         }
+
         public string Color1
         {
             get { return _color1; }
             set { this.RaiseAndSetIfChanged(ref _color1, value); }
         }
+
         public string Color2
         {
             get { return _color2; }
             set { this.RaiseAndSetIfChanged(ref _color2, value); }
-
         }
       }
     }
