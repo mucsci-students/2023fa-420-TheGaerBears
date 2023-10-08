@@ -49,9 +49,9 @@ namespace SpellingBee
         [JsonProperty] private int playerPoints;
         [JsonProperty] private char requiredLetter;
         [JsonProperty] private int maxPoints;
-        private Random rand;
-        private List<string> validWords;
-        private List<KeyValuePair<string, int>> statusTitles;
+        private readonly Random rand;
+        private readonly List<string> validWords;
+        private readonly List<KeyValuePair<string, int>> statusTitles;
         private List<string> PangramWords;
         
 
@@ -334,10 +334,9 @@ namespace SpellingBee
         {
             double ratio = (double)playerPoints / maxPoints;
             double percentageAsDecimal = ratio * 100;
-            int percentage = (int)Math.Round(percentageAsDecimal);
 
-
-            int status = 0; // Default status
+            // Default status
+            int status = 0; 
 
             for (int i = 0; i < statusTitles.Count; ++i)
             {
@@ -350,7 +349,6 @@ namespace SpellingBee
                 }
             }
             return (status - playerPoints);
-
         }
 
         private void UpdatePlayerPointsForFoundWord(string word)

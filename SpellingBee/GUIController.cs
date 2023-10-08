@@ -5,12 +5,12 @@ using System.Linq;
 namespace SpellingBee
 {
     /// <summary>
-    /// Class <c>GUIController</c> is responsible for controlling the game flow and 
+    /// Class <c>GuiController</c> is responsible for controlling the game flow and 
     /// interaction between the GameModel and the GUI.
     /// </summary>
-    public class GUIController
+    public class GuiController
     {
-        // A GameModel object used by the GUIController.
+        // A GameModel object used by the GuiController.
         private readonly GameModel _model;
 
         // A string used to store a message and which is used by <c>MainWindowViewModel</c>.
@@ -21,7 +21,7 @@ namespace SpellingBee
         /// a <c>GameModel</c> as long as model is not null.
         /// /// <param name="model">the GameModel to initialize the GuiController.</param>
         /// </summary>
-        public GUIController(GameModel model)
+        public GuiController(GameModel model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
         }
@@ -52,7 +52,6 @@ namespace SpellingBee
         /// </summary>
         public void NewPuzzleBaseWord(string word)
         {
-
             if (!_model.SetBaseWordForPuzzle(word))
             {
                 _lastMessage = "Not a valid pangram";
@@ -69,8 +68,8 @@ namespace SpellingBee
         /// If a guess is invalid, message "invalid guess" is displayed.
         /// If the guess is valid and not a duplicate: 
         /// the word is added to the <c>foundWords</c> list,
-        /// the equivalent points are added to <c>playerPoints</c>,
-        /// and the points used in the calculating <c>pointsToNextRank</c>.
+        /// the equivalent Points are added to <c>playerPoints</c>,
+        /// and the Points used in the calculating <c>pointsToNextRank</c>.
         /// </para>
         /// <param name="word">the word guessed by the user.</param>
         /// </summary>
@@ -247,9 +246,9 @@ namespace SpellingBee
         }
 
         /// <summary>
-        /// Method <c>GetCurrentRank</c> returns the user's rank calculated from 
+        /// Method <c>GetCurrentRank</c> returns the user's Rank calculated from 
         /// their <c>playerPoints</c> and the <c>MaxPoints</c> of the current puzzle.
-        /// <returns>A string representing their current rank.</returns>
+        /// <returns>A string representing their current Rank.</returns>
         /// </summary>
         public string GetCurrentRank()
         {   
@@ -309,8 +308,8 @@ namespace SpellingBee
 
         /// <summary>
         /// Method <c>GetNextRank</c> is used in <c>MainWindowViewModel</c> to update the
-        /// player's points until their next rank.
-        /// <return>The int points until the next rank.</return>
+        /// player's Points until their next Rank.
+        /// <return>The int Points until the next Rank.</return>
         /// </summary>
         public int GetNextRank()
         {

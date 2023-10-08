@@ -1,5 +1,4 @@
 using SpellingBee;
-using System.Collections.Immutable;
 
 namespace TestSpellingBee
 {
@@ -9,12 +8,11 @@ namespace TestSpellingBee
     public class TestCliController
     {
         /// <summary>
-        /// Verifies that Shuffle function changes the order of the letters in baseword
+        /// Verifies that the <c>Shuffle</c> method changes the order of the letters in <c>baseWord</c>.
         /// </summary>
         [Fact]
         public void ValidateShuffle()
         {
-           
             var model = new GameModel(); 
             var view = new GameView(); 
             var controller = new CliController(model, view);
@@ -40,7 +38,7 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that NewPuzzle function changes the baseword
+        /// Verifies that the <c>NewPuzzle</c> method changes the <c>baseWord</c>.
         /// </summary>
         [Fact]
         public void NewPuzzleResetsBaseWord()
@@ -57,12 +55,11 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that NewPuzzle resets the player points
+        /// Verifies that the <c>NewPuzzle</c> method resets the <c>playerPoints</c>.
         /// </summary>
         [Fact]
         public void NewPuzzleResetsPoints()
         {
-
             var model = new GameModel();
             var view = new GameView();
             var controller = new CliController(model, view);
@@ -72,7 +69,8 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that NewPuzzleFromBaseword sets the baseword as the inputted word and resets points
+        /// Verifies that the <c>NewPuzzleFromBaseword</c> method sets the <c>baseWord</c> 
+        /// as the inputted word and resets <c>playerPoints</c>.
         /// </summary>
         [Fact]
         public void NewPuzzleFromBaseWord()
@@ -102,7 +100,8 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that Guess function adds a valid guess to foundWords and adds points
+        /// Verifies that <c>Guess</c> method adds a valid guess to <c>foundWords</c> and 
+        /// adds points to <c>playerPoints</c>.
         /// </summary>
         [Fact]
         public void GuessValid()
@@ -120,7 +119,8 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that the Guess function does not add an invalid word to foundWords nor adds points
+        /// Verifies that the <c>Guess</c> method does not add an invalid word to <c>foundWords</c> nor 
+        /// adds points to  <c>playerPoints</c>.
         /// </summary>
         [Fact]
         public void GuessInvalid()
@@ -137,6 +137,5 @@ namespace TestSpellingBee
 
             Assert.Equal(0, model.GetPlayerPoints());
         }
-      
     }
 }
