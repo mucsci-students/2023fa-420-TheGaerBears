@@ -334,11 +334,9 @@ namespace SpellingBee
         {
             double ratio = (double)playerPoints / maxPoints;
             double percentageAsDecimal = ratio * 100;
-           // unused and can be deleted
-            //int percentage = (int)Math.Round(percentageAsDecimal);
 
-
-            int status = 0; // Default status
+            // Default status
+            int status = 0; 
 
             for (int i = 0; i < statusTitles.Count; ++i)
             {
