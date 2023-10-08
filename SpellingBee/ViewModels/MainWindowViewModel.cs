@@ -193,12 +193,6 @@ namespace SpellingBee.ViewModels
             LowerText = "";
         }
 
-        //Unused Method can be deleted
-       /* private void SaveCommand()
-        {
-
-        }*/
-
         private async void Load()
         {
             if(_colorThread)
@@ -280,15 +274,6 @@ namespace SpellingBee.ViewModels
             FeedbackMessage = "";
             _guiController.NewPuzzle();
             UpdateLetters();
-            /*
-            Letter1 = _guiController.GetNthLetter(0);
-            Letter2 = _guiController.GetNthLetter(1);
-            Letter3 = _guiController.GetNthLetter(2);
-            Letter4 = _guiController.GetNthLetter(3);
-            Letter5 = _guiController.GetNthLetter(4);
-            Letter6 = _guiController.GetNthLetter(5);
-            Letter7 = _guiController.GetNthLetter(6);
-            */
         }
         private string _feedbackMessage = "";
 
