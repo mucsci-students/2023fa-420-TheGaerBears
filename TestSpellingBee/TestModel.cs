@@ -22,7 +22,7 @@ namespace TestSpellingBee
             bool tester = true;
             foreach (var str in pangramList)
             {
-                string distWord = new string(str.Distinct().ToArray());
+                string distWord = new(str.Distinct().ToArray());
                 if (distWord.Length != 7)
                 {
                     tester = false;
@@ -30,7 +30,7 @@ namespace TestSpellingBee
                 }
             }
             //Check number of pangrams and make sure every word was a pangram
-            Assert.True(pangramList.Count() == 40222);
+            Assert.True(pangramList.Count == 40222);
             Assert.True(tester);
         }
 
@@ -103,15 +103,13 @@ namespace TestSpellingBee
 
             String filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
 
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                string content = reader.ReadToEnd();
+            using StreamReader reader = new(filePath);
+            string content = reader.ReadToEnd();
 
-                Assert.Contains(oWord, content);
-                Assert.Contains(oReqLetter, content);
-                Assert.Contains(oPlayerPoints.ToString(), content);
-                Assert.Contains(oMaxPoints.ToString(), content);
-            }
+            Assert.Contains(oWord, content);
+            Assert.Contains(oReqLetter, content);
+            Assert.Contains(oPlayerPoints.ToString(), content);
+            Assert.Contains(oMaxPoints.ToString(), content);
         }
 
         /// <summary>
@@ -133,7 +131,7 @@ namespace TestSpellingBee
             model.SaveCurrentGameState("test");
 
             //Copy old data of puzzle to compare
-            List<char> oBaseWord = new List<char>(model.GetBaseWord());
+            List<char> oBaseWord = new(model.GetBaseWord());
             char oReqLetter = model.GetRequiredLetter();
             IEnumerable<string> oFoundWords = new List<string>(model.GetFoundWords());
             int oPlayerPoints = model.GetPlayerPoints();

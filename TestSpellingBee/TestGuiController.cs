@@ -137,17 +137,15 @@ namespace TestSpellingBee
 
             model.SaveCurrentGameState("test");
 
-            String filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
+            var filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
 
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                string content = reader.ReadToEnd();
+            using StreamReader reader = new(filePath);
+            string content = reader.ReadToEnd();
 
-                Assert.Contains(oWord, content);
-                Assert.Contains(oReqLetter, content);
-                Assert.Contains(oPlayerPoints.ToString(), content);
-                Assert.Contains(oMaxPoints.ToString(), content);
-            }
+            Assert.Contains(oWord, content);
+            Assert.Contains(oReqLetter, content);
+            Assert.Contains(oPlayerPoints.ToString(), content);
+            Assert.Contains(oMaxPoints.ToString(), content);
         }
 
         /// <summary>

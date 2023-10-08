@@ -30,9 +30,9 @@ namespace AvaTest
                 //Initialize SQLitePCL
                 Batteries.Init();
 
-                GameModel model = new GameModel();
-                GameView view = new GameView();
-                CliController cliController = new CliController(model, view);
+                GameModel model = new();
+                GameView view = new();
+                CliController cliController = new(model, view);
 
                 //Intro Screen
                 cliController.BeginScreen();
@@ -40,7 +40,7 @@ namespace AvaTest
                 //While loop that allows the game to keep going
                 while (true)
                 {
-                    string input = Console.ReadLine().ToLower().Trim();
+                    var input = Console.ReadLine()!.ToLower().Trim();
                     cliController.HandleCommand(input);
                 }
             }

@@ -100,25 +100,19 @@ namespace SpellingBee
         {
             string query = $"select word from pangrams";
             string connectionString = DatabaseConnectionString;
-            List<string> words = new List<string>();
+            List<string> words = new();
 
             try
             {
-                using (SqliteConnection con = new SqliteConnection(connectionString))
+                using SqliteConnection con = new(connectionString);
+                con.Open();
+                using var cmd = con.CreateCommand();
+                cmd.CommandText = query;
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    con.Open();
-                    using (var cmd = con.CreateCommand())
-                    {
-                        cmd.CommandText = query;
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                string word = reader.GetString(0);
-                                words.Add(word);
-                            }
-                        }
-                    }
+                    string word = reader.GetString(0);
+                    words.Add(word);
                 }
             }
             catch (Exception ex)
@@ -127,21 +121,15 @@ namespace SpellingBee
                 connectionString = DatabaseConnectionString_Two;
                 try
                 {
-                    using (SqliteConnection con = new SqliteConnection(connectionString))
+                    using SqliteConnection con = new(connectionString);
+                    con.Open();
+                    using var cmd = con.CreateCommand();
+                    cmd.CommandText = query;
+                    using var reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        con.Open();
-                        using (var cmd = con.CreateCommand())
-                        {
-                            cmd.CommandText = query;
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    string word = reader.GetString(0);
-                                    words.Add(word);
-                                }
-                            }
-                        }
+                        string word = reader.GetString(0);
+                        words.Add(word);
                     }
                 }
                 catch 
@@ -156,14 +144,14 @@ namespace SpellingBee
 
         public void GenerateValidWords()
         {
-            List<string> tableNames = new List<string>
+            List<string> tableNames = new()
             {
                 "four_letter_words", "five_letter_words", "six_letter_words", "seven_letter_words",
                 "eight_letter_words", "nine_letter_words", "ten_letter_words", "eleven_letter_words",
                 "twelve_letter_words", "thirteen_letter_words", "fourteen_letter_words", "fifteen_letter_words"
             };
 
-            StringBuilder queryBuilder = new StringBuilder();
+            StringBuilder queryBuilder = new();
             foreach (string tableName in tableNames)
             {
                 queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' AND word NOT GLOB '*[^{(new string(baseWord.ToArray()))}]*'");
@@ -180,21 +168,15 @@ namespace SpellingBee
 
             try
             {
-                using (SqliteConnection con = new SqliteConnection(connectionString))
+                using SqliteConnection con = new(connectionString);
+                con.Open();
+                using var cmd = con.CreateCommand();
+                cmd.CommandText = query;
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    con.Open();
-                    using (var cmd = con.CreateCommand())
-                    {
-                        cmd.CommandText = query;
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                string word = reader.GetString(0);
-                                validWords.Add(word);
-                            }
-                        }
-                    }
+                    string word = reader.GetString(0);
+                    validWords.Add(word);
                 }
             }
             catch (Exception ex)
@@ -203,21 +185,15 @@ namespace SpellingBee
                 connectionString = DatabaseConnectionString_Two;
                 try
                 {
-                    using (SqliteConnection con = new SqliteConnection(connectionString))
+                    using SqliteConnection con = new(connectionString);
+                    con.Open();
+                    using var cmd = con.CreateCommand();
+                    cmd.CommandText = query;
+                    using var reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        con.Open();
-                        using (var cmd = con.CreateCommand())
-                        {
-                            cmd.CommandText = query;
-                            using (var reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    string word = reader.GetString(0);
-                                    validWords.Add(word);
-                                }
-                            }
-                        }
+                        string word = reader.GetString(0);
+                        validWords.Add(word);
                     }
                 }
                 catch
@@ -272,10 +248,8 @@ namespace SpellingBee
                 // Get a random index up to i inclusive
                 int j = rand.Next(i + 1);
 
-                // Swap elements
-                char temp = baseWord[i];
-                baseWord[i] = baseWord[j];
-                baseWord[j] = temp;
+                // Use tuple to swap elements
+                (baseWord[i], baseWord[j]) = (baseWord[j], baseWord[i]);
             }
         }
 
@@ -288,18 +262,14 @@ namespace SpellingBee
                 int j = rand.Next(i + 1);
 
                 // Swap elements
-                char temp = baseWord[i];
-                baseWord[i] = baseWord[j];
-                baseWord[j] = temp;
+                (baseWord[i], baseWord[j]) = (baseWord[j], baseWord[i]);
             }
 
             // Ensure the required letter is at the 0th index
             int requiredIndex = baseWord.IndexOf(requiredLetter);
             if (requiredIndex != 0 && requiredIndex >= 0 && baseWord.Count > 1)
             {
-                char temp = baseWord[0];
-                baseWord[0] = baseWord[requiredIndex];
-                baseWord[requiredIndex] = temp;
+                (baseWord[0], baseWord[requiredIndex]) = (baseWord[requiredIndex], baseWord[0]);
             }
         }
         public bool IsValidWord(string word)
@@ -332,9 +302,6 @@ namespace SpellingBee
 
         public int PointsToNextRank()
         {
-            double ratio = (double)playerPoints / maxPoints;
-            double percentageAsDecimal = ratio * 100;
-
             // Default status
             int status = 0; 
 
@@ -395,7 +362,7 @@ namespace SpellingBee
                 return false;
             }
             fileName += ".json";
-            GameModel temp = new GameModel
+            GameModel temp = new()
             {
                 requiredLetter = this.requiredLetter,
                 baseWord = new List<char>(this.baseWord)
@@ -405,7 +372,7 @@ namespace SpellingBee
             return true;
         }
 
-        public GameModel LoadGameState(string fileId)
+        public GameModel? LoadGameState(string fileId)
         {
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
             var fileList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
@@ -418,7 +385,7 @@ namespace SpellingBee
 
             if (int.TryParse(fileId, out int id) && id < fileList.Length)
             {
-                StreamReader fileContents = new StreamReader(File.OpenRead(fileList[id]));
+                StreamReader fileContents = new(File.OpenRead(fileList[id]));
                 string openedFile = fileContents.ReadToEnd();
                 GameModel loadedGame = JsonConvert.DeserializeObject<GameModel>(openedFile);
                 loadedGame.GenerateValidWords();
@@ -437,7 +404,7 @@ namespace SpellingBee
             return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves\\")).ToList();
         }
 
-        public GameModel LoadGameStateFromFile(int fileId)
+        public GameModel? LoadGameStateFromFile(int fileId)
         {
             var fileList = GetAvailableSaveFiles();
             if (fileList.Count > fileId)
