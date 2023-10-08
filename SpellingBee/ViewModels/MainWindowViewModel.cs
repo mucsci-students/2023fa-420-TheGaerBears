@@ -101,10 +101,9 @@ namespace SpellingBee.ViewModels
         {
             while (true)
             {
-                string temp = Color1;
-                Color1 = Color2;
-                Color2 = temp;
-                await Task.Delay(1500);
+                // Use tuple to swap colors.
+               (Color1, Color2) = (Color2, Color1);
+               await Task.Delay(1500);
             }
         }
         private void UpdateLetters()
@@ -217,12 +216,9 @@ namespace SpellingBee.ViewModels
 
         }
 
-        private async Task<string> OpenFile()
+        private async Task<string?> OpenFile()
         {
-            var filesService = App.Current?.Services?.GetService<IFilesService>();
-
-            if (filesService is null) throw new NullReferenceException("Missing File Service instance.");
-
+            var filesService = (App.Current?.Services?.GetService<IFilesService>()) ?? throw new NullReferenceException("Missing File Service instance.");
             var file = await filesService.OpenFileAsync();
             if (file is null) return null;
             return file.Name;
