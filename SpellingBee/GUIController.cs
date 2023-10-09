@@ -270,21 +270,21 @@ namespace SpellingBee
         /// </summary>
         public string GetHelp()
         {
-            return @"
-                Welcome to the Spelling Bee game!
+            //Warning do not add tabs or it will make the display incorrect! 
+            return @"Welcome to the Spelling Bee game!
 
-                New Game: Starts a new puzzle game.
-                New Game From Word: Starts a new puzzle game with the word currently written at the bottom of the screen.
-                Load Game: Load a saved game or puzzle.
-                Save Word: Save the current game with progress with the name currently written at the bottom of the screen.
-                Save Puzzle: Save the current puzzle with progress with the name currently written at the bottom of the screen. 
-                Found Words: Display the words you have found.
-                Shuffle: Shuffle the puzzle letters.
-                Help: Show this list of commands.
-                Toggle Colorblind: Adjusts game to be more Red-Green colorblind friendly!
+New Game: Starts a new puzzle game.
+New Game From Word: Starts a new puzzle game with the word currently written at the bottom of the screen.
+Load Game: Load a saved game or puzzle.
+Save Word: Save the current game with progress with the name currently written at the bottom of the screen.
+Save Puzzle: Save the current puzzle with progress with the name currently written at the bottom of the screen. 
+Found Words: Display the words you have found.
+Shuffle: Shuffle the puzzle letters.
+Help: Show this list of commands.
+Toggle Colorblind: Adjusts game to be more Red-Green colorblind friendly!
 
-                You can also simply type in a word to make a guess.
-                Remember, all words must contain the required letter!";
+You can also simply type in a word to make a guess.
+Remember, all words must contain the required letter!";
         }
 
         //// Method can be removed during after next code review, since it is not being implemented
