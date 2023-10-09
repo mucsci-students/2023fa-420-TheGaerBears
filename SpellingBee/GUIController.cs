@@ -202,7 +202,7 @@ namespace SpellingBee
             {
                 _lastMessage = "File saved";
 
-                _model.SaveCurrentGameState(saveName);
+                _model.SaveCurrentPuzzleState(saveName);
             }
         }
 
@@ -274,10 +274,10 @@ namespace SpellingBee
                 Welcome to the Spelling Bee game!
 
                 New Game: Starts a new puzzle game.
-                New Game Grom Word: Starts a new puzzle game with the word currently written at the bottom of the screen.
+                New Game From Word: Starts a new puzzle game with the word currently written at the bottom of the screen.
                 Load Game: Load a saved game or puzzle.
-                Save Word: Save the current game with progress.
-                Save Puzzle: Save the current puzzle.
+                Save Word: Save the current game with progress with the name currently written at the bottom of the screen.
+                Save Puzzle: Save the current puzzle with progress with the name currently written at the bottom of the screen. 
                 Found Words: Display the words you have found.
                 Shuffle: Shuffle the puzzle letters.
                 Help: Show this list of commands.
