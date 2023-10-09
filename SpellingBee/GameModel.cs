@@ -374,7 +374,7 @@ namespace SpellingBee
         /// </summary>
         public bool SaveCurrentPuzzleState(string saveName)
         {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             string fileName = saveName;
             if (string.IsNullOrEmpty(fileName))
             {
@@ -388,7 +388,7 @@ namespace SpellingBee
                 maxPoints = this.maxPoints
             };
             var jsonString = JsonConvert.SerializeObject(temp);
-            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;
         }
 
@@ -397,8 +397,8 @@ namespace SpellingBee
         /// </summary>
         public List<string> GetAvailableSaveFiles()
         {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
-            return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves\\")).ToList();
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
+            return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves/")).ToList();
         }
 
         /// <summary>
