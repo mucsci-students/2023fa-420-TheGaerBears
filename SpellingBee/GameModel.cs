@@ -370,6 +370,29 @@ namespace SpellingBee
         }
 
         /// <summary>
+        /// Saves the current puzzle to a specified file.
+        /// </summary>
+        public bool SaveCurrentPuzzleState(string saveName)
+        {
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"));
+            string fileName = saveName;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return false;
+            }
+            fileName += ".json";
+            GameModel temp = new()
+            {
+                requiredLetter = this.requiredLetter,
+                baseWord = new List<char>(this.baseWord),
+                maxPoints = this.maxPoints
+            };
+            var jsonString = JsonConvert.SerializeObject(temp);
+            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves\\"), fileName), jsonString);
+            return true;
+        }
+
+        /// <summary>
         /// Retrieves a list of available save files.
         /// </summary>
         public List<string> GetAvailableSaveFiles()
