@@ -21,16 +21,22 @@
 			<RowDefinition Height="3*"/>
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
+		
 
+		<!--snowman-->
+		<Grid Grid.Column="1" >
+		<Image Source="/Assets/snowman.png" Opacity=".3"/>
+		</Grid>
 		<!--text block with scroll bar on right side-->
-		<ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left">
-			<TextBlock Grid.Row="0" Text="{Binding FeedbackMessage}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="18"/>
+		<ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" >
+			<TextBlock Grid.Row="0" FontSize="26" Text="{Binding FeedbackMessage}" VerticalAlignment="Center" TextWrapping="Wrap" />
 		</ScrollViewer>
 		<!--Text at the bottom of the screen-->
-		<Label  Content="{Binding Path=LowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+		<Label  Content="{Binding Path=LowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" />
 
 		<!--grid that contains all the letters and guess button-->
 		<Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
+			
 			<!--defines rows and columns-->
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
@@ -49,15 +55,15 @@
 			</Grid.RowDefinitions>
 			<!--Title at the top of the screen-->
 			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
-			<Button Content="{Binding Path=Letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding Color1}"/>
-			<Button Content="{Binding Path=Letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding Color2}"/>
-			<Button Content="{Binding Path=Letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="{Binding Color1}"/>
-			<Button Content="{Binding Path=Letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="{Binding Color2}"/>
-			<Button Content="{Binding Path=Letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="{Binding Color1}"/>
-			<Button Content="{Binding Path=Letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="{Binding Color2}"/>
-			<Button Content="{Binding Path=Letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="{Binding Color1}"/>
-			<!--required letter text which will hopefully be changed soon-->
-			<Label Content="     ^&#x0a;Required&#x0a;  Letter" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+			<Button Content="{Binding Path=Letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8" BorderBrush="Gold"/>
+			<Button Content="{Binding Path=Letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"/>
+			<Button Content="{Binding Path=Letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"/>
+			<Button Content="{Binding Path=Letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"/>
+			<Button Content="{Binding Path=Letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"/>
+			<Button Content="{Binding Path=Letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"/>
+			<Button Content="{Binding Path=Letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"/>
+			
+			
 			<!--Guess button-->
 			<Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"
 					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -110,19 +116,20 @@
 				</Grid.RowDefinitions>
 
 
-				<Button Content="Save&#x0a;Puzzle" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SavePuzzleCommand}"/>
-				<Button Content="Save&#x0a;Word" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SaveCurrentCommand}"/>
-				<Button Content="Load&#x0a;Game" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding LoadCommand}"/>
-				<Button Content="New Game&#x0a;From Word" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewGameFromWordCommand}"/>
-				<Button Content="Found&#x0a;Words" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShowFoundWordsCommand}"/>
-				<Button Content="Help" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding HelpCommand}"/>
-				<Button Content="Shuffle" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShuffleCommand}"/>
-				<Button Content="New Game" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewPuzzleCommand}" />
+				<Button Content="Save&#x0a;Puzzle" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SavePuzzleCommand}"				BorderThickness="4" BorderBrush="Red"	/>
+				<Button Content="Save&#x0a;Word" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SaveCurrentCommand}"				BorderThickness="4" BorderBrush="Green"	/>
+				<Button Content="Load&#x0a;Game" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding LoadCommand}"						BorderThickness="4" BorderBrush="Red"	/>
+				<Button Content="New Game&#x0a;From Word" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewGameFromWordCommand}"	BorderThickness="4" BorderBrush="Green"	/>
+				<Button Content="Found&#x0a;Words" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShowFoundWordsCommand}"			BorderThickness="4" BorderBrush="Green"	/>
+				<Button Content="Help" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding HelpCommand}"									BorderThickness="4" BorderBrush="Red"	/>
+				<Button Content="Shuffle" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShuffleCommand}"							BorderThickness="4" BorderBrush="Green"	/>
+				<Button Content="New Game" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewPuzzleCommand}"						BorderThickness="4" BorderBrush="Red"	/>
 
 
 
 			</Grid>
 		</Grid>
+		
 	</Grid>
 
 </Window>
