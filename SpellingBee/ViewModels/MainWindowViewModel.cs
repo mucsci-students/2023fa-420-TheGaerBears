@@ -30,7 +30,6 @@ namespace SpellingBee.ViewModels
         private bool _saveVisible = false;
         private string _color1 = "Red";
         private string _color2 = "Green";
-        private bool _colorThread = true;
         private string _feedbackMessage = "";
 
         private readonly GuiController _guiController;
@@ -79,6 +78,7 @@ namespace SpellingBee.ViewModels
             ShowFoundWordsCommand = ReactiveCommand.Create(ShowFoundWords);
             HelpCommand = ReactiveCommand.Create(ShowHelp);
             ToggleColorblind = ReactiveCommand.Create(ToggleColors);
+            Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
         }
 
         /// <summary>
@@ -234,12 +234,6 @@ namespace SpellingBee.ViewModels
         /// </summary>
         private async void Load()
         {
-            if(_colorThread)
-            {
-                Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
-                _colorThread = false;
-            }
-
             FeedbackMessage = "";
             var fileName = await OpenFile();
             if (fileName == null) return;
@@ -290,12 +284,6 @@ namespace SpellingBee.ViewModels
         /// </summary>
         private void NewGameFromWord()
         {
-            if (_colorThread)
-            {
-                Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
-                _colorThread = false;
-            }
-
             FeedbackMessage = "";
             _guiController.NewPuzzleBaseWord(LowerText);
 
@@ -318,11 +306,6 @@ namespace SpellingBee.ViewModels
         /// </summary>
         private void StartNewPuzzle()
         {
-            if (_colorThread)
-            {
-                Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
-                _colorThread = false;
-            }
             FeedbackMessage = "";
             _guiController.NewPuzzle();
             UpdateState();
