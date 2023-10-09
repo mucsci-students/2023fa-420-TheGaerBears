@@ -3,55 +3,29 @@ using System.Collections.Generic;
 
 namespace SpellingBee
 {
-/*
- * GameView Class - SpellingBee
- * 
- * Purpose:
- * --------
- * The GameView class provides methods to display game-related information to the user.
- * It acts as the visual representation of the game and communicates directly with the user.
- * 
- * Main Features:
- * --------------
- * - CenterText: Displays a given text in the center of the console.
- * - DisplayScore: Shows the player's current score.
- * - ShowStatus: Provides an overview of the player's current status based on their score and achievements.
- * - BeginScreen: Displays the initial welcoming screen of the game.
- * - ShowFoundWords: Lists all the words that the player has found in the current game.
- * - ShowPuzzle: Presents the current puzzle letters and the required letter.
- * - DisplaySaveFilesList: Shows the list of available saved games for loading.
- * - GetFileIdFromUser: Asks the user to select a saved game from the list.
- * - GetInput: Gets input from user.
- * - DisplayMessage: Outputs a generic message to the console.
- * - Help: Lists all the available commands and instructions for the game.
- * - Exit: Displays exiting message for the game.
- * 
- * Dependencies:
- * -------------
- * This class mainly interacts with the CliController and doesn't hold any game logic or data.
- * Instead, it provides visualization based on data and commands given to it.
- * 
- * Usage:
- * ------
- * GameView should be instantiated and used along with GameModel and CliController to enable a complete game flow.
- */
 
     public class GameView
     {
-        // This function center-aligns text on the console
+        /// <summary>
+        /// Center-aligns and displays the specified text in the console.
+        /// </summary>
         public void CenterText(string text)
         {
             Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
             Console.WriteLine(text);
         }
 
-        // Display the player's score on the console
+        /// <summary>
+        /// Displays the player's score on the console.
+        /// </summary>
         public void DisplayScore(int playerPoints)
         {
             Console.WriteLine($"Your current score is: {playerPoints}");
         }
 
-        // Display the player's status on the console
+        /// <summary>
+        /// Displays the player's status based on points and a list of possible statuses.
+        /// </summary>
         public void ShowStatus(int playerPoints, int maxPoints, List<KeyValuePair<string, int>> statusTitles)
         {
             double ratio = (double)playerPoints / maxPoints;
@@ -72,7 +46,9 @@ namespace SpellingBee
             Console.WriteLine($"Your status: {status}");
         }
 
-        // Show the beginning screen of the game
+        /// <summary>
+        /// Displays the initial game screen with instructions.
+        /// </summary>
         public void BeginScreen()
         {
             Console.WriteLine();
@@ -88,6 +64,9 @@ namespace SpellingBee
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Displays a list of words that the player has found so far.
+        /// </summary>
         public void ShowFoundWords(IEnumerable<string> foundWords)
         {
             Console.WriteLine("Words found so far:");
@@ -97,8 +76,9 @@ namespace SpellingBee
             }
         }
 
-
-        // Display the current puzzle letters and the required letter
+        /// <summary>
+        /// Displays the puzzle's letters along with the required letter.
+        /// </summary>
         public void ShowPuzzle(List<char> baseWord, char requiredLetter)
         {
             Console.Write("Puzzle Letters: ");
@@ -111,6 +91,9 @@ namespace SpellingBee
             Console.WriteLine($"The required letter is: {requiredLetter}");
         }
 
+        /// <summary>
+        /// Lists available save files for the user to choose from.
+        /// </summary>
         public void DisplaySaveFilesList(List<string> fileList)
         {
             Console.WriteLine("Which save file id would you like to load?");
@@ -120,6 +103,9 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Prompts the user for a save file ID and returns the selected ID.
+        /// </summary>
         public int GetFileIdFromUser()
         {
             Console.Write("Enter the file ID: ");
@@ -131,17 +117,26 @@ namespace SpellingBee
             return -1; 
         }
 
+        /// <summary>
+        /// Reads and returns a user input string from the console.
+        /// </summary>
         public string GetInput()
         {
             return Console.ReadLine().ToLower().Trim();
         }
 
 
+        /// <summary>
+        /// Displays a specified message on the console.
+        /// </summary>
         public void DisplayMessage(string message)
         {
             Console.WriteLine(message);
         }
 
+        /// <summary>
+        /// Displays the game's help information, including available commands.
+        /// </summary>
         public void Help()
         {
             Console.WriteLine (
