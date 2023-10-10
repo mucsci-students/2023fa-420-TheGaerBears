@@ -1,129 +1,65 @@
-﻿using SpellingBee.SetUpSpellingBee.src.main;
+﻿
+using Avalonia;
+using Avalonia.ReactiveUI;
 using System;
+using System.IO;
 using SQLitePCL;
+using System.Diagnostics;
 using SpellingBee;
+using System.Collections.Generic;
 
-internal class Program
+namespace AvaTest
 {
-    static void Main(string[] args)
+    internal class Program
     {
-        //Initialize SQLitePCL
-        Batteries.Init();
-
-        Game mainGame = new Game();
-
-        //Intro Screen
-        mainGame.BeginScreen();
-
-        //While loop that allows the game to keep going
-        while (true)
+        // Initialization code. Don't use any Avalonia, third-party APIs or any
+        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        // yet and stuff might break.
+        public static void Main(string[] args)
         {
-            string input = Console.ReadLine().ToLower().Trim();
-            CommandValidation(input, ref mainGame);
-        }
-    }
-    /// <summary>
-    /// Parses the commands entered by the player
-    /// </summary>
-    /// <param name="input"></param> The command typed by the player
-    /// <param name="mainGame"></param> The Game object for the puzzle
-    static void CommandValidation(string input, ref Game mainGame)
-    {
-        switch (input)
-        {
-            case "-exit":
-                mainGame.Exit();
-                break;
-            case "-help":
-                mainGame.Help();
-                break;
-            case "-load":
-            case "-load puzzle":
-                mainGame.Load(ref mainGame);
-                break;
-            case "-new":
-            case "-new game":
-                mainGame.NewPuzzle();
-                break;
-            case "-new game from word":
-                Console.WriteLine("Please enter a valid pangram: ");
+            if (args.Length == 0)
+            {
+                //Run GUI
+                string[] b = { "" };
+                Main2(b);
+            }
+            else if (args[0].Equals("-cli"))
+            {
+                //Run CLI version
 
-                string pang = Console.ReadLine().Trim();
-                mainGame.NewPuzzleBaseWord(pang);
-                break;
-            case "-save current":
-                if (mainGame.Active())
+                //Initialize SQLitePCL
+                Batteries.Init();
+
+                GameModel model = new();
+                GameView view = new();
+                CliController cliController = new(model, view);
+
+                //Intro Screen
+                cliController.BeginScreen();
+
+                //While loop that allows the game to keep going
+                while (true)
                 {
-                    mainGame.SaveCurrent();
+                    var input = Console.ReadLine()!.ToLower().Trim();
+                    cliController.HandleCommand(input);
                 }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-save puzzle":
-                if (mainGame.Active())
-                {
-                    mainGame.SavePuzzle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-found words":
-            case "-show found words":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowFoundWords();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-puzzle":
-            case "-show puzzle":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowPuzzle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-status":
-            case "-show status":
-                if (mainGame.Active())
-                {
-                    mainGame.ShowStatus();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            case "-shuffle":
-                if (mainGame.Active())
-                {
-                    mainGame.Shuffle();
-                }
-                else
-                {
-                    Console.WriteLine("A game has not been started. Please start one by calling one of the new game commands.");
-                }
-                break;
-            default:
-                if (mainGame.Active())
-                {
-                    mainGame.Guess(input);
-                }
-                else
-                {
-                    Console.WriteLine("This is not a valid command. Please use -help to see the list of commands.");
-                }
-                break;
+            }
         }
+
+
+        // Initialization code. Don't use any Avalonia, third-party APIs or any
+        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        // yet and stuff might break.
+        [STAThread]
+        public static void Main2(string[] args) => BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace()
+                .UseReactiveUI();
     }
 }

@@ -7,6 +7,10 @@ using System.Text;
 
 namespace SpellingBee.SetUpSpellingBee.src.main
 {
+    /// <summary>
+    /// Class that creates the database, code only needed to be run once
+    /// Database is already created and included in remote repository
+    /// </summary>
     public class CreateDatabase
     {
         public string word { get; set; }
@@ -23,9 +27,69 @@ namespace SpellingBee.SetUpSpellingBee.src.main
                                                            "fourteen_letter_words",
                                                            "fifteen_letter_words"};
 
+
+        /// <summary>
+        /// Put all words from Json files into database tables
+        /// </summary>
+        public void LoadDataFromJsonFile(string jsonFilePath, string tableName)
+        {
+            // Read JSON file into a string
+            string jsonString = File.ReadAllText(jsonFilePath);
+            List<CreateDatabase> wordEntries = JsonConvert.DeserializeObject<List<CreateDatabase>>(jsonString);
+
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+
+            using (SqliteConnection con = new SqliteConnection(connectionString))
+            {
+                con.Open();
+
+                // Check if the table exists and create it if not
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name=@tableName";
+                    cmd.Parameters.AddWithValue("@tableName", tableName);
+
+                    var existingTable = cmd.ExecuteScalar();
+
+                    if (existingTable == null)
+                    {
+                        // The table doesn't exist, create it
+                        cmd.CommandText = $"CREATE TABLE {tableName} (id INTEGER PRIMARY KEY, word TEXT)";
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                //Batching insertions of data
+                int batchSize = 500;
+
+                for (int i = 0; i < wordEntries.Count; i += batchSize)
+                {
+                    using (var transaction = con.BeginTransaction())
+                    {
+                        for (int j = i; j < Math.Min(i + batchSize, wordEntries.Count); j++)
+                        {
+                            using (var cmd = con.CreateCommand())
+                            {
+                                // Use INSERT OR IGNORE to avoid inserting duplicate words
+                                cmd.CommandText = $"INSERT OR IGNORE INTO {tableName} (word) VALUES (@word)";
+                                cmd.Parameters.AddWithValue("@word", wordEntries[j].word);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Commit the transaction to improve performance
+                        transaction.Commit();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Added the pangram table to the database
+        /// </summary>
         public void AddPangramTable(string tableName)
         {
-            string connectionString = "Data Source=C:\\Users\\skyfa\\source\\repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
 
             using (SqliteConnection con = new SqliteConnection(connectionString))
             {
@@ -78,7 +142,7 @@ namespace SpellingBee.SetUpSpellingBee.src.main
                         {
                             using (var insertCmd = new SqliteCommand(insert, con))
                             {
-                                insertCmd.Parameters.AddWithValue("@word", pangram); // Use correct parameter name
+                                insertCmd.Parameters.AddWithValue("@word", pangram); 
                                 insertCmd.ExecuteNonQuery();
                             }
                         }
@@ -89,16 +153,15 @@ namespace SpellingBee.SetUpSpellingBee.src.main
                     // Handle exceptions here, e.g., log the error or display a message
                     Console.WriteLine("An error occurred: " + ex.Message);
                 }
-                finally
-                {
-                    con.Close(); // Ensure connection is closed
-                }
             }
         }
 
+        /// <summary>
+        /// Prints count of tables for testing
+        /// </summary>
         public void PrintCount(string tableName)
         {
-            string connectionString = "Data Source=C:\\Users\\skyfa\\source\\repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
 
             using (SqliteConnection con = new SqliteConnection(connectionString))
             {
@@ -111,10 +174,13 @@ namespace SpellingBee.SetUpSpellingBee.src.main
                 }
             }
         }
+
+        /// <summary>
+        /// Print contents of table for testing
+        /// </summary>
         public void PrintContents(string tableName)
         {
-            string connectionString = "Data Source=C:\\Users\\skyfa\\source\\repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
-
+            string connectionString = "Data Source=..\\..\\..\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
             using (SqliteConnection con = new SqliteConnection(connectionString))
             {
                 con.Open();
@@ -130,59 +196,6 @@ namespace SpellingBee.SetUpSpellingBee.src.main
                         {
                             Console.WriteLine($"ID: {reader.GetInt32(0)}, Word: {reader.GetString(1)}");
                         }
-                    }
-                }
-            }
-        }
-
-        public void LoadDataFromJsonFile(string jsonFilePath, string tableName)
-        {
-            // Read JSON file into a string
-            string jsonString = File.ReadAllText(jsonFilePath);
-            List<CreateDatabase> wordEntries = JsonConvert.DeserializeObject<List<CreateDatabase>>(jsonString);
-
-            string connectionString = "Data Source=C:\\Users\\skyfa\\source\\repos\\mucsci-students\\2023fa-420-TheGaerBears\\SpellingBee\\SetUpSpellingBee\\Database\\SpellingBeeWords.db;";
-
-            using (SqliteConnection con = new SqliteConnection(connectionString))
-            {
-                con.Open();
-
-                // Check if the table exists and create it if not
-                using (var cmd = con.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name=@tableName";
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
-
-                    var existingTable = cmd.ExecuteScalar();
-
-                    if (existingTable == null)
-                    {
-                        // The table doesn't exist, create it
-                        cmd.CommandText = $"CREATE TABLE {tableName} (id INTEGER PRIMARY KEY, word TEXT)";
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                //Batching insertions of data
-                int batchSize = 500;
-
-                for (int i = 0; i < wordEntries.Count; i += batchSize)
-                {
-                    using (var transaction = con.BeginTransaction())
-                    {
-                        for (int j = i; j < Math.Min(i + batchSize, wordEntries.Count); j++)
-                        {
-                            using (var cmd = con.CreateCommand())
-                            {
-                                // Use INSERT OR IGNORE to avoid inserting duplicate words
-                                cmd.CommandText = $"INSERT OR IGNORE INTO {tableName} (word) VALUES (@word)";
-                                cmd.Parameters.AddWithValue("@word", wordEntries[j].word);
-                                cmd.ExecuteNonQuery();
-                            }
-                        }
-
-                        // Commit the transaction to improve performance
-                        transaction.Commit();
                     }
                 }
             }

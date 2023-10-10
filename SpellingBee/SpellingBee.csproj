@@ -1,29 +1,46 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="SetUpSpellingBee\obj\Release\**" />
-    <Compile Remove="SetUpSpellingBee\src\obj\**" />
-    <EmbeddedResource Remove="SetUpSpellingBee\obj\Release\**" />
-    <EmbeddedResource Remove="SetUpSpellingBee\src\obj\**" />
-    <None Remove="SetUpSpellingBee\obj\Release\**" />
-    <None Remove="SetUpSpellingBee\src\obj\**" />
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
+	
+	<ItemGroup>
+		<Compile Remove="SetUpSpellingBee\obj\Release\**" />
+		<Compile Remove="SetUpSpellingBee\src\obj\**" />
+		<EmbeddedResource Remove="SetUpSpellingBee\obj\Release\**" />
+		<EmbeddedResource Remove="SetUpSpellingBee\src\obj\**" />
+		<None Remove="SetUpSpellingBee\obj\Release\**" />
+		<None Remove="SetUpSpellingBee\src\obj\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.11" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageReference Include="Moq" Version="4.20.69" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="SetUpSpellingBee\Database\" />
+	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.10" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.6" />
+    <PackageReference Include="Avalonia" Version="11.0.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.4" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.4" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.4" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.4" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.4" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SetUpSpellingBee\Database\" />
-  </ItemGroup>
-
 </Project>
