@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore /SpellingBee/
+      run: dotnet restore /SpellingBee.csproj
     - name: Build
-      run: dotnet build --no-restore /SpellingBee/
+      run: dotnet build --no-restore /SpellingBee.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal /SpellingBee/
+      run: dotnet test --no-build --verbosity normal /SpellingBee.csproj
