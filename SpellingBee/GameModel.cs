@@ -8,7 +8,9 @@ using System.IO;
 
 namespace SpellingBee
 {
-
+    /// <summary>
+    /// <c>Game Model</c> class.
+    /// </summary>
     public class GameModel
     {
         [JsonProperty] private List<char> baseWord;
@@ -51,7 +53,7 @@ namespace SpellingBee
             validWords = new List<string>();
             rand = new Random();
 
-            // Status titles with associated point thresholds
+            // Status titles with associated point thresholds.
             statusTitles = new List<KeyValuePair<string, int>>
             {
                 new KeyValuePair<string, int>("Beginner", 0),
@@ -65,11 +67,13 @@ namespace SpellingBee
                 new KeyValuePair<string, int>("Genius", 70),
                 new KeyValuePair<string, int>("Queen Bee", 100)
             };
+            // Starting player points.
+            playerPoints = 0;    
+            // Initial total possible points.
+            maxPoints = 0; 
 
-            playerPoints = 0;    // Starting player points
-            maxPoints = 0; // Initial total possible points
-
-            PangramWords = PangramList(); // Fetch the list of pangrams from the database
+            // Fetch the list of pangrams from the database.
+            PangramWords = PangramList(); 
         }
 
         /// <summary>
@@ -96,7 +100,7 @@ namespace SpellingBee
             }
             catch (Exception ex)
             {
-                //Nested try statement to attempt both connection strings
+                // Nested try statement to attempt both connection strings.
                 connectionString = DatabaseConnectionString_Two;
                 try
                 {
@@ -138,7 +142,7 @@ namespace SpellingBee
             {
                 queryBuilder.AppendLine($"SELECT word FROM {tableName} WHERE word LIKE '%{requiredLetter}%' AND word NOT GLOB '*[^{(new string(baseWord.ToArray()))}]*'");
 
-                // Add UNION between queries, except for the last one
+                // Add UNION between queries, except for the last one.
                 if (tableNames.IndexOf(tableName) < tableNames.Count - 1)
                 {
                     queryBuilder.AppendLine("UNION");
@@ -163,7 +167,7 @@ namespace SpellingBee
             }
             catch (Exception ex)
             {
-                //Nested try statement
+                // Nested try statement.
                 connectionString = DatabaseConnectionString_Two;
                 try
                 {
@@ -184,10 +188,11 @@ namespace SpellingBee
                 }
             }
 
-            // Calculate maxPoints based on validWords
+            // Calculate maxPoints based on validWords.
             foreach (var word in validWords)
             {
-                int uniqueLetterCount = word.Distinct().Count(); // Count of unique letters in the word
+                // Count of unique letters in the word.
+                int uniqueLetterCount = word.Distinct().Count(); 
                 int wordLength = word.Length;
                 int points = 0;
 
@@ -235,10 +240,10 @@ namespace SpellingBee
             int n = baseWord.Count;
             for (int i = n - 1; i > 0; i--)
             {
-                // Get a random index up to i inclusive
+                // Get a random index up to i inclusive.
                 int j = rand.Next(i + 1);
 
-                // Use tuple to swap elements
+                // Use tuple to swap elements.
                 (baseWord[i], baseWord[j]) = (baseWord[j], baseWord[i]);
             }
         }
@@ -251,14 +256,14 @@ namespace SpellingBee
             int n = baseWord.Count;
             for (int i = n - 1; i > 0; i--)
             {
-                // Get a random index up to i inclusive
+                // Get a random index up to i inclusive.
                 int j = rand.Next(i + 1);
 
-                // Swap elements
+                // Swap elements.
                 (baseWord[i], baseWord[j]) = (baseWord[j], baseWord[i]);
             }
 
-            // Ensure the required letter is at the 0th index
+            // Ensure the required letter is at the 0th index.
             int requiredIndex = baseWord.IndexOf(requiredLetter);
             if (requiredIndex != 0 && requiredIndex >= 0 && baseWord.Count > 1)
             {
@@ -330,7 +335,8 @@ namespace SpellingBee
 
         private void UpdatePlayerPointsForFoundWord(string word)
         {
-            int uniqueLetterCount = word.Distinct().Count(); // Count of unique letters in the word
+            // Count of unique letters in the word.
+            int uniqueLetterCount = word.Distinct().Count(); 
             int wordLength = word.Length;
             int points = 0;
 
@@ -341,7 +347,8 @@ namespace SpellingBee
             else if (wordLength > 6)
                 points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
 
-            playerPoints += points; // Add the points to the player's total score.
+            // Add the points to the player's total score.
+            playerPoints += points; 
         }
 
         /// <summary>
@@ -413,8 +420,8 @@ namespace SpellingBee
                 string jsonData = File.ReadAllText(filePath);
                 return JsonConvert.DeserializeObject<GameModel>(jsonData);
             }
-
-            return null; // File not found or invalid ID.
+            // File not found or invalid ID.
+            return null; 
         }
 
         /// <summary>
@@ -430,6 +437,16 @@ namespace SpellingBee
             //validWords = new List<string>(loadedGame.validWords);
             GenerateValidWords();
             maxPoints = loadedGame.maxPoints;
+        }
+
+        /// <summary>
+        /// Returns true if the player has found all of the possible valid words
+        /// of the puzzle.
+        /// <return>True if foundWords == validWords, false otherwise.</return>
+        /// </summary>
+        public bool wonTheGame()
+        {
+            return (foundWords.Count == validWords.Count);
         }
 
         /// <summary>
