@@ -7,6 +7,9 @@ using SQLitePCL;
 using System.Diagnostics;
 using SpellingBee;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AvaTest
 {
@@ -38,11 +41,13 @@ namespace AvaTest
                 cliController.BeginScreen();
 
                 //While loop that allows the game to keep going
-                while (true)
+                string input = string.Empty;
+                while(true) 
                 {
-                    var input = Console.ReadLine()!.ToLower().Trim();
+                    input = view.TabCompleteInput();
                     cliController.HandleCommand(input);
-                }
+                }                
+
             }
         }
 
