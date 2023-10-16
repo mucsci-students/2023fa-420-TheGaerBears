@@ -17,6 +17,8 @@ jobs:
     steps:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      with: 
+        flags: -f
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - uses: actions/checkout@v3
