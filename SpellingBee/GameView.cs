@@ -1,11 +1,15 @@
-﻿using System;
+﻿using DynamicData;
+using SkiaSharp;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SpellingBee
 {
 
     public class GameView
     {
+            private string[] tabCompletable = { "-exit", "-found words", "-help", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status" };
         /// <summary>
         /// Center-aligns and displays the specified text in the console.
         /// </summary>
@@ -161,6 +165,63 @@ namespace SpellingBee
         public void Exit()
         {
             Console.WriteLine("Thank you for playing Spelling Bee. Goodbye!");
+        }
+
+        public string TabCompleteInput()
+        {
+            ConsoleKeyInfo input;
+            var userInput = string.Empty;
+            while (ConsoleKey.Enter != (input = Console.ReadKey()).Key)
+            {
+                if (input.Key == ConsoleKey.Backspace)
+                    userInput = userInput.Any() ? userInput.Remove(userInput.Length - 1, 1) : string.Empty;
+
+                else if (input.Key == ConsoleKey.Tab)
+                {
+                    List<string> valid = new List<string>();
+                    foreach(string str in tabCompletable)
+                    {
+                        bool temp = true;
+                        for(int i = 0; i < userInput.Length && i < str.Length;++i)
+                        {
+                            if (userInput[i] != str[i])
+                            {
+                                temp = false;
+                            }
+                        }
+                        if (temp)
+                        {
+                            valid.Add(str);
+                        }
+                    }
+                    if (valid.Count < 1) ;
+                    else if (valid.Count == 1)
+                    {
+                        userInput = valid[0];
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        foreach (string str in valid)
+                        {
+                            Console.Write(str + "\t");
+                        }
+                        Console.WriteLine();
+                    }
+                }
+                else if (input != null)
+                    userInput += input.KeyChar;
+
+
+                int currentLineCursor = Console.CursorTop;
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, currentLineCursor);
+
+                Console.Write(userInput);
+            }
+            Console.WriteLine();
+            return userInput;
         }
     }
 }
