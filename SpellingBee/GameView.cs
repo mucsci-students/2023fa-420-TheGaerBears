@@ -154,6 +154,7 @@ namespace SpellingBee
                 -show puzzle:        Display the puzzle letters.
                 -show status:        Display your current game status.
                 -shuffle:            Shuffle the puzzle letters.
+                -hint:               Display helpful hints for solving the puzzle.
                 -help:               Show this list of commands.
                 -exit:               Exit the game.
 

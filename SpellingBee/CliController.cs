@@ -164,6 +164,64 @@ namespace SpellingBee
         {
             _view.BeginScreen();
         }
+        public void PrintHintTable(Dictionary<char, int[]> data)
+        {
+            // Define the range
+            int[] wordLengths = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+            int arrayLength = wordLengths.Length;
+
+            // Print header
+            Console.Write("    ");
+            foreach (var length in wordLengths)
+            {
+                Console.Write($"{length,3} ");
+            }
+            Console.WriteLine(" tot");
+
+            // Calculate column totals
+            int[] columnTotals = new int[arrayLength];
+            foreach (var entry in data)
+            {
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    columnTotals[i] += entry.Value[i];
+                }
+            }
+
+            // Print rows
+            foreach (var entry in data)
+            {
+                Console.Write($"{entry.Key}   ");
+                int rowTotal = 0;
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    if (entry.Value[i] == 0)
+                    {
+                        Console.Write("  - ");
+                    }
+                    else
+                    {
+                        Console.Write($"{entry.Value[i],3} ");
+                        rowTotal += entry.Value[i];
+                    }
+                }
+                Console.WriteLine($"{rowTotal,4}");
+            }
+
+            // Print bottom totals
+            Console.Write("tot ");
+            int grandTotal = 0;
+            for (int i = 0; i < arrayLength; i++)
+            {
+                Console.Write($"{columnTotals[i],3} ");
+                grandTotal += columnTotals[i];
+            }
+            Console.WriteLine($"{grandTotal,4}");
+
+            Console.WriteLine($"Max Points: {_model.GetMaxPoints()}");
+            Console.WriteLine($"Total Number of Valid Words: {_model.GetValidWords().Count}");
+        }
+
 
         /// <summary>
         /// Processes user input and executes the corresponding command.
@@ -172,6 +230,17 @@ namespace SpellingBee
         {
             switch (input)
             {
+                case "-hint":
+                    if (_model.Active())
+                    {
+                        var hintToPrint = _model.lettersInWord();
+                        PrintHintTable(hintToPrint);
+                    }
+                    else
+                    {
+                        _view.DisplayMessage("A game has not been started. Please start one by calling one of the new game commands.");
+                    }
+                    break;
                 case "-exit":
                     _view.Exit();
                     _model.Exit();

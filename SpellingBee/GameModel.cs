@@ -504,6 +504,43 @@ namespace SpellingBee
         {
             return validWords;
         }
+
+        /// <summary>
+        /// Returns a dictionary that maps each starting letter of words in validWords to an array.
+        /// The array's indices represent word lengths (4 to 15) and the values are the counts of words with that starting letter and length.
+        /// </summary>
+        /// <returns>A dictionary of chars to arrays of ints.</returns>
+        public Dictionary<char, int[]> lettersInWord()
+        {
+            // Initialize a dictionary to hold the starting letter of words and an array to represent counts of word lengths.
+            Dictionary<char, int[]> countOfLetters = new();
+
+            // Iterate over each word in the validWords list.
+            foreach (var word in validWords)
+            {
+                // Convert the word into a char array for easy access to individual letters.
+                var w = word.ToCharArray();
+
+                // If the dictionary does not already contain an entry for the first letter of the word, add it.
+                if (!countOfLetters.ContainsKey(w[0]))
+                {
+                    countOfLetters[w[0]] = new int[12]; // Initialize a new array of 12 integers (for word lengths 4 to 15).
+                }
+
+                // Calculate the length of the current word.
+                int length = word.Length;
+
+
+                // Increment the appropriate index in the array associated with the starting letter of the word.
+                // Subtract 4 from the word length to get the correct index (for length 4, we want index 0; for length 5, index 1, etc.).
+                countOfLetters[w[0]][length - 4]++;
+
+            }
+
+            // Return the populated dictionary.
+            return countOfLetters;
+        }
+
     }
 }
 
