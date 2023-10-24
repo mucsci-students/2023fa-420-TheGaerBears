@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
 using System.IO;
+using Avalonia.Media.TextFormatting;
+using DynamicData.Aggregation;
 
 namespace SpellingBee
 {
@@ -510,7 +512,7 @@ namespace SpellingBee
         /// The array's indices represent word lengths (4 to 15) and the values are the counts of words with that starting letter and length.
         /// </summary>
         /// <returns>A dictionary of chars to arrays of ints.</returns>
-        public Dictionary<char, int[]> lettersInWord()
+        public Dictionary<char, int[]> LettersInWord()
         {
             // Initialize a dictionary to hold the starting letter of words and an array to represent counts of word lengths.
             Dictionary<char, int[]> countOfLetters = new();
@@ -539,6 +541,174 @@ namespace SpellingBee
 
             // Return the populated dictionary.
             return countOfLetters;
+        }
+
+        /// <summary>
+        /// Generates a list of two letter strings that represent the starting two letters of each word
+        /// and puts a count of how many times they show up in the valid word list
+        /// </summary>
+        /// <returns>
+        /// Dictionary of the two letter string and their count
+        /// </returns>
+        public Dictionary<string, int> TwoLetterList()
+        {
+            // Initialize a dictionary to hold the two letter strings and their counts
+            Dictionary<string, int> twoLetters = new();
+
+            // Loop through valid words
+            foreach (var word in validWords)
+            {
+                // Add the valid word to dictionary or add 1 to its count if already there
+                string twoLetterSub = word.Substring(0, 2);
+                try
+                {
+                    twoLetters.Add(twoLetterSub, 1);
+                }
+                catch (ArgumentException)
+                {
+                    twoLetters[twoLetterSub] += 1;
+                }
+            }
+            return twoLetters;
+        }
+
+        /// <summary>
+        /// Creats a tuple where the first int is the number of pangrams in the valid word set
+        /// and the second int is the number of perfect pangrams in the valid word set
+        /// </summary>
+        /// <returns>
+        /// Tuple of two ints
+        /// </returns>
+        public (int, int) PangramCount()
+        {
+            int pangram = 0;
+            int perfPangram = 0;
+            // Counts the number of perfect and regular pangrams in validWords
+            foreach(var word in validWords)
+            {
+                if (word.Distinct().Count() == 7 && word.Count() == 7)
+                {
+                    perfPangram++;
+                    pangram++;
+                }
+                else if (word.Distinct().Count() == 7)
+                    pangram++;
+            }
+            return (pangram, perfPangram);
+        }
+
+        /// <summary>
+        /// Creates a string for the hint
+        /// </summary>
+        /// <returns>
+        /// A string that contains the hint information
+        /// </returns>
+        public string PrintHintTable()
+        {
+            // Getting data for hints
+            Dictionary<char, int[]> data = LettersInWord();
+            // Define the range
+            int[] wordLengths = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+            int arrayLength = wordLengths.Length;
+
+
+
+            // Calculate totals for each column
+            int[] columnTotals = new int[arrayLength];
+            foreach (var entry in data)
+            {
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    columnTotals[i] += entry.Value[i];
+                }
+            }
+
+            List<int> removedColumns = new List<int>();
+
+            // Start Hint
+            StringBuilder build = new StringBuilder();
+            build.Append("\nRequired letter is first.\n\n");
+            build.Append(new string(baseWord.ToArray()));
+            build.Append("\n\n");
+
+            (int, int) pangramCount = PangramCount();
+            build.Append($"Words: {validWords.Count()}, Points: {GetMaxPoints()}, Pangrams: {pangramCount.Item1}");
+            if (pangramCount.Item2 != 0) 
+                build.Append($" ({pangramCount.Item2} Perfect)");
+            if (data.Count() == 7)
+                build.Append($", BINGO");
+            build.Append("\n\n");
+
+            // Create header for table
+            build.Append("    ");
+            for (int i = 0; i < arrayLength; i++)
+            {
+                if (columnTotals[i] != 0)
+                {
+                    build.Append($"{wordLengths[i], 3} ");
+                }
+                else
+                {
+                    removedColumns.Add(i);
+                }
+            }
+            //Added for -1 so list isn't empty
+            removedColumns.Add(-1);
+
+            build.Append(" tot\n");
+
+            
+
+            // Create rows
+            foreach (var entry in data)
+            {
+                build.Append($"{entry.Key}   ");
+                int rowTotal = 0;
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    if (!removedColumns.Contains(i))
+                    { 
+                        if (entry.Value[i] == 0)
+                        {
+                            build.Append("  - ");
+                        }
+                        else
+                        {
+                            build.Append($"{entry.Value[i],3} ");
+                            rowTotal += entry.Value[i];
+                        }
+                    }
+                }
+                build.Append($"{rowTotal,4}\n");
+            }
+
+            // Print bottom totals
+            build.Append("tot ");
+            for (int i = 0; i < arrayLength; i++)
+            {
+                if (!removedColumns.Contains(i))
+                {
+                    build.Append($"{columnTotals[i],3} ");
+                }
+            }
+            build.Append($"{validWords.Count(),4}");
+
+            // Create the two letter list
+            build.Append("\n\nTwo Letter List:\n\n");
+            Dictionary<string, int> twoLetter = TwoLetterList();
+            string curLet = twoLetter.Keys.First().Substring(0, 1);
+
+            foreach (var two in twoLetter)
+            {
+                if (!curLet.Equals(two.Key.Substring(0, 1)))
+                {
+                    curLet = two.Key.Substring(0, 1);
+                    build.Append("\n");
+                }
+                build.Append(two.Key + "-" + two.Value.ToString() + " ");
+            }
+
+            return build.ToString();
         }
 
     }
