@@ -233,8 +233,9 @@ namespace SpellingBee
                 case "-hint":
                     if (_model.Active())
                     {
-                        var hintToPrint = _model.lettersInWord();
-                        PrintHintTable(hintToPrint);
+                        //var hintToPrint = _model.LettersInWord();
+                        //PrintHintTable(hintToPrint);
+                        _view.DisplayMessage(_model.PrintHintTable());
                     }
                     else
                     {
