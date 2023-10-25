@@ -26,5 +26,7 @@ jobs:
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      with:
+       files: ./coverage.xml,e2e-coverage.xml
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
