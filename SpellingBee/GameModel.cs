@@ -508,6 +508,23 @@ namespace SpellingBee
         }
 
         /// <summary>
+        /// Calculates the ranks and the points required to reach them
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, int> GetAllRanks()
+        {
+            Dictionary<string, int> ranks = new Dictionary<string, int>();
+            // Show the points needed for each rank
+            foreach (var rank in statusTitles)
+            {
+                int points = (int)(rank.Value * .01 * maxPoints);
+                ranks.Add(rank.Key, points);
+            }
+
+            return ranks;
+        }
+
+        /// <summary>
         /// Returns a dictionary that maps each starting letter of words in validWords to an array.
         /// The array's indices represent word lengths (4 to 15) and the values are the counts of words with that starting letter and length.
         /// </summary>
