@@ -313,5 +313,10 @@ Remember, all words must contain the required letter!";
         {
             return _model.PointsToNextRank();
         }
+        
+        public string PrintHintsTable()
+        {
+            return _model.PrintHintTable();
+        }
     }
 }

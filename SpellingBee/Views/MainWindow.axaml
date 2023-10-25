@@ -60,7 +60,7 @@
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 			<!--Title at the top of the screen-->
-			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
+			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30" Foreground="Black"/>
 			<Button Content="Backspace"				 Grid.Column="6" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding Backspace}"							 Background ="{Binding Color1}" BorderThickness="8"					   Foreground="Black"/>
 			<Button Content="{Binding Path=Letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8" BorderBrush="Gold" Foreground="Black"/>
 			<Button Content="{Binding Path=Letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"					   Foreground="Black"/>
@@ -82,7 +82,7 @@
 			<!--Command="{Binding SaveCommand}"/> -->
 
 			<!--colorblind mode-->
-			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}"/>
+			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}" Foreground="Black"/>
 			
 			<!--displays the points rank and -->
 			<Grid Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2">
@@ -102,9 +102,27 @@
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<Label Content="{Binding Path=Points}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				<Label Content="{Binding Path=Rank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1"/>
-				<Label Content="{Binding Path=NextRank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2"/>
+				<Label Content="{Binding Path=Points}" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black"/>
+				<Label Content="{Binding Path=Rank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Foreground="Black"/>
+				<Label Content="{Binding Path=NextRank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2" Foreground="Black"/>
+			</Grid>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+					<Grid.ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<Grid.RowDefinition Height="*"/>
+					<Grid.RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
 			</Grid>
 		</Grid>
 		<!--defines buttons in bottom right-->
@@ -123,7 +141,7 @@
 				</Grid.RowDefinitions>
 
 
-				<Button Content="Hints" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SavePuzzleCommand}"				BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
+				<Button Content="Hints" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding HintCommand}"				BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
 				<Button Content="Load&#x0a;Game" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding LoadCommand}"						BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
 				<Button Content="New Game" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewPuzzleCommand}"	BorderThickness="4" BorderBrush="Green"	Foreground="Black"/>
 				<Button Content="Found&#x0a;Words" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShowFoundWordsCommand}"			BorderThickness="4" BorderBrush="Green"	Foreground="Black"/>

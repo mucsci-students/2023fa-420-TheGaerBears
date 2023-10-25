@@ -52,7 +52,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> HelpCommand { get; }
         public ReactiveCommand<Unit,Unit> ToggleColorblind { get; }
         public ReactiveCommand<Unit, Unit> Backspace { get; }
-
+        public ReactiveCommand<Unit, Unit> HintCommand { get; }
         /// <summary>
         /// Instantiates the <c>MainWindowViewModel</c> with <c>GuiController</c> and <c>GameModel</c> 
         /// and sets up the button commands.
@@ -80,6 +80,7 @@ namespace SpellingBee.ViewModels
             HelpCommand = ReactiveCommand.Create(ShowHelp);
             ToggleColorblind = ReactiveCommand.Create(ToggleColors);
             Backspace = ReactiveCommand.Create(DeleteFromEnd);
+            HintCommand = ReactiveCommand.Create(DisplayHints);
         }
 
         /// <summary>
@@ -312,6 +313,14 @@ namespace SpellingBee.ViewModels
             FeedbackMessage = "";
             _guiController.NewPuzzle();
             UpdateState();
+        }
+
+        /// <summary>
+        /// Method <c>DisplayHints</c> displays the hints
+        /// </summary>
+        private void DisplayHints()
+        {
+            FeedbackMessage = _guiController.PrintHintsTable();
         }
 
         public string FeedbackMessage
