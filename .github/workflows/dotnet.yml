@@ -18,7 +18,7 @@ jobs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with: 
-        xtra_args: -R ./SpellingBee/
+        xtra_args: -F ./SpellingBee/
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - uses: actions/checkout@v3
