@@ -44,13 +44,14 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> AppendLetter7Command { get; }
         public ReactiveCommand<Unit, Unit> ShuffleCommand { get; }
         public ReactiveCommand<Unit, Unit> GuessCommand { get; }
-        public ReactiveCommand<Unit, Unit> SavePuzzleCommand { get; }
-        public ReactiveCommand<Unit, Unit> SaveCurrentCommand { get; }
+        public ReactiveCommand<string, Unit> SavePuzzleCommand { get; }
+        public ReactiveCommand<string, Unit> SaveCurrentCommand { get; }
         public ReactiveCommand<Unit, Unit> LoadCommand { get; }
-        public ReactiveCommand<Unit, Unit> NewGameFromWordCommand { get; }
+        public ReactiveCommand<string, Unit> NewGameFromWordCommand { get; }
         public ReactiveCommand<Unit, Unit> ShowFoundWordsCommand { get; }
         public ReactiveCommand<Unit, Unit> HelpCommand { get; }
         public ReactiveCommand<Unit,Unit> ToggleColorblind { get; }
+        public ReactiveCommand<Unit, Unit> Backspace { get; }
 
         /// <summary>
         /// Instantiates the <c>MainWindowViewModel</c> with <c>GuiController</c> and <c>GameModel</c> 
@@ -71,14 +72,14 @@ namespace SpellingBee.ViewModels
             NewPuzzleCommand = ReactiveCommand.Create(StartNewPuzzle);
             ShuffleCommand = ReactiveCommand.Create(ShuffleLetters);
             GuessCommand = ReactiveCommand.Create(ExecuteGuess);
-            SavePuzzleCommand = ReactiveCommand.Create(SavePuzzle);
-            SaveCurrentCommand = ReactiveCommand.Create(SaveCurrent);
+            SavePuzzleCommand = ReactiveCommand.Create<string>(SavePuzzle);
+            SaveCurrentCommand = ReactiveCommand.Create<string>(SaveCurrent);
             LoadCommand = ReactiveCommand.Create(Load);
-            NewGameFromWordCommand = ReactiveCommand.Create(NewGameFromWord);
+            NewGameFromWordCommand = ReactiveCommand.Create<string>(NewGameFromWord);
             ShowFoundWordsCommand = ReactiveCommand.Create(ShowFoundWords);
             HelpCommand = ReactiveCommand.Create(ShowHelp);
             ToggleColorblind = ReactiveCommand.Create(ToggleColors);
-            Dispatcher.UIThread.Post(SwapColors, DispatcherPriority.Background);
+            Backspace = ReactiveCommand.Create(DeleteFromEnd);
         }
 
         /// <summary>
@@ -87,6 +88,17 @@ namespace SpellingBee.ViewModels
         private void AppendLetter(string letter)
         {
             LowerText += letter;
+        }
+        /// <sumary>
+        /// Method <c>Backspace</c>
+        /// </sumary>
+        private void DeleteFromEnd()
+        {
+            if (LowerText.Length > 0)
+            {
+                LowerText = LowerText.Substring(0, LowerText.Length - 1);
+
+            }
         }
 
         /// <summary>
@@ -113,19 +125,6 @@ namespace SpellingBee.ViewModels
             {
                 Color2 = "Green";
                 return;
-            }
-        }
-
-        /// <summary>
-        /// Method <c>SwapColors</c> alternates the pair of colors during gameplay.
-        /// </summary>
-        private async void SwapColors()
-        {
-            while (true)
-            {
-               // Use tuple to swap colors.
-               (Color1, Color2) = (Color2, Color1);
-               await Task.Delay(1500);
             }
         }
 
@@ -198,7 +197,7 @@ namespace SpellingBee.ViewModels
         /// Method <c>SavePuzzle</c> allows the user to click the SavePuzzle button to save state
         /// as long as a game has started.
         /// </summary>
-        private void SavePuzzle()
+        private void SavePuzzle(string word)
         {
             FeedbackMessage = "";
             if (!_guiController.GameStarted())
@@ -206,7 +205,7 @@ namespace SpellingBee.ViewModels
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _guiController.SavePuzzle(LowerText);
+            _guiController.SavePuzzle(word);
             FeedbackMessage = _guiController.GetLastMessage();
             LowerText = "";
         }
@@ -215,7 +214,7 @@ namespace SpellingBee.ViewModels
         /// Method <c>SaveCurrent</c> allows the user to click the SaveCurrent button to save state
         /// as long as a game has started.
         /// </summary>
-        private void SaveCurrent()
+        private void SaveCurrent(string word)
         {
             FeedbackMessage = "";
             if (!_guiController.GameStarted())
@@ -223,7 +222,7 @@ namespace SpellingBee.ViewModels
                 FeedbackMessage = "Game Not Started";
                 return;
             }
-            _guiController.SaveCurrent(LowerText);
+            _guiController.SaveCurrent(word);
             FeedbackMessage = _guiController.GetLastMessage();
             LowerText = "";
         }
@@ -282,15 +281,19 @@ namespace SpellingBee.ViewModels
         /// Method <c>NewGameFromWord</c> allows the user to start a new game from the word
         /// typed into the textbox as long as it is a valid pangram.
         /// </summary>
-        private void NewGameFromWord()
+        private void NewGameFromWord(String word)
         {
             FeedbackMessage = "";
-            _guiController.NewPuzzleBaseWord(LowerText);
+            if (word != null)
+            {
+                _guiController.NewPuzzleBaseWord(word);
+                FeedbackMessage = _guiController.GetLastMessage();
+            }
+            else
+                FeedbackMessage = "Not a valid pangram";
 
-            FeedbackMessage = _guiController.GetLastMessage();
             if (!FeedbackMessage.Equals("Not a valid pangram"))
                 UpdateState();
-            LowerText = "";
         }
 
         /// <summary>
