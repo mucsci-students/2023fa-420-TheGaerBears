@@ -26,3 +26,9 @@ jobs:
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Test
       run: dotnet test --no-build --verbosity normal ./SpellingBee/SpellingBee.csproj
+    - name: Upload coverage reports to Codecov
+    - name: Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
