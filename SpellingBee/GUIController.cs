@@ -178,8 +178,10 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage = "File saved";
-                _model.SaveCurrentGameState(saveName);
+                if (!_model.SaveCurrentGameState(saveName))
+                    _lastMessage = "Invalid save name";
+                else
+                    _lastMessage = "File saved";
             }
         }
 
@@ -200,9 +202,12 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage = "File saved";
+                
 
-                _model.SaveCurrentPuzzleState(saveName);
+                if (!_model.SaveCurrentPuzzleState(saveName))
+                    _lastMessage = "Invalid save name";
+                else
+                    _lastMessage = "File saved";
             }
         }
 
