@@ -30,7 +30,7 @@ namespace SpellingBee
         /// <summary>
         /// Displays the player's status based on points and a list of possible statuses.
         /// </summary>
-        public void ShowStatus(int playerPoints, int maxPoints, List<KeyValuePair<string, int>> statusTitles)
+        public void ShowStatus(int playerPoints, int maxPoints, List<KeyValuePair<string, int>> statusTitles, Dictionary<string, int> ranks)
         {
             double ratio = (double)playerPoints / maxPoints;
             double percentageAsDecimal = ratio * 100;
@@ -48,6 +48,17 @@ namespace SpellingBee
 
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
+
+            // Show the points needed for each rank
+            Console.WriteLine("\n");
+            Console.WriteLine("        Rank:                             Points needed:");
+            Console.WriteLine("        ================================================");
+            foreach (var rank in ranks)
+            {
+                int pointsPrint = rank.Value;
+                string space = String.Concat(Enumerable.Repeat(" ", (40 - rank.Key.Length - (pointsPrint.ToString().Length / 2) + (pointsPrint.ToString().Length % 2 == 0 ? 1 : 0))));
+                Console.WriteLine("        " + rank.Key + space + pointsPrint);
+            }
         }
 
         /// <summary>
