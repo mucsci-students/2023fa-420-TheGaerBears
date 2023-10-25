@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -25,8 +23,13 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Upload coverage reports to Codecov
+    - name: Test
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    
+    - name: Codecov
       uses: codecov/codecov-action@v3
       with:
-       files: ./coverage.xml,e2e-coverage.xml
+        files: coverage.opencover.xml
+        directory: FUI.Test
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
