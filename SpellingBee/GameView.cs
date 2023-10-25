@@ -9,7 +9,7 @@ namespace SpellingBee
 
     public class GameView
     {
-            private string[] tabCompletable = { "-exit", "-found words", "-help", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status" };
+            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status" };
         /// <summary>
         /// Center-aligns and displays the specified text in the console.
         /// </summary>
@@ -190,6 +190,11 @@ namespace SpellingBee
                                 temp = false;
                             }
                         }
+                        if (str.Length < userInput.Length)
+                        {
+                            temp = false;
+                        }
+
                         if (temp)
                         {
                             valid.Add(str);

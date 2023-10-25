@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj": {}
+    "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj": {}
   },
   "projects": {
-    "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj": {
+    "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
+        "projectUniqueName": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
         "projectName": "SpellingBee",
-        "projectPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
-        "packagesPath": "C:\\Users\\noahi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\obj\\",
+        "projectPath": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj",
+        "packagesPath": "C:\\Users\\turtl\\.nuget\\packages\\",
+        "outputPath": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\SpellingBee\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\noahi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\turtl\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -47,31 +47,31 @@
           "dependencies": {
             "Avalonia": {
               "target": "Package",
-              "version": "[11.0.2, )"
+              "version": "[11.0.5, )"
             },
             "Avalonia.Desktop": {
               "target": "Package",
-              "version": "[11.0.2, )"
+              "version": "[11.0.5, )"
             },
             "Avalonia.Diagnostics": {
               "target": "Package",
-              "version": "[11.0.2, )"
+              "version": "[11.0.5, )"
             },
             "Avalonia.Fonts.Inter": {
               "target": "Package",
-              "version": "[11.0.2, )"
+              "version": "[11.0.5, )"
             },
             "Avalonia.ReactiveUI": {
               "target": "Package",
-              "version": "[11.0.2, )"
+              "version": "[11.0.5, )"
             },
             "Avalonia.Themes.Fluent": {
               "target": "Package",
-              "version": "[11.0.2, )"
+              "version": "[11.0.5, )"
             },
             "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
-              "version": "[7.0.10, )"
+              "version": "[7.0.13, )"
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
@@ -110,20 +110,20 @@
         }
       }
     },
-    "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj": {
+    "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj",
+        "projectUniqueName": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj",
         "projectName": "TestSpellingBee",
-        "projectPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj",
-        "packagesPath": "C:\\Users\\noahi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\TestSpellingBee\\obj\\",
+        "projectPath": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\TestSpellingBee\\TestSpellingBee.csproj",
+        "packagesPath": "C:\\Users\\turtl\\.nuget\\packages\\",
+        "outputPath": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\TestSpellingBee\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\noahi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\turtl\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -139,8 +139,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj": {
-                "projectPath": "C:\\Users\\noahi\\Source\\Repos\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj"
+              "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj": {
+                "projectPath": "C:\\GaerBears\\2023fa-420-TheGaerBears\\2023fa-420-TheGaerBears\\SpellingBee\\SpellingBee.csproj"
               }
             }
           }
@@ -157,13 +157,13 @@
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[17.5.0, )"
+              "version": "[17.7.2, )"
             },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[6.0.0, )"
             },
             "xunit": {
               "target": "Package",
@@ -173,7 +173,7 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.4.5, )"
+              "version": "[2.5.1, )"
             }
           },
           "imports": [
