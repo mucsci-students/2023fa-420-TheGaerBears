@@ -30,7 +30,7 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Dotnet Tests            # Name of the check run which will be created
-        path: TestSpellingBee/TestResults/test-results.trx   # Path to test results
+        path: ./TestSpellingBee/TestResults/b98f5f38-2c0f-4c86-b90a-bfa576e39e39/coverage.cobertura.xml  # Path to test results
         reporter: dotnet-trx        # Format of test results
     - name: Codecov
       uses: codecov/codecov-action@v3
