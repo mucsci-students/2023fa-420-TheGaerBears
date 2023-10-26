@@ -186,6 +186,22 @@ namespace SpellingBee
         }
 
         /// <summary>
+        /// Gets the hint table from the model and retu
+        /// </summary>
+        /// <returns></returns>
+        public void Hint()
+        {
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else
+            {
+                _lastMessage = _model.PrintHintTable();
+            }
+        }
+
+        /// <summary>
         /// Method <c>SavePuzzle</c> allows the user to save the current puzzle without progress.
         /// <para>
         /// The name of the save file is first typed in,

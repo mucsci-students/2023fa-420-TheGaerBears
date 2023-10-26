@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 
 namespace SpellingBee.ViewModels
 {
@@ -31,6 +30,7 @@ namespace SpellingBee.ViewModels
         private string _color1 = "Red";
         private string _color2 = "Green";
         private string _feedbackMessage = "";
+        private string _hint = "";
 
         private readonly GuiController _guiController;
 
@@ -52,6 +52,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> HelpCommand { get; }
         public ReactiveCommand<Unit,Unit> ToggleColorblind { get; }
         public ReactiveCommand<Unit, Unit> Backspace { get; }
+        public ReactiveCommand<Unit, Unit> HintCommand { get; }
 
         /// <summary>
         /// Instantiates the <c>MainWindowViewModel</c> with <c>GuiController</c> and <c>GameModel</c> 
@@ -80,6 +81,7 @@ namespace SpellingBee.ViewModels
             HelpCommand = ReactiveCommand.Create(ShowHelp);
             ToggleColorblind = ReactiveCommand.Create(ToggleColors);
             Backspace = ReactiveCommand.Create(DeleteFromEnd);
+            HintCommand = ReactiveCommand.Create(Hint);
         }
 
         /// <summary>
@@ -293,7 +295,9 @@ namespace SpellingBee.ViewModels
                 FeedbackMessage = "Not a valid pangram";
 
             if (!FeedbackMessage.Equals("Not a valid pangram"))
+            {
                 UpdateState();
+            }
         }
 
         /// <summary>
@@ -312,6 +316,12 @@ namespace SpellingBee.ViewModels
             FeedbackMessage = "";
             _guiController.NewPuzzle();
             UpdateState();
+        }
+
+        private void Hint()
+        {
+            _guiController.Hint();
+            HintString = _guiController.GetLastMessage();
         }
 
         public string FeedbackMessage
@@ -415,5 +425,11 @@ namespace SpellingBee.ViewModels
             get { return _color2; }
             set { this.RaiseAndSetIfChanged(ref _color2, value); }
         }
-      }
+
+        public string HintString
+        {
+            get { return _hint; }
+            set { this.RaiseAndSetIfChanged(ref _hint, value); }
+        }
+    }
     }
