@@ -18,7 +18,7 @@ jobs:
     - name: Install Coverlet
       run:  cd TestSpellingBee && dotnet add package coverlet.msbuild
     - name: Restore dependencies
-      run: dotnet restore ./SpellingBee/SpellingBee.csproj
+      run: dotnet restore ./SpellingBee/SpellingBee.csproj 
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Test
