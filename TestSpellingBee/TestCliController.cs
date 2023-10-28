@@ -20,7 +20,7 @@ namespace TestSpellingBee
   
             var originalBaseWord = model.GetBaseWord();
 
-            controller.Shuffle();
+            controller.ShuffleBaseWord();
 
             var shuffledBaseWord = model.GetBaseWord();
          
