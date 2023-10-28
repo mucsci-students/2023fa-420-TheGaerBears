@@ -8,7 +8,7 @@ namespace SpellingBee
     /// Class <c>GuiController</c> is responsible for controlling the game flow and 
     /// interaction between the GameModel and the GUI.
     /// </summary>
-    public class GuiController
+    public class GuiController : Controller
     {
         // A GameModel object used by the GuiController.
         private readonly GameModel _model;
@@ -21,7 +21,7 @@ namespace SpellingBee
         /// a <c>GameModel</c> as long as model is not null.
         /// /// <param name="model">the GameModel to initialize the GuiController.</param>
         /// </summary>
-        public GuiController(GameModel model)
+        public GuiController(GameModel model) : base (model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
         }
@@ -34,7 +34,7 @@ namespace SpellingBee
         /// generates valid words to guess from.
         /// </para>
         /// </summary>
-        public void NewPuzzle()
+        public override void NewPuzzle()
         {
             _model.Reset();
             _model.SelectRandomWordForPuzzle();
@@ -50,7 +50,7 @@ namespace SpellingBee
         /// </para>
         /// <param name="word">the new baseword to start the puzzle.</param>
         /// </summary>
-        public void NewPuzzleBaseWord(string word)
+        public override void NewPuzzleBaseWord(string word)
         {
             if (!_model.SetBaseWordForPuzzle(word))
             {
@@ -73,7 +73,7 @@ namespace SpellingBee
         /// </para>
         /// <param name="word">the word guessed by the user.</param>
         /// </summary>
-        public void Guess(string word)
+        public override void Guess(string word)
         {  
             if (_model.GetBaseWord().Count == 0)
             {
@@ -101,17 +101,17 @@ namespace SpellingBee
         /// Method <c>GetLastMessage</c> returns the string currently stored in <c>_lastMessage</c>. 
         /// <returns>The string message.</returns>
         /// </summary>
-        public string GetLastMessage()
+        /*public string GetLastMessage()
         {
             return _lastMessage;
-        }
+        }*/
 
         /// <summary>
         /// Method <c>ShuffleBaseWord</c> is used in the creation of a new game
         /// to shuffle the letters of the pangram before displaying them.
         /// A game must be started.
         /// </summary>
-        public void ShuffleBaseWord()
+        public override void ShuffleBaseWord()
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -139,10 +139,10 @@ namespace SpellingBee
         /// Method <c>GetBaseWord</c> returns the baseword of the puzzle.
         /// /// <returns>The list of characters that make up the baseword.</returns>
         /// </summary>
-        public List<char> GetBaseWord()
+        /*public List<char> GetBaseWord()
         {
             return _model.GetBaseWord();
-        }
+        }*/
 
         /// <summary>
         /// Method <c>Shuffle</c> swaps the letters of the baseword while
@@ -170,7 +170,7 @@ namespace SpellingBee
         /// </para>
         /// <param name="saveName">the name of the save file the user types.</param>
         /// </summary>
-        public void SaveCurrent(string saveName)
+        public override void SaveCurrent(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -210,7 +210,7 @@ namespace SpellingBee
         /// </para>
         /// <param name="saveName">the name of the save file the user types.</param>
         /// </summary>
-        public void SavePuzzle(string saveName)
+        public override void SavePuzzle(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -231,7 +231,7 @@ namespace SpellingBee
         /// Method <c>Load</c> allows the user to load a saved puzzle or game.
         /// <param name="saveName">the name of the saved file.</param>
         /// </summary>
-        public void Load(string fileName)
+        public override void Load(string fileName)
         {
             int fileId = -1;
             var files = _model.GetAvailableSaveFiles();
