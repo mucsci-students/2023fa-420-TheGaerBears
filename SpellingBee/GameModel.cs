@@ -32,7 +32,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the current score of the player.
         /// </summary>
-        public int GetCurrentScore()
+        public virtual int GetCurrentScore()
         {
             return playerPoints; 
         }
@@ -81,7 +81,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves a list of pangrams from the database.
         /// </summary>
-        public List<string> PangramList()
+        public virtual List<string> PangramList()
         {
             string query = $"select word from pangrams";
             string connectionString = DatabaseConnectionString;
@@ -317,7 +317,7 @@ namespace SpellingBee
         /// <summary>
         /// Calculates the points required for the player to achieve the next rank.
         /// </summary>
-        public int PointsToNextRank()
+        public virtual int PointsToNextRank()
         {
             // Default status
             int status = 0; 
@@ -404,7 +404,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves a list of available save files.
         /// </summary>
-        public List<string> GetAvailableSaveFiles()
+        public virtual List<string> GetAvailableSaveFiles()
         {
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves/")).ToList();
@@ -413,7 +413,7 @@ namespace SpellingBee
         /// <summary>
         /// Loads a game state from a specified file ID.
         /// </summary>
-        public GameModel? LoadGameStateFromFile(int fileId)
+        public virtual GameModel? LoadGameStateFromFile(int fileId)
         {
             var fileList = GetAvailableSaveFiles();
             if (fileList.Count > fileId)
@@ -454,7 +454,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the base word of the current puzzle.
         /// </summary>
-        public List<char> GetBaseWord()
+        public virtual List<char> GetBaseWord()
         {
             return baseWord;
         }
@@ -462,7 +462,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the required letter of the current puzzle.
         /// </summary>
-        public char GetRequiredLetter()
+        public virtual char GetRequiredLetter()
         {
             return requiredLetter;
         }
@@ -470,7 +470,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the player's current points.
         /// </summary>
-        public int GetPlayerPoints()
+        public virtual int GetPlayerPoints()
         {
             return playerPoints;
         }
@@ -478,7 +478,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the status titles with their associated point thresholds.
         /// </summary>
-        public List<KeyValuePair<string, int>> GetStatusTitles()
+        public virtual List<KeyValuePair<string, int>> GetStatusTitles()
         {
             return statusTitles;
         }
@@ -486,7 +486,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves a list of words found by the player.
         /// </summary>
-        public IEnumerable<string> GetFoundWords()
+        public virtual IEnumerable<string> GetFoundWords()
         {
             return foundWords;
         }
@@ -494,7 +494,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the maximum points achievable for the current puzzle.
         /// </summary>
-        public int GetMaxPoints()
+        public virtual int GetMaxPoints()
         {
             return maxPoints;
         }
@@ -502,7 +502,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the valid words for the current puzzle.
         /// </summary>
-        public List<String> GetValidWords()
+        public virtual List<String> GetValidWords()
         {
             return validWords;
         }
@@ -620,7 +620,7 @@ namespace SpellingBee
         /// <returns>
         /// A string that contains the hint information
         /// </returns>
-        public string PrintHintTable()
+        public virtual string PrintHintTable()
         {
             // Getting data for hints
             Dictionary<char, int[]> data = LettersInWord();

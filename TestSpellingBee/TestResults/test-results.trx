@@ -1,135 +1,141 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TestRun id="e5a0331b-bc64-45eb-a35e-e42775efb34d" name="skyfa@SURFACE 2023-10-26 00:14:47" runUser="SURFACE\skyfa" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
-  <Times creation="2023-10-26T00:14:47.2588671-04:00" queuing="2023-10-26T00:14:47.2588675-04:00" start="2023-10-26T00:14:45.9188859-04:00" finish="2023-10-26T00:14:47.5442103-04:00" />
-  <TestSettings name="default" id="a00e77b6-d13c-462d-8515-c2cbf60b834f">
-    <Deployment runDeploymentRoot="skyfa_SURFACE_2023-10-26_00_14_47" />
+<TestRun id="e4939ece-fa4f-41b6-8436-09f8a892b17b" name="skyfa@SURFACE 2023-10-28 12:33:48" runUser="SURFACE\skyfa" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2023-10-28T12:33:48.2840587-04:00" queuing="2023-10-28T12:33:48.2840592-04:00" start="2023-10-28T12:33:44.4444532-04:00" finish="2023-10-28T12:33:49.1563092-04:00" />
+  <TestSettings name="default" id="56868398-8f22-4bb0-b91f-28c6ad87bd9f">
+    <Deployment runDeploymentRoot="skyfa_SURFACE_2023-10-28_12_33_48" />
   </TestSettings>
   <Results>
-    <UnitTestResult executionId="c83e80ff-9239-4e29-a90a-643b10f820b9" testId="45701b02-8e02-f84f-f8d8-cc849dd1d38a" testName="TestSpellingBee.TestModel.ValidatePangramList" computerName="SURFACE" duration="00:00:00.0844678" startTime="2023-10-26T00:14:47.3685407-04:00" endTime="2023-10-26T00:14:47.3685411-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c83e80ff-9239-4e29-a90a-643b10f820b9" />
-    <UnitTestResult executionId="6477af19-97bc-4f1c-913f-4d686ece2158" testId="80fb9270-93af-b3dd-6e43-78eb6fc83df0" testName="TestSpellingBee.TestModel.PlayerPointsUpdate" computerName="SURFACE" duration="00:00:00.0706064" startTime="2023-10-26T00:14:47.2839801-04:00" endTime="2023-10-26T00:14:47.2839802-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6477af19-97bc-4f1c-913f-4d686ece2158" />
-    <UnitTestResult executionId="ee3d3d06-f205-43f6-b79a-c8dafde377d3" testId="8a504728-fe8b-e269-9e1f-81c3e3803ee3" testName="TestSpellingBee.TestGuiController.ValidateShuffle" computerName="SURFACE" duration="00:00:00.0188986" startTime="2023-10-26T00:14:47.4894578-04:00" endTime="2023-10-26T00:14:47.4894581-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee3d3d06-f205-43f6-b79a-c8dafde377d3" />
-    <UnitTestResult executionId="b3063791-b119-4fa3-af2e-5c45ba50fff0" testId="2abf6f41-35a8-e58d-0ef8-0d7eaf5695e2" testName="TestSpellingBee.TestGuiController.SaveVerify" computerName="SURFACE" duration="00:00:00.0652327" startTime="2023-10-26T00:14:47.4704914-04:00" endTime="2023-10-26T00:14:47.4704920-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b3063791-b119-4fa3-af2e-5c45ba50fff0" />
-    <UnitTestResult executionId="66c7f792-12d2-4db0-995f-21a80d44b5fc" testId="8cb9b470-5e3a-1e36-9ec1-8e482841be52" testName="TestSpellingBee.TestModel.SaveVerify" computerName="SURFACE" duration="00:00:00.0887783" startTime="2023-10-26T00:14:47.2204049-04:00" endTime="2023-10-26T00:14:47.2204049-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="66c7f792-12d2-4db0-995f-21a80d44b5fc" />
-    <UnitTestResult executionId="91334ec8-39b5-4b71-9d90-3a86258cbafc" testId="28b282d6-1c41-3882-badd-88a65f2f9b56" testName="TestSpellingBee.TestGuiController.LoadVerify" computerName="SURFACE" duration="00:00:00.2392002" startTime="2023-10-26T00:14:47.0823168-04:00" endTime="2023-10-26T00:14:47.0823171-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="91334ec8-39b5-4b71-9d90-3a86258cbafc" />
-    <UnitTestResult executionId="25cead2f-53f0-4f45-8827-afff026dddd6" testId="1c7ddffd-ab26-1231-595e-6663e81b8c46" testName="TestSpellingBee.TestModel.LoadVerify" computerName="SURFACE" duration="00:00:00.2399527" startTime="2023-10-26T00:14:47.0829991-04:00" endTime="2023-10-26T00:14:47.0829992-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="25cead2f-53f0-4f45-8827-afff026dddd6" />
-    <UnitTestResult executionId="6e7ca588-2eb8-4d83-934f-1046eedbed03" testId="e421349d-9284-2396-c94a-98efa62c6aef" testName="TestSpellingBee.TestGuiController.NewPuzzleResetsState" computerName="SURFACE" duration="00:00:00.1133330" startTime="2023-10-26T00:14:47.2826161-04:00" endTime="2023-10-26T00:14:47.2826164-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6e7ca588-2eb8-4d83-934f-1046eedbed03" />
-    <UnitTestResult executionId="5652af95-a839-40f1-b94b-06305cfcb836" testId="c08a407c-48e3-64e7-64d9-7d22785f8d34" testName="TestSpellingBee.TestCliController.NewPuzzleResetsBaseWord" computerName="SURFACE" duration="00:00:00.1233861" startTime="2023-10-26T00:14:47.4172058-04:00" endTime="2023-10-26T00:14:47.4172060-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5652af95-a839-40f1-b94b-06305cfcb836" />
-    <UnitTestResult executionId="d031635b-d017-4ebb-a0e9-273c0e215782" testId="88d6177f-f8ab-2a1e-3712-0b151de0088c" testName="TestSpellingBee.TestModel.ValidateGenerateValidWords" computerName="SURFACE" duration="00:00:00.0413203" startTime="2023-10-26T00:14:47.1244735-04:00" endTime="2023-10-26T00:14:47.1244737-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d031635b-d017-4ebb-a0e9-273c0e215782" />
-    <UnitTestResult executionId="69823dd3-c9bc-4ac2-9fd2-195b84befdc0" testId="b6e3ed1f-047a-c191-4fbe-1bb9065bb935" testName="TestSpellingBee.TestCliController.NewPuzzleResetsPoints" computerName="SURFACE" duration="00:00:00.0928728" startTime="2023-10-26T00:14:47.1940596-04:00" endTime="2023-10-26T00:14:47.1940599-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69823dd3-c9bc-4ac2-9fd2-195b84befdc0" />
-    <UnitTestResult executionId="10463d14-84bd-4d23-848c-e3aaa4d6a00c" testId="133fb162-764b-92fd-b767-a104e008e9e0" testName="TestSpellingBee.TestGuiController.GuessInvalid" computerName="SURFACE" duration="00:00:00.0867735" startTime="2023-10-26T00:14:47.1692494-04:00" endTime="2023-10-26T00:14:47.1692497-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="10463d14-84bd-4d23-848c-e3aaa4d6a00c" />
-    <UnitTestResult executionId="8163d2a4-af2d-4724-844e-d812197442ba" testId="8b1b782d-b1a3-0260-7ed9-566203cb6d89" testName="TestSpellingBee.TestGuiController.NewPuzzleFromBaseWord" computerName="SURFACE" duration="00:00:00.0642342" startTime="2023-10-26T00:14:47.4049657-04:00" endTime="2023-10-26T00:14:47.4049661-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8163d2a4-af2d-4724-844e-d812197442ba" />
-    <UnitTestResult executionId="46933d17-e5bd-4f51-94bc-31f3cd54c606" testId="8c4013ec-d24d-99f6-f788-82fcde006394" testName="TestSpellingBee.TestGuiController.GuessValid" computerName="SURFACE" duration="00:00:00.0578798" startTime="2023-10-26T00:14:47.3406085-04:00" endTime="2023-10-26T00:14:47.3406089-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="46933d17-e5bd-4f51-94bc-31f3cd54c606" />
-    <UnitTestResult executionId="a42a1c0c-b55b-4126-bf63-ce147e1bbbe3" testId="2677fce3-65f1-cd8e-7f71-4e79f9786a52" testName="TestSpellingBee.TestCliController.GuessInvalid" computerName="SURFACE" duration="00:00:00.0798514" startTime="2023-10-26T00:14:47.1010721-04:00" endTime="2023-10-26T00:14:47.1010723-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a42a1c0c-b55b-4126-bf63-ce147e1bbbe3" />
-    <UnitTestResult executionId="1039827d-ff52-4940-84af-cab34638236e" testId="7bc0c037-9e5f-f366-a7c1-553655cb1fb1" testName="TestSpellingBee.TestCliController.GuessValid" computerName="SURFACE" duration="00:00:00.1754599" startTime="2023-10-26T00:14:47.0217606-04:00" endTime="2023-10-26T00:14:47.0217779-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1039827d-ff52-4940-84af-cab34638236e" />
-    <UnitTestResult executionId="56e695c0-f06e-4ebe-a93f-4736a7ca58d2" testId="e7624b71-7006-5488-bade-6d91ac6a5c33" testName="TestSpellingBee.TestCliController.NewPuzzleFromBaseWord" computerName="SURFACE" duration="00:00:00.0763168" startTime="2023-10-26T00:14:47.2937429-04:00" endTime="2023-10-26T00:14:47.2937432-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="56e695c0-f06e-4ebe-a93f-4736a7ca58d2" />
-    <UnitTestResult executionId="13916594-9238-4bf6-83f1-0d449eed9e78" testId="6b0502c0-9898-9010-dfba-b388626bf254" testName="TestSpellingBee.TestCliController.ValidateShuffle" computerName="SURFACE" duration="00:00:00.0231073" startTime="2023-10-26T00:14:47.2205555-04:00" endTime="2023-10-26T00:14:47.2205556-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="13916594-9238-4bf6-83f1-0d449eed9e78" />
+    <UnitTestResult executionId="920c50ef-4c4c-4c17-9b2e-e2ca8c33407d" testId="e7624b71-7006-5488-bade-6d91ac6a5c33" testName="TestSpellingBee.TestCliController.NewPuzzleFromBaseWord" computerName="SURFACE" duration="00:00:00.1971077" startTime="2023-10-28T12:33:48.4859205-04:00" endTime="2023-10-28T12:33:48.4859211-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="920c50ef-4c4c-4c17-9b2e-e2ca8c33407d" />
+    <UnitTestResult executionId="eaa53750-a2f2-4092-a993-907cce78a599" testId="88d6177f-f8ab-2a1e-3712-0b151de0088c" testName="TestSpellingBee.TestModel.ValidateGenerateValidWords" computerName="SURFACE" duration="00:00:00.1397942" startTime="2023-10-28T12:33:48.1758054-04:00" endTime="2023-10-28T12:33:48.1758058-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eaa53750-a2f2-4092-a993-907cce78a599" />
+    <UnitTestResult executionId="86badb9a-c7ee-4d85-b11d-413630b359eb" testId="28b282d6-1c41-3882-badd-88a65f2f9b56" testName="TestSpellingBee.TestGuiController.LoadVerify" computerName="SURFACE" duration="00:00:01.4521184" startTime="2023-10-28T12:33:48.0361379-04:00" endTime="2023-10-28T12:33:48.0361380-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="86badb9a-c7ee-4d85-b11d-413630b359eb" />
+    <UnitTestResult executionId="dfa210fa-4f01-48f5-b532-37c894e403cc" testId="80fb9270-93af-b3dd-6e43-78eb6fc83df0" testName="TestSpellingBee.TestModel.PlayerPointsUpdate" computerName="SURFACE" duration="00:00:00.1462181" startTime="2023-10-28T12:33:48.5872366-04:00" endTime="2023-10-28T12:33:48.5872371-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dfa210fa-4f01-48f5-b532-37c894e403cc" />
+    <UnitTestResult executionId="8bbb7cb6-856e-4278-86ae-463fc243b1d3" testId="7bc0c037-9e5f-f366-a7c1-553655cb1fb1" testName="TestSpellingBee.TestCliController.GuessValid" computerName="SURFACE" duration="00:00:01.1649459" startTime="2023-10-28T12:33:47.7667148-04:00" endTime="2023-10-28T12:33:47.7677152-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8bbb7cb6-856e-4278-86ae-463fc243b1d3" />
+    <UnitTestResult executionId="cd5b9246-9e61-4598-9156-f778c7b57da4" testId="2abf6f41-35a8-e58d-0ef8-0d7eaf5695e2" testName="TestSpellingBee.TestGuiController.SaveVerify" computerName="SURFACE" duration="00:00:00.1298636" startTime="2023-10-28T12:33:48.9255401-04:00" endTime="2023-10-28T12:33:48.9255408-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cd5b9246-9e61-4598-9156-f778c7b57da4" />
+    <UnitTestResult executionId="f2dc667a-fe8a-4705-8e7f-416dd26cd639" testId="8c4013ec-d24d-99f6-f788-82fcde006394" testName="TestSpellingBee.TestGuiController.GuessValid" computerName="SURFACE" duration="00:00:00.1239018" startTime="2023-10-28T12:33:48.6947111-04:00" endTime="2023-10-28T12:33:48.6947112-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2dc667a-fe8a-4705-8e7f-416dd26cd639" />
+    <UnitTestResult executionId="ded92cf1-6534-435b-8f28-4837d637181d" testId="133fb162-764b-92fd-b767-a104e008e9e0" testName="TestSpellingBee.TestGuiController.GuessInvalid" computerName="SURFACE" duration="00:00:00.1822128" startTime="2023-10-28T12:33:48.2182149-04:00" endTime="2023-10-28T12:33:48.2182155-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ded92cf1-6534-435b-8f28-4837d637181d" />
+    <UnitTestResult executionId="ba74164a-429c-4a18-b1c1-fe1dbe71e24d" testId="8cb9b470-5e3a-1e36-9ec1-8e482841be52" testName="TestSpellingBee.TestModel.SaveVerify" computerName="SURFACE" duration="00:00:00.2648908" startTime="2023-10-28T12:33:48.4408912-04:00" endTime="2023-10-28T12:33:48.4408916-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ba74164a-429c-4a18-b1c1-fe1dbe71e24d" />
+    <UnitTestResult executionId="46f0899b-1d0f-4243-b93d-d7faf0151ca5" testId="1c7ddffd-ab26-1231-595e-6663e81b8c46" testName="TestSpellingBee.TestModel.LoadVerify" computerName="SURFACE" duration="00:00:01.4521379" startTime="2023-10-28T12:33:48.0358094-04:00" endTime="2023-10-28T12:33:48.0358098-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="46f0899b-1d0f-4243-b93d-d7faf0151ca5" />
+    <UnitTestResult executionId="1579be04-3e77-424f-b8c6-d17a2bb4711b" testId="2677fce3-65f1-cd8e-7f71-4e79f9786a52" testName="TestSpellingBee.TestCliController.GuessInvalid" computerName="SURFACE" duration="00:00:00.2030318" startTime="2023-10-28T12:33:47.9676619-04:00" endTime="2023-10-28T12:33:47.9676622-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1579be04-3e77-424f-b8c6-d17a2bb4711b" />
+    <UnitTestResult executionId="b1011843-985d-4b04-97df-84081c1747ee" testId="8b1b782d-b1a3-0260-7ed9-566203cb6d89" testName="TestSpellingBee.TestGuiController.NewPuzzleFromBaseWord" computerName="SURFACE" duration="00:00:00.1006273" startTime="2023-10-28T12:33:48.7954901-04:00" endTime="2023-10-28T12:33:48.7954910-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b1011843-985d-4b04-97df-84081c1747ee" />
+    <UnitTestResult executionId="3938d3be-3ac1-406f-9c04-f9982cf404be" testId="8a504728-fe8b-e269-9e1f-81c3e3803ee3" testName="TestSpellingBee.TestGuiController.ValidateShuffle" computerName="SURFACE" duration="00:00:00.0684737" startTime="2023-10-28T12:33:48.9943438-04:00" endTime="2023-10-28T12:33:48.9943443-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3938d3be-3ac1-406f-9c04-f9982cf404be" />
+    <UnitTestResult executionId="1ac8de2b-a185-4366-bc97-6bf33ff4502b" testId="b6e3ed1f-047a-c191-4fbe-1bb9065bb935" testName="TestSpellingBee.TestCliController.NewPuzzleResetsPoints" computerName="SURFACE" duration="00:00:00.2200509" startTime="2023-10-28T12:33:48.1878202-04:00" endTime="2023-10-28T12:33:48.1878210-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1ac8de2b-a185-4366-bc97-6bf33ff4502b" />
+    <UnitTestResult executionId="c8f2b05f-4e7f-41e5-9cad-bed985ab4c9f" testId="d1092382-72b8-598f-aad7-19b9d29155bf" testName="TestSpellingBee.TestModel.ValidateAssignFromMethod" computerName="SURFACE" duration="00:00:00.1858775" startTime="2023-10-28T12:33:48.9097881-04:00" endTime="2023-10-28T12:33:48.9097884-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c8f2b05f-4e7f-41e5-9cad-bed985ab4c9f" />
+    <UnitTestResult executionId="56eaf115-b0dd-4f2c-9d59-6dab250daec6" testId="e421349d-9284-2396-c94a-98efa62c6aef" testName="TestSpellingBee.TestGuiController.NewPuzzleResetsState" computerName="SURFACE" duration="00:00:00.3522674" startTime="2023-10-28T12:33:48.5706798-04:00" endTime="2023-10-28T12:33:48.5706801-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="56eaf115-b0dd-4f2c-9d59-6dab250daec6" />
+    <UnitTestResult executionId="6d24fd83-5d46-463a-a0d0-34292123719d" testId="c08a407c-48e3-64e7-64d9-7d22785f8d34" testName="TestSpellingBee.TestCliController.NewPuzzleResetsBaseWord" computerName="SURFACE" duration="00:00:00.2085411" startTime="2023-10-28T12:33:48.6946332-04:00" endTime="2023-10-28T12:33:48.6946338-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6d24fd83-5d46-463a-a0d0-34292123719d" />
+    <UnitTestResult executionId="d49003d4-ef00-4f3c-bac8-b070369f7ea4" testId="45701b02-8e02-f84f-f8d8-cc849dd1d38a" testName="TestSpellingBee.TestModel.ValidatePangramList" computerName="SURFACE" duration="00:00:00.1362495" startTime="2023-10-28T12:33:48.7237260-04:00" endTime="2023-10-28T12:33:48.7237268-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d49003d4-ef00-4f3c-bac8-b070369f7ea4" />
+    <UnitTestResult executionId="8ac060ce-bb32-451f-beac-47bc562b24a0" testId="6b0502c0-9898-9010-dfba-b388626bf254" testName="TestSpellingBee.TestCliController.ValidateShuffle" computerName="SURFACE" duration="00:00:00.1004674" startTime="2023-10-28T12:33:48.2884996-04:00" endTime="2023-10-28T12:33:48.2885000-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8ac060ce-bb32-451f-beac-47bc562b24a0" />
   </Results>
   <TestDefinitions>
     <UnitTest name="TestSpellingBee.TestCliController.NewPuzzleResetsPoints" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="b6e3ed1f-047a-c191-4fbe-1bb9065bb935">
-      <Execution id="69823dd3-c9bc-4ac2-9fd2-195b84befdc0" />
+      <Execution id="1ac8de2b-a185-4366-bc97-6bf33ff4502b" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestCliController" name="NewPuzzleResetsPoints" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.GuessValid" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="8c4013ec-d24d-99f6-f788-82fcde006394">
-      <Execution id="46933d17-e5bd-4f51-94bc-31f3cd54c606" />
+      <Execution id="f2dc667a-fe8a-4705-8e7f-416dd26cd639" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="GuessValid" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestCliController.NewPuzzleFromBaseWord" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="e7624b71-7006-5488-bade-6d91ac6a5c33">
-      <Execution id="56e695c0-f06e-4ebe-a93f-4736a7ca58d2" />
+      <Execution id="920c50ef-4c4c-4c17-9b2e-e2ca8c33407d" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestCliController" name="NewPuzzleFromBaseWord" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.SaveVerify" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="2abf6f41-35a8-e58d-0ef8-0d7eaf5695e2">
-      <Execution id="b3063791-b119-4fa3-af2e-5c45ba50fff0" />
+      <Execution id="cd5b9246-9e61-4598-9156-f778c7b57da4" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="SaveVerify" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestCliController.NewPuzzleResetsBaseWord" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="c08a407c-48e3-64e7-64d9-7d22785f8d34">
-      <Execution id="5652af95-a839-40f1-b94b-06305cfcb836" />
+      <Execution id="6d24fd83-5d46-463a-a0d0-34292123719d" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestCliController" name="NewPuzzleResetsBaseWord" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestModel.ValidateGenerateValidWords" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="88d6177f-f8ab-2a1e-3712-0b151de0088c">
-      <Execution id="d031635b-d017-4ebb-a0e9-273c0e215782" />
+      <Execution id="eaa53750-a2f2-4092-a993-907cce78a599" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestModel" name="ValidateGenerateValidWords" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.NewPuzzleResetsState" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="e421349d-9284-2396-c94a-98efa62c6aef">
-      <Execution id="6e7ca588-2eb8-4d83-934f-1046eedbed03" />
+      <Execution id="56eaf115-b0dd-4f2c-9d59-6dab250daec6" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="NewPuzzleResetsState" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.LoadVerify" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="28b282d6-1c41-3882-badd-88a65f2f9b56">
-      <Execution id="91334ec8-39b5-4b71-9d90-3a86258cbafc" />
+      <Execution id="86badb9a-c7ee-4d85-b11d-413630b359eb" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="LoadVerify" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.NewPuzzleFromBaseWord" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="8b1b782d-b1a3-0260-7ed9-566203cb6d89">
-      <Execution id="8163d2a4-af2d-4724-844e-d812197442ba" />
+      <Execution id="b1011843-985d-4b04-97df-84081c1747ee" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="NewPuzzleFromBaseWord" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.GuessInvalid" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="133fb162-764b-92fd-b767-a104e008e9e0">
-      <Execution id="10463d14-84bd-4d23-848c-e3aaa4d6a00c" />
+      <Execution id="ded92cf1-6534-435b-8f28-4837d637181d" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="GuessInvalid" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestCliController.GuessInvalid" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="2677fce3-65f1-cd8e-7f71-4e79f9786a52">
-      <Execution id="a42a1c0c-b55b-4126-bf63-ce147e1bbbe3" />
+      <Execution id="1579be04-3e77-424f-b8c6-d17a2bb4711b" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestCliController" name="GuessInvalid" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestGuiController.ValidateShuffle" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="8a504728-fe8b-e269-9e1f-81c3e3803ee3">
-      <Execution id="ee3d3d06-f205-43f6-b79a-c8dafde377d3" />
+      <Execution id="3938d3be-3ac1-406f-9c04-f9982cf404be" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestGuiController" name="ValidateShuffle" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestModel.LoadVerify" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="1c7ddffd-ab26-1231-595e-6663e81b8c46">
-      <Execution id="25cead2f-53f0-4f45-8827-afff026dddd6" />
+      <Execution id="46f0899b-1d0f-4243-b93d-d7faf0151ca5" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestModel" name="LoadVerify" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestCliController.GuessValid" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="7bc0c037-9e5f-f366-a7c1-553655cb1fb1">
-      <Execution id="1039827d-ff52-4940-84af-cab34638236e" />
+      <Execution id="8bbb7cb6-856e-4278-86ae-463fc243b1d3" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestCliController" name="GuessValid" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestCliController.ValidateShuffle" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="6b0502c0-9898-9010-dfba-b388626bf254">
-      <Execution id="13916594-9238-4bf6-83f1-0d449eed9e78" />
+      <Execution id="8ac060ce-bb32-451f-beac-47bc562b24a0" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestCliController" name="ValidateShuffle" />
     </UnitTest>
+    <UnitTest name="TestSpellingBee.TestModel.ValidateAssignFromMethod" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="d1092382-72b8-598f-aad7-19b9d29155bf">
+      <Execution id="c8f2b05f-4e7f-41e5-9cad-bed985ab4c9f" />
+      <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestModel" name="ValidateAssignFromMethod" />
+    </UnitTest>
     <UnitTest name="TestSpellingBee.TestModel.SaveVerify" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="8cb9b470-5e3a-1e36-9ec1-8e482841be52">
-      <Execution id="66c7f792-12d2-4db0-995f-21a80d44b5fc" />
+      <Execution id="ba74164a-429c-4a18-b1c1-fe1dbe71e24d" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestModel" name="SaveVerify" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestModel.PlayerPointsUpdate" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="80fb9270-93af-b3dd-6e43-78eb6fc83df0">
-      <Execution id="6477af19-97bc-4f1c-913f-4d686ece2158" />
+      <Execution id="dfa210fa-4f01-48f5-b532-37c894e403cc" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestModel" name="PlayerPointsUpdate" />
     </UnitTest>
     <UnitTest name="TestSpellingBee.TestModel.ValidatePangramList" storage="c:\users\skyfa\source\repos\mucsci-students\2023fa-420-thegaerbears\testspellingbee\bin\debug\net6.0\testspellingbee.dll" id="45701b02-8e02-f84f-f8d8-cc849dd1d38a">
-      <Execution id="c83e80ff-9239-4e29-a90a-643b10f820b9" />
+      <Execution id="d49003d4-ef00-4f3c-bac8-b070369f7ea4" />
       <TestMethod codeBase="C:\Users\skyfa\source\repos\mucsci-students\2023fa-420-TheGaerBears\TestSpellingBee\bin\Debug\net6.0\TestSpellingBee.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TestSpellingBee.TestModel" name="ValidatePangramList" />
     </UnitTest>
   </TestDefinitions>
   <TestEntries>
-    <TestEntry testId="45701b02-8e02-f84f-f8d8-cc849dd1d38a" executionId="c83e80ff-9239-4e29-a90a-643b10f820b9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="80fb9270-93af-b3dd-6e43-78eb6fc83df0" executionId="6477af19-97bc-4f1c-913f-4d686ece2158" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8a504728-fe8b-e269-9e1f-81c3e3803ee3" executionId="ee3d3d06-f205-43f6-b79a-c8dafde377d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="2abf6f41-35a8-e58d-0ef8-0d7eaf5695e2" executionId="b3063791-b119-4fa3-af2e-5c45ba50fff0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8cb9b470-5e3a-1e36-9ec1-8e482841be52" executionId="66c7f792-12d2-4db0-995f-21a80d44b5fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="28b282d6-1c41-3882-badd-88a65f2f9b56" executionId="91334ec8-39b5-4b71-9d90-3a86258cbafc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="1c7ddffd-ab26-1231-595e-6663e81b8c46" executionId="25cead2f-53f0-4f45-8827-afff026dddd6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="e421349d-9284-2396-c94a-98efa62c6aef" executionId="6e7ca588-2eb8-4d83-934f-1046eedbed03" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="c08a407c-48e3-64e7-64d9-7d22785f8d34" executionId="5652af95-a839-40f1-b94b-06305cfcb836" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="88d6177f-f8ab-2a1e-3712-0b151de0088c" executionId="d031635b-d017-4ebb-a0e9-273c0e215782" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="b6e3ed1f-047a-c191-4fbe-1bb9065bb935" executionId="69823dd3-c9bc-4ac2-9fd2-195b84befdc0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="133fb162-764b-92fd-b767-a104e008e9e0" executionId="10463d14-84bd-4d23-848c-e3aaa4d6a00c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8b1b782d-b1a3-0260-7ed9-566203cb6d89" executionId="8163d2a4-af2d-4724-844e-d812197442ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8c4013ec-d24d-99f6-f788-82fcde006394" executionId="46933d17-e5bd-4f51-94bc-31f3cd54c606" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="2677fce3-65f1-cd8e-7f71-4e79f9786a52" executionId="a42a1c0c-b55b-4126-bf63-ce147e1bbbe3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="7bc0c037-9e5f-f366-a7c1-553655cb1fb1" executionId="1039827d-ff52-4940-84af-cab34638236e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="e7624b71-7006-5488-bade-6d91ac6a5c33" executionId="56e695c0-f06e-4ebe-a93f-4736a7ca58d2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="6b0502c0-9898-9010-dfba-b388626bf254" executionId="13916594-9238-4bf6-83f1-0d449eed9e78" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7624b71-7006-5488-bade-6d91ac6a5c33" executionId="920c50ef-4c4c-4c17-9b2e-e2ca8c33407d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88d6177f-f8ab-2a1e-3712-0b151de0088c" executionId="eaa53750-a2f2-4092-a993-907cce78a599" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="28b282d6-1c41-3882-badd-88a65f2f9b56" executionId="86badb9a-c7ee-4d85-b11d-413630b359eb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="80fb9270-93af-b3dd-6e43-78eb6fc83df0" executionId="dfa210fa-4f01-48f5-b532-37c894e403cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7bc0c037-9e5f-f366-a7c1-553655cb1fb1" executionId="8bbb7cb6-856e-4278-86ae-463fc243b1d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2abf6f41-35a8-e58d-0ef8-0d7eaf5695e2" executionId="cd5b9246-9e61-4598-9156-f778c7b57da4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c4013ec-d24d-99f6-f788-82fcde006394" executionId="f2dc667a-fe8a-4705-8e7f-416dd26cd639" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="133fb162-764b-92fd-b767-a104e008e9e0" executionId="ded92cf1-6534-435b-8f28-4837d637181d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8cb9b470-5e3a-1e36-9ec1-8e482841be52" executionId="ba74164a-429c-4a18-b1c1-fe1dbe71e24d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c7ddffd-ab26-1231-595e-6663e81b8c46" executionId="46f0899b-1d0f-4243-b93d-d7faf0151ca5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2677fce3-65f1-cd8e-7f71-4e79f9786a52" executionId="1579be04-3e77-424f-b8c6-d17a2bb4711b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8b1b782d-b1a3-0260-7ed9-566203cb6d89" executionId="b1011843-985d-4b04-97df-84081c1747ee" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8a504728-fe8b-e269-9e1f-81c3e3803ee3" executionId="3938d3be-3ac1-406f-9c04-f9982cf404be" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b6e3ed1f-047a-c191-4fbe-1bb9065bb935" executionId="1ac8de2b-a185-4366-bc97-6bf33ff4502b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d1092382-72b8-598f-aad7-19b9d29155bf" executionId="c8f2b05f-4e7f-41e5-9cad-bed985ab4c9f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e421349d-9284-2396-c94a-98efa62c6aef" executionId="56eaf115-b0dd-4f2c-9d59-6dab250daec6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c08a407c-48e3-64e7-64d9-7d22785f8d34" executionId="6d24fd83-5d46-463a-a0d0-34292123719d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="45701b02-8e02-f84f-f8d8-cc849dd1d38a" executionId="d49003d4-ef00-4f3c-bac8-b070369f7ea4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6b0502c0-9898-9010-dfba-b388626bf254" executionId="8ac060ce-bb32-451f-beac-47bc562b24a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
   </TestEntries>
   <TestLists>
     <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
     <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
   </TestLists>
   <ResultSummary outcome="Completed">
-    <Counters total="18" executed="18" passed="18" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Counters total="19" executed="19" passed="19" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
     <Output>
-      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.1.1+5fe7eebc65 (64-bit .NET 6.0.22)&#xD;
-[xUnit.net 00:00:00.10]   Discovering: TestSpellingBee&#xD;
-[xUnit.net 00:00:00.15]   Discovered:  TestSpellingBee&#xD;
-[xUnit.net 00:00:00.16]   Starting:    TestSpellingBee&#xD;
-[xUnit.net 00:00:00.89]   Finished:    TestSpellingBee&#xD;
+      <StdOut>[xUnit.net 00:00:00.01] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 6.0.22)&#xD;
+[xUnit.net 00:00:00.24]   Discovering: TestSpellingBee&#xD;
+[xUnit.net 00:00:00.36]   Discovered:  TestSpellingBee&#xD;
+[xUnit.net 00:00:00.36]   Starting:    TestSpellingBee&#xD;
+[xUnit.net 00:00:02.89]   Finished:    TestSpellingBee&#xD;
 </StdOut>
     </Output>
   </ResultSummary>
