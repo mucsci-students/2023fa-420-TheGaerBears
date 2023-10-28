@@ -317,7 +317,7 @@ namespace SpellingBee
         /// <summary>
         /// Calculates the points required for the player to achieve the next rank.
         /// </summary>
-        public int PointsToNextRank()
+        public int GetNextRankThreshold()
         {
             // Default status
             int status = 0; 
@@ -332,7 +332,7 @@ namespace SpellingBee
                         status = (int)(statusTitles[i + 1].Value * maxPoints * .01);
                 }
             }
-            return (status - playerPoints);
+            return status;
         }
 
         private void UpdatePlayerPointsForFoundWord(string word)

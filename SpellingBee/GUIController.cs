@@ -332,7 +332,12 @@ Remember, all words must contain the required letter!";
         /// </summary>
         public int GetNextRank()
         {
-            return _model.PointsToNextRank();
+            return _model.GetNextRankThreshold();
         }
+
+        public int GetMaxPoints()
+        {
+            return _model.GetMaxPoints(); 
+        } 
     }
 }

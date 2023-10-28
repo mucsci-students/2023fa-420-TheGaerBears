@@ -1,10 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Utils;
+using Avalonia.Controls.Templates;
+using Avalonia.LogicalTree;
+using Avalonia.Input;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using SpellingBee.Services;
+using SpellingBee.Views;
 using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Threading.Tasks;
+using Avalonia.Interactivity;
+using Castle.Components.DictionaryAdapter.Xml;
+using System.Drawing.Printing;
 
 namespace SpellingBee.ViewModels
 {
@@ -31,6 +40,19 @@ namespace SpellingBee.ViewModels
         private string _color2 = "Green";
         private string _feedbackMessage = "";
         private string _hint = "";
+        private int _beginner = 0;
+        private int _goodStart = 0;
+        private int _movingUp = 0;
+        private int _good = 0;
+        private int _solid = 0;
+        private int _nice = 0;
+        private int _great = 0;
+        private int _amazing = 0;
+        private int _genius = 0;
+        private int _queenBee = 0;
+
+
+        private int _maxPoints = 0;
 
         private readonly GuiController _guiController;
 
@@ -50,9 +72,10 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<string, Unit> NewGameFromWordCommand { get; }
         public ReactiveCommand<Unit, Unit> ShowFoundWordsCommand { get; }
         public ReactiveCommand<Unit, Unit> HelpCommand { get; }
-        public ReactiveCommand<Unit,Unit> ToggleColorblind { get; }
+        public ReactiveCommand<Unit, Unit> ToggleColorblind { get; }
         public ReactiveCommand<Unit, Unit> Backspace { get; }
         public ReactiveCommand<Unit, Unit> HintCommand { get; }
+
 
         /// <summary>
         /// Instantiates the <c>MainWindowViewModel</c> with <c>GuiController</c> and <c>GameModel</c> 
@@ -61,7 +84,7 @@ namespace SpellingBee.ViewModels
         public MainWindowViewModel()
         {
             _guiController = new GuiController(new GameModel());
-            
+
             AppendLetter1Command = ReactiveCommand.Create(() => AppendLetter(Letter1));
             AppendLetter2Command = ReactiveCommand.Create(() => AppendLetter(Letter2));
             AppendLetter3Command = ReactiveCommand.Create(() => AppendLetter(Letter3));
@@ -155,12 +178,37 @@ namespace SpellingBee.ViewModels
             Points = _guiController.GetCurrentScore();
             Rank = _guiController.GetCurrentRank();
             NextRank = _guiController.GetNextRank();
+            MaxPoints = _guiController.GetMaxPoints();
+            SetThresholds();
         }
-
-        /// <summary>
-        /// Method <c>ShuffleLetters</c> shuffles the displayed letters.
-        /// </summary>
-        private void ShuffleLetters()
+        private void SetThresholds()
+        {
+            /*
+             * new KeyValuePair<string, int>("Beginner", 0),
+                new KeyValuePair<string, int>("Good Start", 2),
+                new KeyValuePair<string, int>("Moving Up", 5),
+                new KeyValuePair<string, int>("Good", 8),
+                new KeyValuePair<string, int>("Solid", 15),
+                new KeyValuePair<string, int>("Nice", 25),
+                new KeyValuePair<string, int>("Great", 40),
+                new KeyValuePair<string, int>("Amazing", 50),
+                new KeyValuePair<string, int>("Genius", 70),
+                new KeyValuePair<string, int>("Queen Bee", 100)
+             */
+            GoodStart = (int) (MaxPoints * .02);
+			MovingUp = (int)(MaxPoints * .05);
+			Good = (int)(MaxPoints * .08);
+			Solid = (int)(MaxPoints * .15);
+			Nice = (int)(MaxPoints * .25);
+			Great = (int)(MaxPoints * .4);
+			Amazing = (int)(MaxPoints * .5);
+			Genius = (int)(MaxPoints * .7);
+			QueenBee = MaxPoints;
+		}
+		/// <summary>
+		/// Method <c>ShuffleLetters</c> shuffles the displayed letters.
+		/// </summary>
+		private void ShuffleLetters()
         {
             FeedbackMessage = "";
             if (!_guiController.GameStarted())
@@ -170,6 +218,7 @@ namespace SpellingBee.ViewModels
             }
             _guiController.ShuffleBaseWord();
             UpdateState();
+
         }
 
         /// <summary>
@@ -191,6 +240,7 @@ namespace SpellingBee.ViewModels
                 Points = _guiController.GetCurrentScore();
                 Rank = _guiController.GetCurrentRank();
                 NextRank = _guiController.GetNextRank();
+
             }
             LowerText = "";
         }
@@ -298,6 +348,7 @@ namespace SpellingBee.ViewModels
             {
                 UpdateState();
             }
+
         }
 
         /// <summary>
@@ -323,6 +374,7 @@ namespace SpellingBee.ViewModels
             _guiController.Hint();
             HintString = _guiController.GetLastMessage();
         }
+
 
         public string FeedbackMessage
         {
@@ -396,24 +448,6 @@ namespace SpellingBee.ViewModels
             set { this.RaiseAndSetIfChanged(ref _nextRank, value); }
         }
 
-        public bool LoadVisible
-        {
-            get { return _loadVisible; }
-            set { this.RaiseAndSetIfChanged(ref _loadVisible, value); }
-        }
-
-        public bool GuessVisible
-        {
-            get { return _guessVisible; }
-            set { this.RaiseAndSetIfChanged(ref _guessVisible, value); }
-        }
-
-        public bool SaveVisible
-        {
-            get { return _saveVisible; }
-            set { this.RaiseAndSetIfChanged(ref _saveVisible, value); }
-        }
-
         public string Color1
         {
             get { return _color1; }
@@ -431,5 +465,62 @@ namespace SpellingBee.ViewModels
             get { return _hint; }
             set { this.RaiseAndSetIfChanged(ref _hint, value); }
         }
+
+        public int MaxPoints
+        {
+            get { return _maxPoints; }
+            set { this.RaiseAndSetIfChanged(ref _maxPoints, value); }
+        }
+        public int Beginner
+        {
+            get { return _beginner; }
+            set { this.RaiseAndSetIfChanged(ref _beginner, value); }
+
+        }
+        public int MovingUp
+        {
+            get { return _movingUp; }
+            set { this.RaiseAndSetIfChanged(ref _movingUp, value); }
+        }
+		public int GoodStart
+		{
+			get { return _goodStart; }
+			set { this.RaiseAndSetIfChanged(ref _goodStart, value); }
+		}
+		public int Good
+        {
+            get { return _good; }
+            set { this.RaiseAndSetIfChanged(ref _good, value); }
+        }
+        public int Solid
+        {
+            get { return _solid; }
+            set { this.RaiseAndSetIfChanged(ref _solid, value); }
+        }
+        public int Nice
+        {
+            get { return _nice; }
+            set { this.RaiseAndSetIfChanged(ref _nice, value); }
+        }
+        public int Great
+        {
+            get { return _great; }
+            set { this.RaiseAndSetIfChanged(ref _great, value); }
+        }
+        public int Amazing
+        {
+            get { return _amazing; }
+            set { this.RaiseAndSetIfChanged(ref _amazing, value); }
+        }
+        public int Genius
+        {
+            get { return _genius; }
+            set { this.RaiseAndSetIfChanged(ref _genius, value); }
+        }
+        public int QueenBee
+        {
+            get { return _queenBee; }
+            set { this.RaiseAndSetIfChanged(ref _queenBee, value); }
+        }
     }
-    }
+}
