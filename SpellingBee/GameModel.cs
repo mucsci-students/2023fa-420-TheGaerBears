@@ -474,7 +474,7 @@ namespace SpellingBee
         {
             return playerPoints;
         }
-
+         
         /// <summary>
         /// Retrieves the status titles with their associated point thresholds.
         /// </summary>

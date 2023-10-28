@@ -98,7 +98,7 @@ namespace SpellingBee
         public override IEnumerable<string> GetFoundWords()
         {
             return new List<String>();
-        }
+        } 
 
     }
 }
