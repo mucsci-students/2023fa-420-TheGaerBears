@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Test
-      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger "trx;LogFileName=test-results.trx"
     - name: Dir
       run: cd TestSpellingBee && ls
     - name: Test Report
