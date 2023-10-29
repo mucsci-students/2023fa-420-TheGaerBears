@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Location
-      run: echo $PATH
+      run: ls
     - name: Test
       run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./TestResults/result.cobertura.xml'
     - name: Codecov
