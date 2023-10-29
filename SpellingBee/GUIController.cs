@@ -37,7 +37,7 @@ namespace SpellingBee
         public override void NewPuzzle()
         {
             //_model = new GameModel();
-            //_model.Reset();
+            _model.Reset();
             _model.SelectRandomWordForPuzzle();
             _model.GenerateValidWords();
         }

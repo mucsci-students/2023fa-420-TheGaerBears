@@ -72,7 +72,14 @@ namespace SpellingBee
         /// <summary>
         /// Resets the game model to its initial state.
         /// </summary>
-        public abstract void Reset();
+        public virtual void Reset()
+        {
+            baseWord.Clear();
+            foundWords.Clear();
+            playerPoints = 0;
+            maxPoints = 0;
+            requiredLetter = (char)0;
+        }
 
         /// <summary>
         /// Calculates the points required for the player to achieve the next rank.
@@ -135,7 +142,10 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the base word of the current puzzle.
         /// </summary>
-        public abstract List<char> GetBaseWord();
+        public List<char> GetBaseWord()
+        {
+            return baseWord;
+        }
 
         /// <summary>
         /// Retrieves the required letter of the current puzzle.

@@ -24,6 +24,7 @@ namespace SpellingBee
             playerPoints = 0;
             // Initial total possible points.
             maxPoints = 0;
+            requiredLetter = '-';
         }
 
         /// <summary>
@@ -83,12 +84,6 @@ namespace SpellingBee
         { }
 
         /// <summary>
-        /// Resets the game model to its initial state.
-        /// </summary>
-        public override void Reset()
-        { }
-
-        /// <summary>
         /// Calculates the points required for the player to achieve the next rank.
         /// </summary>
         public override int GetNextRankThreshold()
@@ -134,14 +129,6 @@ namespace SpellingBee
         public override bool wonTheGame()
         {
             return false;
-        }
-
-        /// <summary>
-        /// Retrieves the base word of the current puzzle.
-        /// </summary>
-        public override List<char> GetBaseWord()
-        {
-            return new List<char>();
         }
 
         /// <summary>

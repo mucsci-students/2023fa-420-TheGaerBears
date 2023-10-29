@@ -24,18 +24,10 @@ namespace SpellingBee
         private readonly Random rand;
         private readonly List<string> validWords;
         private readonly List<KeyValuePair<string, int>> statusTitles;
-        public List<string> PangramWords;
+        private List<string> PangramWords;
 
         private const string DatabaseConnectionString = "Data Source=../../../../SpellingBee/SetUpSpellingBee/Database/SpellingBeeWords.db;";
         private const string DatabaseConnectionString_Two = "Data Source=./SetUpSpellingBee/Database/SpellingBeeWords.db";
-
-        /// <summary>
-        /// Retrieves the current score of the player.
-        /// </summary>
-        public override int GetCurrentScore()
-        {
-            return playerPoints;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <c>GameModel</c> class, setting up the base game state.
@@ -46,6 +38,7 @@ namespace SpellingBee
             foundWords = new List<string>();
             validWords = new List<string>();
             rand = new Random();
+            requiredLetter = new char();
 
             // Status titles with associated point thresholds.
             statusTitles = new List<KeyValuePair<string, int>>
@@ -298,11 +291,8 @@ namespace SpellingBee
         /// </summary>
         public override void Reset()
         {
-            baseWord.Clear();
+            base.Reset();
             validWords.Clear();
-            foundWords.Clear();
-            playerPoints = 0;
-            maxPoints = 0;
             PangramWords = PangramList();
         }
 
@@ -421,14 +411,6 @@ namespace SpellingBee
         }
 
         /// <summary>
-        /// Retrieves the base word of the current puzzle.
-        /// </summary>
-        public override List<char> GetBaseWord()
-        {
-            return baseWord;
-        }
-
-        /// <summary>
         /// Retrieves the required letter of the current puzzle.
         /// </summary>
         public override char GetRequiredLetter()
@@ -440,6 +422,14 @@ namespace SpellingBee
         /// Retrieves the player's current points.
         /// </summary>
         public override int GetPlayerPoints()
+        {
+            return playerPoints;
+        }
+
+        /// <summary>
+        /// Retrieves the current score of the player.
+        /// </summary>
+        public override int GetCurrentScore()
         {
             return playerPoints;
         }
@@ -474,6 +464,15 @@ namespace SpellingBee
         public override List<String> GetValidWords()
         {
             return validWords;
+        }
+
+        /// <summary>
+        /// Returns the list of pangrams from the dictionary
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetPangramList()
+        {
+            return PangramWords;
         }
 
         /// <summary>
