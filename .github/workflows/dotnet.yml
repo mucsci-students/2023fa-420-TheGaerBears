@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Test
-      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./TestSpellingBee/TestResults/result.cobertura.xml'
+      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./TestSpellingBee/TestResults/result.cobertura.xml'
     - name: Codecov
       uses: codecov/codecov-action@v3
       with:
