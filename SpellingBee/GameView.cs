@@ -56,7 +56,7 @@ namespace SpellingBee
             foreach (var rank in ranks)
             {
                 int pointsPrint = rank.Value;
-                string space = String.Concat(Enumerable.Repeat(" ", (40 - rank.Key.Length - (pointsPrint.ToString().Length / 2) + (pointsPrint.ToString().Length % 2 == 0 ? 1 : 0))));
+                string space = String.Concat(Enumerable.Repeat(" ", (48 - rank.Key.Length - (pointsPrint.ToString().Length))));// / 2) + (pointsPrint.ToString().Length % 2 == 0 ? 1 : 0))));
                 Console.WriteLine("        " + rank.Key + space + pointsPrint);
             }
         }
