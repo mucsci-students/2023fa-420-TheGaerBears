@@ -1,4 +1,5 @@
 ﻿using SpellingBee;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TestSpellingBee
 {
@@ -86,7 +87,7 @@ namespace TestSpellingBee
         }
 
         /// <summary>
-        /// Verifies that the <c>Save</c> function saves state to a JSON file.
+        /// Verifies that the <c>SaveCurrentGame</c> function saves state to a JSON file.
         /// </summary>
         [Fact]
         public void SaveVerify()
@@ -388,6 +389,381 @@ namespace TestSpellingBee
             var currentScore = model.GetCurrentScore();
 
             Assert.Equal(expectedScore, currentScore);
+        }
+
+        [Fact]
+        public void ValidateGetNextRankThresholdReturnsCorrectValue()
+        {
+            // Set up the game
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new CliController(model, view);
+
+            model.baseWord = new List<char> { 'd', 's', 'o', 'l', 'i', 'e', 'r'};
+            model.requiredLetter = 'd';
+            model.GenerateValidWords();
+
+            Assert.Equal(2713, model.GetMaxPoints());
+
+            // Test scenario 1: When playerPoints is 0 (Beginner), next threshold should be 2% of maxPoints
+            Assert.Equal((int)(0.02 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 2: When playerPoints is 81 (between Good Start and Moving Up), next threshold should be 5% of maxPoints
+            model.playerPoints = (int)(0.03 * model.maxPoints);
+            Assert.Equal((int)(0.05 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 3: When playerPoints is 189 (7% of maxPoints, between Moving Up and Good), next threshold should be 8% of maxPoints
+            model.playerPoints = (int)(0.07 * model.maxPoints);
+            Assert.Equal((int)(0.08 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 4: When playerPoints is 271 (10% of maxPoints, between Good and Solid), next threshold should be 15% of maxPoints
+            model.playerPoints = (int)(0.10 * model.maxPoints);
+            Assert.Equal((int)(0.15 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 5: When playerPoints is 542 (20% of maxPoints, between Solid and Nice), next threshold should be 25% of maxPoints
+            model.playerPoints = (int)(0.20 * model.maxPoints); ;
+            Assert.Equal((int)(0.25 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 6: When playerPoints is 813 (30% of maxPoints, between Nice and Great), next threshold should be 40% of maxPoints
+            model.playerPoints = (int)(0.30 * model.maxPoints);
+            Assert.Equal((int)(0.40 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 7: When playerPoints is 1220 (45% of maxPoints, between Great and Amazing), next threshold should be 50% of maxPoints
+            model.playerPoints = (int)(0.45 * model.maxPoints);
+            Assert.Equal((int)(0.50 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 8: When playerPoints is 1627 (60% of maxPoints, between Amazing and Genius), next threshold should be 70% of maxPoints
+            model.playerPoints = (int)(0.60 * model.maxPoints);
+            Assert.Equal((int)(0.70 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 9: When playerPoints is 2170 (80% of maxPoints, between Genius and Queen Bee), next threshold should be 100% of maxPoints
+            model.playerPoints = (int)(0.80 * model.maxPoints);
+            Assert.Equal((int)(1.00 * model.maxPoints), model.GetNextRankThreshold());
+
+            // Test scenario 10: When playerPoints is at maximum, the threshold returned should be the maxPoints itself
+            model.playerPoints = model.maxPoints;
+            Assert.Equal(model.maxPoints, model.GetNextRankThreshold());
+        }
+
+        /// <summary>
+        /// Validates that SetBaseWordForPuzzle creates a list of distinct chars out of the string
+        /// </summary>
+        [Fact]
+        public void ValidateSetBaseWord()
+        {
+            var model = new GameModel();
+            string word = "companion";
+
+            model.SetBaseWordForPuzzle(word);
+
+            // Make sure all letters in word are in baseWord
+            List<char> bWord = model.GetBaseWord();
+            bool testing = false;
+            foreach (var let in bWord)
+            {
+                if (word.Contains(let))
+                    testing = true;
+                if (!testing)
+                    break;
+            }
+            Assert.True(testing);
+        }
+
+        /// <summary>
+        /// Validates that ShuffleNewWord reorders the letters of the pangram
+        /// </summary>
+        [Fact]
+        public void ValidateShuffleNewWord()
+        {
+            var model = new GameModel();
+
+            model.baseWord = new List<char> { 'c', 'o', 'd', 'a', 'b', 'l', 'e' };
+            List<char> oBaseWord = new List<char>(model.baseWord);
+
+            model.ShuffleNewWord();
+            Assert.NotEqual(oBaseWord, model.baseWord);
+        }
+
+        /// <summary>
+        /// Validates that ShuffleBaseWord reorders the letters
+        /// </summary>
+        [Fact]
+        public void ValidateShuffleBaseWord()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            controller.NewPuzzleBaseWord("codable");
+            var oBaseWord = new List<char> (model.GetBaseWord());
+
+            model.ShuffleBaseWord();
+
+            Assert.NotEqual(oBaseWord, model.baseWord);
+            Assert.Equal(model.requiredLetter, model.baseWord[0]);
+        }
+
+        /// <summary>
+        /// Validates the output of IsValidWord
+        /// </summary>
+        [Fact]
+        public void ValidateIsValidWord()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            controller.NewPuzzleBaseWord("codable");
+
+            Assert.True(model.IsValidWord("codable"));
+            Assert.False(model.IsValidWord("nope"));
+            Assert.False(model.IsValidWord("cod"));
+        }
+
+        /// <summary>
+        /// Validates the output of IsWordAlreadyFound
+        /// </summary>
+        [Fact]
+        public void ValidateIsWordAlreadyFound()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            controller.NewPuzzleBaseWord("codable");
+
+            Assert.False(model.IsWordAlreadyFound("codable"));
+            Assert.False(model.IsWordAlreadyFound("nope"));
+
+            controller.Guess("codable");
+
+            Assert.True(model.IsWordAlreadyFound("codable"));
+            Assert.False(model.IsWordAlreadyFound("nope"));
+        }
+
+        /// <summary>
+        /// Validates that Reset actually resets the game
+        /// </summary>
+        [Fact]
+        public void ValidateReset()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            controller.NewPuzzleBaseWord("codable");
+            controller.Guess("codable");
+
+            model.Reset();
+
+            Assert.Empty(model.GetFoundWords());
+            Assert.Empty(model.GetBaseWord());
+            Assert.Equal(0, model.requiredLetter);
+            Assert.Equal(0, model.GetPlayerPoints());
+            Assert.Equal(0, model.GetMaxPoints());
+            Assert.Empty(model.GetValidWords());
+        }
+
+        /// <summary>
+        /// Validate that player points are update for found words
+        /// </summary>
+        [Fact]
+        public void ValidateUpdatePlayerPointsForWordFound()
+        {
+            var model = new GameModel();
+
+            model.baseWord = new List<char> { 'c', 'o', 'm', 'p', 'a', 'n', 'i' };
+            model.requiredLetter = 'c';
+            model.GenerateValidWords();
+
+            Assert.Equal(0, model.GetPlayerPoints());
+
+            model.UpdatePlayerPointsForFoundWord("cod");
+
+            Assert.Equal(0, model.GetPlayerPoints());
+
+            model.UpdatePlayerPointsForFoundWord("companion");
+
+            Assert.Equal(16, model.GetPlayerPoints());
+
+            model.UpdatePlayerPointsForFoundWord("coin");
+
+            Assert.Equal(17, model.GetPlayerPoints());
+        }
+
+        /// <summary>
+        /// Validates the Active function
+        /// </summary>
+        [Fact]
+        public void ValidateActive()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            Assert.False(model.Active());
+
+            controller.NewPuzzle();
+
+            Assert.True(model.Active());
+        }
+
+        /// <summary>
+        /// Verifies that the <c>SaveCurrentPuzzle</c> function saves state to a JSON file.
+        /// </summary>
+        [Fact]
+        public void ValidateSavePuzzle()
+        {
+            var model = new GameModel();
+            //var view = new GameView();
+            var controller = new GuiController(model);
+
+            string oWord = "codable";
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+            var oBaseWord = controller.GetBaseWord();
+            char oReqLetter = model.GetRequiredLetter();
+            int oMaxPoints = model.GetMaxPoints();
+
+            model.SaveCurrentPuzzleState("test-mod-sv-p");
+
+            controller.Load("test-mod-sv-p");
+
+
+            Assert.Equal(oBaseWord, controller.GetBaseWord());
+            Assert.Equal(oReqLetter, model.GetRequiredLetter());
+            Assert.Equal(0, model.GetCurrentScore());
+            Assert.Equal(oMaxPoints, model.GetMaxPoints());
+        }
+
+        /// <summary>
+        /// Validate TwoLetterList produces the correct two letter dictionary
+        /// </summary>
+        [Fact]
+        public void ValidateTwoLetterList()
+        {
+            Dictionary<string, int> twoLettersEx = new Dictionary<string, int> { { "fo", 7}, { "fr", 1}, { "mi", 1}, { "mo", 13 },
+             {"om", 1 }, {"ot", 1 }, {"ri", 1 }, {"ro", 9 }, {"ry", 1 }, {"ti", 1 }, {"to", 18 }, {"tr", 5 }, {"ty", 1 }, {"yo", 2 } };
+
+            var model = new GameModel();
+
+            model.baseWord = new List<char> { 'o', 'm', 'r', 't', 'i', 'f', 'y' };
+            model.requiredLetter = 'o';
+            model.GenerateValidWords();
+
+            Assert.Equal(twoLettersEx, model.TwoLetterList());
+        }
+
+        /// <summary>
+        /// Validate LettersInWord produces the correct dictionary for letters
+        /// </summary>
+        [Fact]
+        public void ValidateLettersInWord()
+        {
+            Dictionary<char, int[]> lettersEx = new Dictionary<char, int[]> { { 'f', new int[12] { 4,2,1,1,0,0,0,0,0,0,0,0} },
+            { 'm', new int[12] { 5,6,2,1,0,0,0,0,0,0,0,0} },
+            { 'o', new int[12] { 2,0,0,0,0,0,0,0,0,0,0,0 } },
+            { 'r', new int[12] { 7,3,0,0,1,0,0,0,0,0,0,0} },
+            { 't', new int[12] { 16,4,1,2,2,0,0,0,0,0,0,0} },
+            { 'y', new int[12] { 1,1,0,0,0,0,0,0,0,0,0,0} }};
+
+            var model = new GameModel();
+
+            model.baseWord = new List<char> { 'o', 'm', 'r', 't', 'i', 'f', 'y' };
+            model.requiredLetter = 'o';
+            model.GenerateValidWords();
+
+            Assert.Equal(lettersEx, model.LettersInWord());
+        }
+
+        /// <summary>
+        /// Validates PangramCount returns the correct number of pangrams and perfect pangrams
+        /// </summary>
+        [Fact]
+        public void ValidatePangramCount()
+        {
+            (int, int) pCountEx = (1, 1);
+
+            var model = new GameModel();
+
+            model.baseWord = new List<char> { 'o', 'm', 'r', 't', 'i', 'f', 'y' };
+            model.requiredLetter = 'o';
+            model.GenerateValidWords();
+
+            Assert.Equal(pCountEx, model.PangramCount());
+
+            model.Reset();
+            model.baseWord = new List<char> { 'n', 'c', 'o', 'm', 'i', 'a', 'p' };
+            model.requiredLetter = 'n';
+            model.GenerateValidWords();
+
+            pCountEx = (2, 1);
+
+            Assert.Equal(pCountEx, model.PangramCount());
+        }
+
+        /// <summary>
+        /// Verifies that the <c>PrintHintTable</c> method correctly generates the hint table string
+        /// for a known base word and simulated game state.
+        /// </summary>
+        [Fact]
+        public void ValidatePrintHintTable()
+        {
+            var model = new GameModel();
+
+            model.baseWord = new List<char> { 'r', 'e', 'i', 'l', 's', 'o', 'd' };
+            model.requiredLetter = 'r';
+            model.GenerateValidWords();
+
+            // There are spaces at the ends of the two letter list on purpose
+            string expectedOutput = @"Required letter is first.
+
+reilsod
+
+Words: 443, Points: 2644, Pangrams: 9 (2 Perfect), BINGO
+
+      4   5   6   7   8   9  10  11  tot
+d    10  20  18  26  22   6   3   -  105
+e     2   8   8   1   -   3   -   -   22
+i     4   3   4   1   1   1   -   -   14
+l     6   6   9   5   4   -   -   -   30
+o     4  11   9   8   4   2   -   -   38
+r    24  31  40  38  14  10   2   -  159
+s     9  14  17  24   4   5   1   1   75
+tot  59  93 105 103  49  27   6   1  443
+
+Two Letter List:
+
+de-21 di-14 do-34 dr-36 
+ee-3 ei-2 el-5 er-12 
+id-4 il-1 ir-9 
+le-7 li-5 lo-18 
+od-5 oi-3 ol-3 oo-1 or-23 os-3 
+re-88 ri-30 ro-41 
+se-23 si-16 sl-5 so-30 sr-1"
+            ;
+            expectedOutput = expectedOutput.Replace("\r", "");
+
+            string output = model.PrintHintTable();
+
+
+            Assert.Equal(expectedOutput, output.Trim()); // Trim to ensure no leading/trailing whitespace
+        }
+
+        /// <summary>
+        /// Validates GetAvailableSaveFiles returns list of save files
+        /// </summary>
+        [Fact]
+        public void ValidateGetAvailableSaveFiles()
+        {
+            var model = new GameModel();
+
+            var files = model.GetAvailableSaveFiles();
+
+            //Since tests run at different time hard to know count in save file
+            //Count will be in range [0, 5]
+            Assert.True(files.Count() < 6);
+
+            //Makes sure files are json
+            for (int i = 0; i < files.Count; i++)
+            {
+                Assert.Equal(".json", files[i].Substring(files[i].Length - 5));
+            }
         }
     }
 }
