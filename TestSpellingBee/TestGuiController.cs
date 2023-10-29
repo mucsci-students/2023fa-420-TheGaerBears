@@ -146,7 +146,7 @@ namespace TestSpellingBee
 
             model.SaveCurrentGameState("test-gui-sv");
 
-            var filePath = "..\\..\\debug\\net6.0\\saves\\test-gui-sv.json";
+            var filePath = "../../debug/net6.0/saves/test-gui-sv.json";
 
             using StreamReader reader = new(filePath);
             string content = reader.ReadToEnd();

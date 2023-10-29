@@ -104,7 +104,7 @@ namespace TestSpellingBee
 
             model.SaveCurrentGameState("test-mod-sv");
 
-            String filePath = "..\\..\\debug\\net6.0\\saves\\test-mod-sv.json";
+            String filePath = "../../debug/net6.0/saves/test-mod-sv.json";
 
             using StreamReader reader = new(filePath);
             string content = reader.ReadToEnd();
