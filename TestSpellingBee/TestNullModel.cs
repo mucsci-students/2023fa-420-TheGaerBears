@@ -14,6 +14,7 @@ namespace TestSpellingBee
     {
         /// <summary>
         /// Verifies that the <c>GetCurrentScore</c> method returns -1.
+        /// </summary>
         [Fact]
         public void VerifyNullCurrentScore()
         {
@@ -25,6 +26,58 @@ namespace TestSpellingBee
             Assert.Equal(-1, nullModel.GetCurrentScore());
         }
 
+        /// <summary>
+        /// Verifies that the <c>ShuffleBaseWord</c> method does nothing when the model is null.
+        /// </summary>
+        [Fact]
+        public void VerifyNullShuffle() 
+        {
+            NullModel nullModel = new();
+            GuiController controller = new GuiController(nullModel);
+            
+            Assert.False(controller.GameStarted());
+            nullModel.ShuffleBaseWord();
+            Assert.Empty(controller.GetBaseWord());
+        }
+
+        /// <summary>
+        /// Verifies that <c>AddFoundWords</c> method does nothing when
+        /// the model is null.
+        /// </summary>
+        [Fact]
+        public void VerifyNullFoundWord()
+        {
+            NullModel nullModel = new();
+            GuiController controller = new GuiController(nullModel);
+
+            Assert.False(controller.GameStarted());
+            nullModel.AddFoundWord("codable");
+            Assert.Empty(controller.GetFoundWords());
+        }
+
+        /// <summary>
+        /// Verifies that <c>Active</c> method returns false when the model is null.
+        /// </summary>
+        [Fact]
+        public void VerifyNullActive()
+        {
+            NullModel nullModel = new();
+
+            Assert.False(nullModel.Active());
+        }
+
+        /// <summary>
+        /// Verifies that the <c>IsValidWord</c> method returns false when model is null.
+        /// </summary>
+        [Fact]
+        public void VerifyNullIsValidWord()
+        {
+            NullModel nullModel = new();
+            GuiController controller = new GuiController(nullModel);
+
+            Assert.False(controller.GameStarted());
+            Assert.False(nullModel.IsValidWord("codable"));
+        }
         /// <summary>
         /// Verifies that the <c>SetBaseWordForPuzzle</c> method returns a nullModel
         /// when a game has not started.
