@@ -102,9 +102,9 @@ namespace TestSpellingBee
             int oPlayerPoints = model.GetPlayerPoints();
             int oMaxPoints = model.GetMaxPoints();
 
-            model.SaveCurrentGameState("test");
+            model.SaveCurrentGameState("test-mod-sv");
 
-            String filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
+            String filePath = "..\\..\\debug\\net6.0\\saves\\test-mod-sv.json";
 
             using StreamReader reader = new(filePath);
             string content = reader.ReadToEnd();
@@ -131,7 +131,7 @@ namespace TestSpellingBee
             controller.Guess(oWord);
 
 
-            model.SaveCurrentGameState("test");
+            model.SaveCurrentGameState("a-test-mod-load");
 
             //Copy old data of puzzle to compare
             List<char> oBaseWord = new(model.GetBaseWord());
@@ -205,7 +205,7 @@ namespace TestSpellingBee
                 "mockFilePath3.json"
             };
 
-            int fileIdOutOfRange = 10;
+            int fileIdOutOfRange = 100;
 
 
             var result = model.LoadGameStateFromFile(fileIdOutOfRange);
@@ -376,13 +376,15 @@ namespace TestSpellingBee
         {
             var model = new GameModel();
             var view = new GameView();
-            var controller = new CliController(model, view); var baseWord = "soldier";
+            var controller = new CliController(model, view); 
+            
+            var baseWord = "soldier";
 
             controller.NewPuzzleBaseWord(baseWord);
 
-            model.AddFoundWord("rides");
+            model.AddFoundWord("soldier");
 
-            int expectedScore = 5; 
+            int expectedScore = 14; 
 
             var currentScore = model.GetCurrentScore();
 

@@ -144,9 +144,9 @@ namespace TestSpellingBee
             int oPlayerPoints = model.GetPlayerPoints();
             int oMaxPoints = model.GetMaxPoints();
 
-            model.SaveCurrentGameState("test");
+            model.SaveCurrentGameState("test-gui-sv");
 
-            var filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
+            var filePath = "..\\..\\debug\\net6.0\\saves\\test-gui-sv.json";
 
             using StreamReader reader = new(filePath);
             string content = reader.ReadToEnd();
@@ -172,7 +172,7 @@ namespace TestSpellingBee
             controller.Guess(oWord);
 
 
-            model.SaveCurrentGameState("testGUI");
+            model.SaveCurrentGameState("b-test-GUI-load");
 
             //Copy old data of puzzle to compare
             List<char> oBaseWord = new List<char>(model.GetBaseWord());
