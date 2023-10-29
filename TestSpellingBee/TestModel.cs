@@ -205,12 +205,12 @@ namespace TestSpellingBee
                 "mockFilePath3.json"
             };
 
-            int fileIdOutOfRange = 3;
+            int fileIdOutOfRange = 10;
 
 
             var result = model.LoadGameStateFromFile(fileIdOutOfRange);
 
-            Assert.Null(result);
+            Assert.True(result.IsNull());
         }
 
         /// <summary>
