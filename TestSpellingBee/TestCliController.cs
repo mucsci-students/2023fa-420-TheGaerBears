@@ -47,10 +47,18 @@ namespace TestSpellingBee
             var view = new GameView();
             var controller = new CliController(model, view);
 
+            Assert.False(controller._model.IsNull());
+
             controller.NewPuzzle();
             var b1 = model.GetBaseWord();
+            Assert.False(model.IsNull());
+
             controller.NewPuzzle();
             var b2 = model.GetBaseWord();
+
+            Assert.NotEmpty(b2);
+            Assert.NotEmpty(b1);
+            Assert.False(model.IsNull());
             Assert.NotEqual(b1, b2);
         }
 

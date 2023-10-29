@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SpellingBee
 {
     public abstract class Controller
     {
-        private readonly GameModel _model;
+        public Model _model;
 
-        private string _lastMessage = "";
-        public Controller(GameModel model)
+        public string _lastMessage = "";
+        public Controller(Model model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
         }
@@ -43,6 +44,7 @@ namespace SpellingBee
         public abstract void SaveCurrent(string saveName);
 
         public abstract void SavePuzzle(string saveName);
+
         public abstract void Load(string fileName);
 
     }

@@ -13,18 +13,18 @@ namespace SpellingBee
     /// <summary>
     /// <c>Game Model</c> class.
     /// </summary>
-    public class GameModel
+    public class GameModel : Model
     {
-        [JsonProperty] private List<char> baseWord;
+        /*[JsonProperty] private List<char> baseWord;
         [JsonProperty] private List<string> foundWords;
         [JsonProperty] private int playerPoints;
         [JsonProperty] private char requiredLetter;
-        [JsonProperty] private int maxPoints;
+        [JsonProperty] private int maxPoints;*/
 
         private readonly Random rand;
         private readonly List<string> validWords;
         private readonly List<KeyValuePair<string, int>> statusTitles;
-        private List<string> PangramWords;
+        public List<string> PangramWords;
 
         private const string DatabaseConnectionString = "Data Source=../../../../SpellingBee/SetUpSpellingBee/Database/SpellingBeeWords.db;";
         private const string DatabaseConnectionString_Two = "Data Source=./SetUpSpellingBee/Database/SpellingBeeWords.db";
@@ -32,17 +32,9 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the current score of the player.
         /// </summary>
-        public int GetCurrentScore()
+        public override int GetCurrentScore()
         {
-            return playerPoints; 
-        }
-
-        /// <summary>
-        /// Exits the game application.
-        /// </summary>
-        public void Exit()
-        {
-            System.Environment.Exit(0);
+            return playerPoints;
         }
 
         /// <summary>
@@ -70,12 +62,12 @@ namespace SpellingBee
                 new KeyValuePair<string, int>("Queen Bee", 100)
             };
             // Starting player points.
-            playerPoints = 0;    
+            playerPoints = 0;
             // Initial total possible points.
-            maxPoints = 0; 
+            maxPoints = 0;
 
             // Fetch the list of pangrams from the database.
-            PangramWords = PangramList(); 
+            PangramWords = PangramList();
         }
 
         /// <summary>
@@ -117,11 +109,11 @@ namespace SpellingBee
                         words.Add(word);
                     }
                 }
-                catch 
+                catch
                 {
-                    Console.WriteLine($"An error occurred: {ex.Message}"); 
+                    Console.WriteLine($"An error occurred: {ex.Message}");
                 }
-                
+
             }
 
             return words;
@@ -130,7 +122,7 @@ namespace SpellingBee
         /// <summary>
         /// Generates valid words for the current puzzle based on the database.
         /// </summary>
-        public void GenerateValidWords()
+        public override void GenerateValidWords()
         {
             List<string> tableNames = new()
             {
@@ -194,7 +186,7 @@ namespace SpellingBee
             foreach (var word in validWords)
             {
                 // Count of unique letters in the word.
-                int uniqueLetterCount = word.Distinct().Count(); 
+                int uniqueLetterCount = word.Distinct().Count();
                 int wordLength = word.Length;
                 int points = 0;
 
@@ -209,7 +201,7 @@ namespace SpellingBee
         /// <summary>
         /// Selects a random word to be used as the base for the puzzle.
         /// </summary>
-        public void SelectRandomWordForPuzzle()
+        public override void SelectRandomWordForPuzzle()
         {
             string selectedWord = PangramWords[rand.Next(PangramWords.Count)];
             baseWord = new List<char>(selectedWord.Distinct().ToArray());
@@ -220,18 +212,18 @@ namespace SpellingBee
         /// <summary>
         /// Sets the base word for the puzzle from a given word.
         /// </summary>
-        public bool SetBaseWordForPuzzle(string word)
+        public override Model SetBaseWordForPuzzle(string word)
         {
             string bWord = word.ToLower();
             if (!PangramWords.Contains(bWord))
             {
-                return false;
+                return new NullModel();
             }
             Reset();
             baseWord = new List<char>(bWord.Distinct().ToArray());
             ShuffleNewWord();
             requiredLetter = baseWord[0];
-            return true;
+            return this;
         }
 
         /// <summary>
@@ -253,7 +245,7 @@ namespace SpellingBee
         /// <summary>
         /// Shuffles the letters of the base word. Also makes sure that the required letter is the first element.
         /// </summary>
-        public void ShuffleBaseWord()
+        public override void ShuffleBaseWord()
         {
             int n = baseWord.Count;
             for (int i = n - 1; i > 0; i--)
@@ -276,7 +268,7 @@ namespace SpellingBee
         /// <summary>
         /// Checks if a given word is valid for the current puzzle.
         /// </summary>
-        public bool IsValidWord(string word)
+        public override bool IsValidWord(string word)
         {
             return validWords.Contains(word);
         }
@@ -284,7 +276,7 @@ namespace SpellingBee
         /// <summary>
         /// Determines if a word has already been found by the player.
         /// </summary>
-        public bool IsWordAlreadyFound(string word)
+        public override bool IsWordAlreadyFound(string word)
         {
             return foundWords.Contains(word);
         }
@@ -292,7 +284,7 @@ namespace SpellingBee
         /// <summary>
         /// Adds a found word to the list of discovered words and updates player's points.
         /// </summary>
-        public void AddFoundWord(string word)
+        public override void AddFoundWord(string word)
         {
             if (IsValidWord(word) && !IsWordAlreadyFound(word))
             {
@@ -304,7 +296,7 @@ namespace SpellingBee
         /// <summary>
         /// Resets the game model to its initial state.
         /// </summary>
-        public void Reset()
+        public override void Reset()
         {
             baseWord.Clear();
             validWords.Clear();
@@ -317,18 +309,18 @@ namespace SpellingBee
         /// <summary>
         /// Calculates the points required for the player to achieve the next rank.
         /// </summary>
-        public int GetNextRankThreshold()
+        public override int GetNextRankThreshold()
         {
             // Default status
-            int status = 0; 
+            int status = 0;
 
             for (int i = 0; i < statusTitles.Count; ++i)
             {
-                if (playerPoints >= (int)(statusTitles[i].Value * maxPoints* .01))
+                if (playerPoints >= (int)(statusTitles[i].Value * maxPoints * .01))
                 {
                     if (i == statusTitles.Count - 1)
                         status = GetMaxPoints();
-                    else 
+                    else
                         status = (int)(statusTitles[i + 1].Value * maxPoints * .01);
                 }
             }
@@ -338,7 +330,7 @@ namespace SpellingBee
         private void UpdatePlayerPointsForFoundWord(string word)
         {
             // Count of unique letters in the word.
-            int uniqueLetterCount = word.Distinct().Count(); 
+            int uniqueLetterCount = word.Distinct().Count();
             int wordLength = word.Length;
             int points = 0;
 
@@ -350,13 +342,13 @@ namespace SpellingBee
                 points = wordLength + (uniqueLetterCount == 7 ? 7 : 0);
 
             // Add the points to the player's total score.
-            playerPoints += points; 
+            playerPoints += points;
         }
 
         /// <summary>
         /// Determines if a puzzle has been started.
         /// </summary>
-        public bool Active()
+        public override bool Active()
         {
             return baseWord.Count > 0;
         }
@@ -364,7 +356,7 @@ namespace SpellingBee
         /// <summary>
         /// Saves the current game state to a specified file.
         /// </summary>
-        public bool SaveCurrentGameState(string saveName)
+        public override bool SaveCurrentGameState(string saveName)
         {
             string fileName = saveName;
             if (string.IsNullOrEmpty(fileName))
@@ -381,7 +373,7 @@ namespace SpellingBee
         /// <summary>
         /// Saves the current puzzle to a specified file.
         /// </summary>
-        public bool SaveCurrentPuzzleState(string saveName)
+        public override bool SaveCurrentPuzzleState(string saveName)
         {
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             string fileName = saveName;
@@ -401,44 +393,21 @@ namespace SpellingBee
             return true;
         }
 
-        /// <summary>
-        /// Retrieves a list of available save files.
-        /// </summary>
-        public List<string> GetAvailableSaveFiles()
-        {
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
-            return Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "saves/")).ToList();
-        }
-
-        /// <summary>
-        /// Loads a game state from a specified file ID.
-        /// </summary>
-        public GameModel? LoadGameStateFromFile(int fileId)
-        {
-            var fileList = GetAvailableSaveFiles();
-            if (fileList.Count > fileId)
-            {
-                string filePath = fileList[fileId];
-                string jsonData = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<GameModel>(jsonData);
-            }
-            // File not found or invalid ID.
-            return null; 
-        }
 
         /// <summary>
         /// Assigns properties and fields from a loaded game to the current instance.
         /// </summary>
-        public void AssignFrom(GameModel loadedGame)
+        public override void AssignFrom(Model loadedGame)
         {
+            GameModel temp = (GameModel)loadedGame;
             // Assigning each field and property from the loaded game to this instance
-            baseWord = new List<char>(loadedGame.baseWord);
-            foundWords = new List<string>(loadedGame.foundWords);
-            playerPoints = loadedGame.playerPoints;
-            requiredLetter = loadedGame.requiredLetter;
+            baseWord = new List<char>(temp.baseWord);
+            foundWords = new List<string>(temp.foundWords);
+            playerPoints = temp.playerPoints;
+            requiredLetter = temp.requiredLetter;
             //validWords = new List<string>(loadedGame.validWords);
             GenerateValidWords();
-            maxPoints = loadedGame.maxPoints;
+            maxPoints = temp.maxPoints;
         }
 
         /// <summary>
@@ -446,7 +415,7 @@ namespace SpellingBee
         /// of the puzzle.
         /// <return>True if foundWords == validWords, false otherwise.</return>
         /// </summary>
-        public bool wonTheGame()
+        public override bool wonTheGame()
         {
             return (foundWords.Count == validWords.Count);
         }
@@ -454,7 +423,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the base word of the current puzzle.
         /// </summary>
-        public List<char> GetBaseWord()
+        public override List<char> GetBaseWord()
         {
             return baseWord;
         }
@@ -462,7 +431,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the required letter of the current puzzle.
         /// </summary>
-        public char GetRequiredLetter()
+        public override char GetRequiredLetter()
         {
             return requiredLetter;
         }
@@ -470,7 +439,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the player's current points.
         /// </summary>
-        public int GetPlayerPoints()
+        public override int GetPlayerPoints()
         {
             return playerPoints;
         }
@@ -478,7 +447,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the status titles with their associated point thresholds.
         /// </summary>
-        public List<KeyValuePair<string, int>> GetStatusTitles()
+        public override List<KeyValuePair<string, int>> GetStatusTitles()
         {
             return statusTitles;
         }
@@ -486,7 +455,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves a list of words found by the player.
         /// </summary>
-        public IEnumerable<string> GetFoundWords()
+        public override IEnumerable<string> GetFoundWords()
         {
             return foundWords;
         }
@@ -494,7 +463,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the maximum points achievable for the current puzzle.
         /// </summary>
-        public int GetMaxPoints()
+        public override int GetMaxPoints()
         {
             return maxPoints;
         }
@@ -502,7 +471,7 @@ namespace SpellingBee
         /// <summary>
         /// Retrieves the valid words for the current puzzle.
         /// </summary>
-        public List<String> GetValidWords()
+        public override List<String> GetValidWords()
         {
             return validWords;
         }
@@ -511,7 +480,7 @@ namespace SpellingBee
         /// Calculates the ranks and the points required to reach them
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, int> GetAllRanks()
+        public override Dictionary<string, int> GetAllRanks()
         {
             Dictionary<string, int> ranks = new Dictionary<string, int>();
             // Show the points needed for each rank
@@ -601,7 +570,7 @@ namespace SpellingBee
             int pangram = 0;
             int perfPangram = 0;
             // Counts the number of perfect and regular pangrams in validWords
-            foreach(var word in validWords)
+            foreach (var word in validWords)
             {
                 if (word.Distinct().Count() == 7 && word.Count() == 7)
                 {
@@ -620,7 +589,7 @@ namespace SpellingBee
         /// <returns>
         /// A string that contains the hint information
         /// </returns>
-        public string PrintHintTable()
+        public override string PrintHintTable()
         {
             // Getting data for hints
             Dictionary<char, int[]> data = LettersInWord();
@@ -650,7 +619,7 @@ namespace SpellingBee
 
             (int, int) pangramCount = PangramCount();
             build.Append($"Words: {validWords.Count()}, Points: {GetMaxPoints()}, Pangrams: {pangramCount.Item1}");
-            if (pangramCount.Item2 != 0) 
+            if (pangramCount.Item2 != 0)
                 build.Append($" ({pangramCount.Item2} Perfect)");
             if (data.Count() == 7)
                 build.Append($", BINGO");
@@ -662,7 +631,7 @@ namespace SpellingBee
             {
                 if (columnTotals[i] != 0)
                 {
-                    build.Append($"{wordLengths[i], 3} ");
+                    build.Append($"{wordLengths[i],3} ");
                 }
                 else
                 {
@@ -674,7 +643,7 @@ namespace SpellingBee
 
             build.Append(" tot\n");
 
-            
+
 
             // Create rows
             foreach (var entry in data)
@@ -684,7 +653,7 @@ namespace SpellingBee
                 for (int i = 0; i < arrayLength; i++)
                 {
                     if (!removedColumns.Contains(i))
-                    { 
+                    {
                         if (entry.Value[i] == 0)
                         {
                             build.Append("  - ");
@@ -726,6 +695,11 @@ namespace SpellingBee
             }
 
             return build.ToString();
+        }
+
+        public override bool IsNull()
+        {
+            return false;
         }
 
     }

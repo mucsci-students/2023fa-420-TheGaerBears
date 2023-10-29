@@ -17,12 +17,21 @@ namespace TestSpellingBee
             var model = new GameModel();
             var controller = new GuiController(model);
 
+            Assert.False(controller._model.IsNull());
+
             controller.NewPuzzle();
-            var b1 = model.GetBaseWord();
+            var b1 = controller.GetBaseWord();
+            Assert.False(model.IsNull());
+
             controller.NewPuzzle();
-            var b2 = model.GetBaseWord();
+            var b2 = controller.GetBaseWord();
+
+            Assert.NotEmpty(b2);
+            Assert.NotEmpty(b1);
+            Assert.False(model.IsNull());
             Assert.NotEqual(b1, b2);
         }
+
         /// <summary>
         /// Verifies that the <c>NewPuzzleFromBaseword</c> method sets the <c>baseWord</c> 
         /// as the inputted word and resets <c>playerPoints</c>.
@@ -175,7 +184,7 @@ namespace TestSpellingBee
             //Verify load
             controller.NewPuzzleBaseWord("companion");
 
-            model = model.LoadGameStateFromFile(1);
+            model = (GameModel)model.LoadGameStateFromFile(1);
 
             oBaseWord.Sort();
 
