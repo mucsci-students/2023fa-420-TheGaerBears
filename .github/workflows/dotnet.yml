@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
     - name: Test
-      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true --collect:"XPlat Code Coverage"
     - name: Dir
       run: cd TestSpellingBee && ls
     - name: Test Report
@@ -30,12 +30,12 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Dotnet Tests            # Name of the check run which will be created
-        path: TestSpellingBee/TestResults/test-results.trx   # Path to test results
+        path: TestSpellingBee/TestResults/  # Path to test results
         reporter: dotnet-trx        # Format of test results
     - name: Codecov
       uses: codecov/codecov-action@v3
       with:
-          files: TestSpellingBee/TestResults/test-results.trx # optional
+          files: TestSpellingBee/TestResults/ # optional
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
