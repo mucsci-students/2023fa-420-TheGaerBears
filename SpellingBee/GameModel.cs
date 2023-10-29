@@ -30,14 +30,6 @@ namespace SpellingBee
         private const string DatabaseConnectionString_Two = "Data Source=./SetUpSpellingBee/Database/SpellingBeeWords.db";
 
         /// <summary>
-        /// Retrieves the current score of the player.
-        /// </summary>
-        public override int GetCurrentScore()
-        {
-            return playerPoints;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <c>GameModel</c> class, setting up the base game state.
         /// </summary>
         public GameModel()
@@ -440,6 +432,14 @@ namespace SpellingBee
         /// Retrieves the player's current points.
         /// </summary>
         public override int GetPlayerPoints()
+        {
+            return playerPoints;
+        }
+
+        /// <summary>
+        /// Retrieves the current score of the player.
+        /// </summary>
+        public override int GetCurrentScore()
         {
             return playerPoints;
         }
