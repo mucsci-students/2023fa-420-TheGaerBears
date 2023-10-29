@@ -370,5 +370,23 @@ namespace TestSpellingBee
             Assert.Equal(expectedPangramCount, pangramCount);
             Assert.Equal(expectedPerfectPangramCount, perfectPangramCount);
         }
+
+        [Fact]
+        public void ValidateGetCurrentScoreReturnsCorrectValue()
+        {
+            var model = new GameModel();
+            var view = new GameView();
+            var controller = new CliController(model, view); var baseWord = "soldier";
+
+            controller.NewPuzzleBaseWord(baseWord);
+
+            model.AddFoundWord("rides");
+
+            int expectedScore = 5; 
+
+            var currentScore = model.GetCurrentScore();
+
+            Assert.Equal(expectedScore, currentScore);
+        }
     }
 }
