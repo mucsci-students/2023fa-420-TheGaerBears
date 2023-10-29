@@ -199,7 +199,7 @@
 								</Grid.ColumnDefinitions>
 								<TextBox x:Name="txtBox2" VerticalAlignment="Center" Margin="15,0,15,0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
 								<Button Content="Save&#x0a;Puzzle" Grid.Row="1" Command="{Binding SavePuzzleCommand}" CommandParameter="{Binding ElementName=txtBox2, Path=Text}" HorizontalAlignment="Center" />
-								<Button Content="Save&#x0a;Word" Grid.Row="1" Grid.Column="1" Command="{Binding SaveCurrentCommand}" CommandParameter="{Binding ElementName=txtBox2, Path=Text}" HorizontalAlignment="Center"/>
+								<Button Content="Save&#x0a;Current" Grid.Row="1" Grid.Column="1" Command="{Binding SaveCurrentCommand}" CommandParameter="{Binding ElementName=txtBox2, Path=Text}" HorizontalAlignment="Center"/>
 							</Grid>
 						</Flyout>
 					</Button.Flyout>
