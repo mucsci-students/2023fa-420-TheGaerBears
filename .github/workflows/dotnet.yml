@@ -21,14 +21,14 @@ jobs:
       run: dotnet restore ./SpellingBee/SpellingBee.csproj 
     - name: Build
       run: dotnet build --no-restore ./SpellingBee/SpellingBee.csproj
-    - name: Location
-      run: ls
     - name: Test
-      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./TestResults/result.cobertura.xml'
+      run: dotnet test ./SpellingBee/SpellingBee.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./TestSpellingBee/TestResults/result.cobertura.xml'
+    - name: Location
+      run: cd ./TestSpellingBee/TestResults && ls
     - name: Codecov
       uses: codecov/codecov-action@v3
       with:
-        files: ./TestResults/result.cobertura.xml
+        files: ./TestSpellingBee/TestResults/result.cobertura.xml
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         
