@@ -222,7 +222,7 @@ namespace SpellingBee
         /// <summary>
         /// Shuffles the letters of the base word.
         /// </summary>
-        private void ShuffleNewWord()
+        public void ShuffleNewWord()
         {
             int n = baseWord.Count;
             for (int i = n - 1; i > 0; i--)
@@ -317,7 +317,7 @@ namespace SpellingBee
             return status;
         }
 
-        private void UpdatePlayerPointsForFoundWord(string word)
+        public void UpdatePlayerPointsForFoundWord(string word)
         {
             // Count of unique letters in the word.
             int uniqueLetterCount = word.Distinct().Count();
