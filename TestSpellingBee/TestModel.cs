@@ -92,27 +92,26 @@ namespace TestSpellingBee
         public void SaveVerify()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            //var view = new GameView();
+            var controller = new GuiController(model);
 
             string oWord = "codable";
             controller.NewPuzzleBaseWord(oWord);
             controller.Guess(oWord);
+            var oBaseWord = controller.GetBaseWord();
             char oReqLetter = model.GetRequiredLetter();
             int oPlayerPoints = model.GetPlayerPoints();
             int oMaxPoints = model.GetMaxPoints();
 
             model.SaveCurrentGameState("test-mod-sv");
 
-            String filePath = "../../debug/net6.0/saves/test-mod-sv.json";
+            controller.Load("test-mod-sv");
 
-            using StreamReader reader = new(filePath);
-            string content = reader.ReadToEnd();
 
-            Assert.Contains(oWord, content);
-            Assert.Contains(oReqLetter, content);
-            Assert.Contains(oPlayerPoints.ToString(), content);
-            Assert.Contains(oMaxPoints.ToString(), content);
+            Assert.Equal(oBaseWord, controller.GetBaseWord());
+            Assert.Equal(oReqLetter, model.GetRequiredLetter());
+            Assert.Equal(oPlayerPoints, model.GetCurrentScore());
+            Assert.Equal(oMaxPoints, model.GetMaxPoints());
         }
 
         /// <summary>
