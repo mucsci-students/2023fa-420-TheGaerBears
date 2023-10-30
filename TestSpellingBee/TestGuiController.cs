@@ -17,12 +17,26 @@ namespace TestSpellingBee
             var model = new GameModel();
             var controller = new GuiController(model);
 
+            Assert.False(controller._model.IsNull());
+            Assert.False(model.IsNull());
+            Assert.NotEmpty(model.GetPangramList());
+
             controller.NewPuzzle();
-            var b1 = model.GetBaseWord();
+            Assert.NotEqual(0, model.GetRequiredLetter());
+            var b1 = controller.GetBaseWord();
+            Assert.NotEmpty(b1);
+
+            Assert.NotEqual(0, model.GetRequiredLetter());
+            Assert.False(model.IsNull());
+
             controller.NewPuzzle();
-            var b2 = model.GetBaseWord();
+            var b2 = controller.GetBaseWord();
+
+            Assert.NotEmpty(b2);
+            Assert.False(model.IsNull());
             Assert.NotEqual(b1, b2);
         }
+
         /// <summary>
         /// Verifies that the <c>NewPuzzleFromBaseword</c> method sets the <c>baseWord</c> 
         /// as the inputted word and resets <c>playerPoints</c>.
@@ -131,21 +145,19 @@ namespace TestSpellingBee
             string oWord = "codable";
             controller.NewPuzzleBaseWord(oWord);
             controller.Guess(oWord);
+            var oBaseWord = controller.GetBaseWord();
             char oReqLetter = model.GetRequiredLetter();
             int oPlayerPoints = model.GetPlayerPoints();
             int oMaxPoints = model.GetMaxPoints();
 
-            model.SaveCurrentGameState("test");
+            model.SaveCurrentGameState("test-gui-sv");
 
-            var filePath = "..\\..\\debug\\net6.0\\saves\\test.json";
+            controller.Load("test-gui-sv");
 
-            using StreamReader reader = new(filePath);
-            string content = reader.ReadToEnd();
-
-            Assert.Contains(oWord, content);
-            Assert.Contains(oReqLetter, content);
-            Assert.Contains(oPlayerPoints.ToString(), content);
-            Assert.Contains(oMaxPoints.ToString(), content);
+            Assert.Equal(oBaseWord, controller.GetBaseWord());
+            Assert.Equal(oReqLetter, model.GetRequiredLetter());
+            Assert.Equal(oPlayerPoints, controller.GetCurrentScore());
+            Assert.Equal(oMaxPoints, controller.GetMaxPoints());
         }
 
         /// <summary>
@@ -163,7 +175,7 @@ namespace TestSpellingBee
             controller.Guess(oWord);
 
 
-            model.SaveCurrentGameState("testGUI");
+            model.SaveCurrentGameState("b-test-GUI-load");
 
             //Copy old data of puzzle to compare
             List<char> oBaseWord = new List<char>(model.GetBaseWord());
@@ -175,7 +187,7 @@ namespace TestSpellingBee
             //Verify load
             controller.NewPuzzleBaseWord("companion");
 
-            model = model.LoadGameStateFromFile(1);
+            controller.Load("b-test-GUI-load");
 
             oBaseWord.Sort();
 

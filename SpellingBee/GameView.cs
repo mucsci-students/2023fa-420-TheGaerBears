@@ -1,11 +1,15 @@
-﻿using System;
+﻿using DynamicData;
+using SkiaSharp;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SpellingBee
 {
 
     public class GameView
     {
+            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status" };
         /// <summary>
         /// Center-aligns and displays the specified text in the console.
         /// </summary>
@@ -26,7 +30,7 @@ namespace SpellingBee
         /// <summary>
         /// Displays the player's status based on points and a list of possible statuses.
         /// </summary>
-        public void ShowStatus(int playerPoints, int maxPoints, List<KeyValuePair<string, int>> statusTitles)
+        public void ShowStatus(int playerPoints, int maxPoints, List<KeyValuePair<string, int>> statusTitles, Dictionary<string, int> ranks)
         {
             double ratio = (double)playerPoints / maxPoints;
             double percentageAsDecimal = ratio * 100;
@@ -44,6 +48,17 @@ namespace SpellingBee
 
             Console.WriteLine($"Your current points: {playerPoints}");
             Console.WriteLine($"Your status: {status}");
+
+            // Show the points needed for each rank
+            Console.WriteLine("\n");
+            Console.WriteLine("        Rank:                             Points needed:");
+            Console.WriteLine("        ================================================");
+            foreach (var rank in ranks)
+            {
+                int pointsPrint = rank.Value;
+                string space = String.Concat(Enumerable.Repeat(" ", (48 - rank.Key.Length - (pointsPrint.ToString().Length))));// / 2) + (pointsPrint.ToString().Length % 2 == 0 ? 1 : 0))));
+                Console.WriteLine("        " + rank.Key + space + pointsPrint);
+            }
         }
 
         /// <summary>
@@ -150,6 +165,7 @@ namespace SpellingBee
                 -show puzzle:        Display the puzzle letters.
                 -show status:        Display your current game status.
                 -shuffle:            Shuffle the puzzle letters.
+                -hint:               Display helpful hints for solving the puzzle.
                 -help:               Show this list of commands.
                 -exit:               Exit the game.
 
@@ -161,6 +177,68 @@ namespace SpellingBee
         public void Exit()
         {
             Console.WriteLine("Thank you for playing Spelling Bee. Goodbye!");
+        }
+
+        public string TabCompleteInput()
+        {
+            ConsoleKeyInfo input;
+            var userInput = string.Empty;
+            while (ConsoleKey.Enter != (input = Console.ReadKey()).Key)
+            {
+                if (input.Key == ConsoleKey.Backspace)
+                    userInput = userInput.Any() ? userInput.Remove(userInput.Length - 1, 1) : string.Empty;
+
+                else if (input.Key == ConsoleKey.Tab)
+                {
+                    List<string> valid = new List<string>();
+                    foreach(string str in tabCompletable)
+                    {
+                        bool temp = true;
+                        for(int i = 0; i < userInput.Length && i < str.Length;++i)
+                        {
+                            if (userInput[i] != str[i])
+                            {
+                                temp = false;
+                            }
+                        }
+                        if (str.Length < userInput.Length)
+                        {
+                            temp = false;
+                        }
+
+                        if (temp)
+                        {
+                            valid.Add(str);
+                        }
+                    }
+                    if (valid.Count < 1) ;
+                    else if (valid.Count == 1)
+                    {
+                        userInput = valid[0];
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        foreach (string str in valid)
+                        {
+                            Console.Write(str + "\t");
+                        }
+                        Console.WriteLine();
+                    }
+                }
+                else if (input != null)
+                    userInput += input.KeyChar;
+
+
+                int currentLineCursor = Console.CursorTop;
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, currentLineCursor);
+
+                Console.Write(userInput);
+            }
+            Console.WriteLine();
+            return userInput;
         }
     }
 }

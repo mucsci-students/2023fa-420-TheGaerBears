@@ -20,7 +20,7 @@ namespace TestSpellingBee
   
             var originalBaseWord = model.GetBaseWord();
 
-            controller.Shuffle();
+            controller.ShuffleBaseWord();
 
             var shuffledBaseWord = model.GetBaseWord();
          
@@ -47,10 +47,23 @@ namespace TestSpellingBee
             var view = new GameView();
             var controller = new CliController(model, view);
 
+            Assert.False(controller._model.IsNull());
+            Assert.False(model.IsNull());
+            Assert.NotEmpty(model.GetPangramList());
+
             controller.NewPuzzle();
-            var b1 = model.GetBaseWord();
+            Assert.NotEqual(0, model.GetRequiredLetter());
+            var b1 = controller.GetBaseWord();
+            Assert.NotEmpty(b1);
+
+            Assert.NotEqual(0, model.GetRequiredLetter());
+            Assert.False(model.IsNull());
+
             controller.NewPuzzle();
-            var b2 = model.GetBaseWord();
+            var b2 = controller.GetBaseWord();
+
+            Assert.NotEmpty(b2);
+            Assert.False(model.IsNull());
             Assert.NotEqual(b1, b2);
         }
 

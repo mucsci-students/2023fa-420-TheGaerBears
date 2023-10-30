@@ -8,20 +8,20 @@ namespace SpellingBee
     /// Class <c>GuiController</c> is responsible for controlling the game flow and 
     /// interaction between the GameModel and the GUI.
     /// </summary>
-    public class GuiController
+    public class GuiController : Controller
     {
         // A GameModel object used by the GuiController.
-        private readonly GameModel _model;
+        public Model _model;
 
         // A string used to store a message and which is used by <c>MainWindowViewModel</c>.
-        private string _lastMessage = "";
+        //private string _lastMessage = "";
 
         /// <summary>
         /// This constructor initializes a <c>GuiController</c> from 
         /// a <c>GameModel</c> as long as model is not null.
         /// /// <param name="model">the GameModel to initialize the GuiController.</param>
         /// </summary>
-        public GuiController(GameModel model)
+        public GuiController(Model model) : base(model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
         }
@@ -34,8 +34,9 @@ namespace SpellingBee
         /// generates valid words to guess from.
         /// </para>
         /// </summary>
-        public void NewPuzzle()
+        public override void NewPuzzle()
         {
+            //_model = new GameModel();
             _model.Reset();
             _model.SelectRandomWordForPuzzle();
             _model.GenerateValidWords();
@@ -50,9 +51,10 @@ namespace SpellingBee
         /// </para>
         /// <param name="word">the new baseword to start the puzzle.</param>
         /// </summary>
-        public void NewPuzzleBaseWord(string word)
+        public override void NewPuzzleBaseWord(string word)
         {
-            if (!_model.SetBaseWordForPuzzle(word))
+            Model temp = _model.SetBaseWordForPuzzle(word);
+            if (temp.IsNull())
             {
                 _lastMessage = "Not a valid pangram";
                 return;
@@ -73,8 +75,8 @@ namespace SpellingBee
         /// </para>
         /// <param name="word">the word guessed by the user.</param>
         /// </summary>
-        public void Guess(string word)
-        {  
+        public override void Guess(string word)
+        {
             if (_model.GetBaseWord().Count == 0)
             {
                 _lastMessage = "Start a game first!";
@@ -101,17 +103,17 @@ namespace SpellingBee
         /// Method <c>GetLastMessage</c> returns the string currently stored in <c>_lastMessage</c>. 
         /// <returns>The string message.</returns>
         /// </summary>
-        public string GetLastMessage()
+        /*public string GetLastMessage()
         {
             return _lastMessage;
-        }
+        }*/
 
         /// <summary>
         /// Method <c>ShuffleBaseWord</c> is used in the creation of a new game
         /// to shuffle the letters of the pangram before displaying them.
         /// A game must be started.
         /// </summary>
-        public void ShuffleBaseWord()
+        public override void ShuffleBaseWord()
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -139,10 +141,10 @@ namespace SpellingBee
         /// Method <c>GetBaseWord</c> returns the baseword of the puzzle.
         /// /// <returns>The list of characters that make up the baseword.</returns>
         /// </summary>
-        public List<char> GetBaseWord()
+        /*public List<char> GetBaseWord()
         {
             return _model.GetBaseWord();
-        }
+        }*/
 
         /// <summary>
         /// Method <c>Shuffle</c> swaps the letters of the baseword while
@@ -170,7 +172,7 @@ namespace SpellingBee
         /// </para>
         /// <param name="saveName">the name of the save file the user types.</param>
         /// </summary>
-        public void SaveCurrent(string saveName)
+        public override void SaveCurrent(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -178,8 +180,26 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage = "File saved";
-                _model.SaveCurrentGameState(saveName);
+                if (!_model.SaveCurrentGameState(saveName))
+                    _lastMessage = "Invalid save name";
+                else
+                    _lastMessage = "File saved";
+            }
+        }
+
+        /// <summary>
+        /// Gets the hint table from the model and retu
+        /// </summary>
+        /// <returns></returns>
+        public void Hint()
+        {
+            if (_model.GetBaseWord().Count == 0)
+            {
+                _lastMessage = "Start a game first!";
+            }
+            else
+            {
+                _lastMessage = _model.PrintHintTable();
             }
         }
 
@@ -192,7 +212,7 @@ namespace SpellingBee
         /// </para>
         /// <param name="saveName">the name of the save file the user types.</param>
         /// </summary>
-        public void SavePuzzle(string saveName)
+        public override void SavePuzzle(string saveName)
         {
             if (_model.GetBaseWord().Count == 0)
             {
@@ -200,9 +220,12 @@ namespace SpellingBee
             }
             else
             {
-                _lastMessage = "File saved";
 
-                _model.SaveCurrentPuzzleState(saveName);
+
+                if (!_model.SaveCurrentPuzzleState(saveName))
+                    _lastMessage = "Invalid save name";
+                else
+                    _lastMessage = "File saved";
             }
         }
 
@@ -210,7 +233,7 @@ namespace SpellingBee
         /// Method <c>Load</c> allows the user to load a saved puzzle or game.
         /// <param name="saveName">the name of the saved file.</param>
         /// </summary>
-        public void Load(string fileName)
+        public override void Load(string fileName)
         {
             int fileId = -1;
             var files = _model.GetAvailableSaveFiles();
@@ -223,11 +246,11 @@ namespace SpellingBee
                 }
             }
 
-            GameModel loadedGame = _model.LoadGameStateFromFile(fileId);
-            
-            if (loadedGame != null)
+            Model loadedGame = _model.LoadGameStateFromFile(fileId);
+
+            if (!loadedGame.IsNull())
             {
-                _model.AssignFrom(loadedGame);
+                _model.AssignFrom((GameModel)loadedGame);
                 _lastMessage = "File Loaded";
             }
             else
@@ -241,7 +264,7 @@ namespace SpellingBee
         /// <return>A list of the valid found words.</return>
         /// </summary>
         public List<string> GetFoundWords()
-        { 
+        {
             return _model.GetFoundWords().ToList();
         }
 
@@ -251,7 +274,7 @@ namespace SpellingBee
         /// <returns>A string representing their current Rank.</returns>
         /// </summary>
         public string GetCurrentRank()
-        {   
+        {
             int currentPoints = _model.GetPlayerPoints();
             string rank = "Beginner";
             foreach (var rankPair in _model.GetStatusTitles())
@@ -311,7 +334,11 @@ Remember, all words must contain the required letter!";
         /// </summary>
         public int GetNextRank()
         {
-            return _model.PointsToNextRank();
+            return _model.GetNextRankThreshold();
+        }
+        public int GetMaxPoints()
+        {
+            return _model.GetMaxPoints();
         }
     }
 }

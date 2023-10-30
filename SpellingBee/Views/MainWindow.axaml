@@ -9,8 +9,10 @@
 	   KeyDown="KeyInput_KeyDown"
 	   Icon="/Assets/avalonia-logo.ico"
 	   Title="SpellingBee">
+
 	<!--grid that contains everything-->
-	<Grid>
+	<Grid Background="#368BC1" >
+
 		<!--defines columns and rows of entire page-->
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="2*"/>
@@ -22,18 +24,22 @@
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 		
-
-		<!--snowman-->
-		<Grid Grid.Column="1" >
-		<Image Source="/Assets/snowman.png" Opacity=".3"/>
-		</Grid>
 		<!--text block with scroll bar on right side-->
 		<ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" >
-			<TextBlock Grid.Row="0" FontSize="26" Text="{Binding FeedbackMessage}" VerticalAlignment="Center" TextWrapping="Wrap" />
+			<TextBlock Grid.Row="0" FontSize="20" FontFamily="Courier New" Text="{Binding FeedbackMessage}" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="Black"/>
 		</ScrollViewer>
 		<!--Text at the bottom of the screen-->
-		<Label  Content="{Binding Path=LowerText}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" />
-
+		<Grid Grid.Row="1" Grid.Column="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Label  Content="Type Here!" FontSize="30" HorizontalAlignment="Center" Foreground="Black" VerticalAlignment="Top" Grid.RowSpan="5"/>
+			<Label  Content="{Binding Path=LowerText}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" Grid.RowSpan="5" Foreground="Black"/>
+		</Grid>
 		<!--grid that contains all the letters and guess button-->
 		<Grid x:Name="Letters" Grid.Column="0" Grid.Row="0">
 			
@@ -55,28 +61,57 @@
 			</Grid.RowDefinitions>
 			<!--Title at the top of the screen-->
 			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
-			<Button Content="{Binding Path=Letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8" BorderBrush="Gold"/>
-			<Button Content="{Binding Path=Letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"/>
-			<Button Content="{Binding Path=Letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"/>
-			<Button Content="{Binding Path=Letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"/>
-			<Button Content="{Binding Path=Letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"/>
-			<Button Content="{Binding Path=Letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"/>
-			<Button Content="{Binding Path=Letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"/>
+			<Button Content="Backspace"				 Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding Backspace}" Foreground="Black"/>
+			<Button Content="{Binding Path=Letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8" BorderBrush="Gold" Foreground="Black"/>
+			<Button Content="{Binding Path=Letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"					   Foreground="Black"/>
+			<Button Content="{Binding Path=Letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"					   Foreground="Black"/>
+			<Button Content="{Binding Path=Letter4}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter4Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"					   Foreground="Black"/>
+			<Button Content="{Binding Path=Letter5}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter5Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"					   Foreground="Black"/>
+			<Button Content="{Binding Path=Letter6}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter6Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"					   Foreground="Black"/>
+			<Button Content="{Binding Path=Letter7}" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter7Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"					   Foreground="Black"/>
 			
+			<!--Progress Bar-->
 			
-			<!--Guess button-->
-			<Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"
-					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-					Command="{Binding GuessCommand}" IsVisible="{Binding GuessVisible}"/>
-			<!--<Button Content="Save Game" Grid.ColumnSpan="7" IsVisible="{Binding saveVisible}" Grid.Row="3" FontSize="30"-->
-			<!--HorizontalAlignment="Stretch" VerticalAlignment="Stretch" -->
-			<!--VerticalContentAlignment="Center" HorizontalContentAlignment="Center" -->
-			<!--Command="{Binding SaveCommand}"/> -->
+			<Grid Grid.Row="2" Grid.ColumnSpan="7">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
 
-			<!--colorblind mode-->
-			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}"/>
-			
+				</Grid.ColumnDefinitions>
+				
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=Genius}"		MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=QueenBee}"  VerticalAlignment="Center" Grid.Row="1"		Grid.Column="8"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=Amazing}"		MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=Genius}"  VerticalAlignment="Center" Grid.Row="1"		Grid.Column="7"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=Great}"		MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=Amazing}"  VerticalAlignment="Center" Grid.Row="1"		Grid.Column="6"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=Nice}"		MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=Great}" VerticalAlignment="Center" Grid.Row="1"		Grid.Column="5"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=Solid}"		MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=Nice}"  VerticalAlignment="Center" Grid.Row="1"			Grid.Column="4"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=Good}"		MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=Solid}"  VerticalAlignment="Center" Grid.Row="1"		Grid.Column="3"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=MovingUp}"	MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=Good}"  VerticalAlignment="Center" Grid.Row="1"			Grid.Column="2"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="{Binding Path=GoodStart}"	MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=MovingUp}"  VerticalAlignment="Center" Grid.Row="1"		Grid.Column="1"/>
+				<ProgressBar Value="{Binding Path=Points}" Minimum="0"							MinWidth="0" HorizontalAlignment="Stretch" Maximum="{Binding Path=GoodStart}"  VerticalAlignment="Center" Grid.Row="1"	Grid.Column="0"/>
+				<Label Content="Beginning" VerticalAlignment="Bottom"/>
+				<Label Content="Good Start" VerticalAlignment="Top" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+				<Label Content="Moving Up" VerticalAlignment="Bottom" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+				<Label Content="Good" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+				<Label Content="Solid" VerticalAlignment="Bottom" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+				<Label Content="Nice" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+				<Label Content="Great" VerticalAlignment="Bottom" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+				<Label Content="Amazing" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+				<Label Content="Genius" VerticalAlignment="Bottom" Grid.Column="7" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+				<Label Content="QueenBee" Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+			</Grid>
+				
 			<!--displays the points rank and -->
 			<Grid Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>
@@ -84,21 +119,29 @@
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<Label Content="Points: " VerticalAlignment="Center" HorizontalAlignment="Right"/>
-				<Label Content="Rank: " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1"/>
-				<Label Content="Next Rank Points: " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2"/>
+				<Label Content="Points: " VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Black" />
 			</Grid>
 			<!--the actual calls to get the values-->
-			<Grid Grid.Column="6" Grid.Row="2">
+			<Grid Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<Label Content="{Binding Path=Points}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				<Label Content="{Binding Path=Rank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1"/>
-				<Label Content="{Binding Path=NextRank}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2"/>
+				<Label Content="{Binding Path=Points}" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black" />
 			</Grid>
+			
+			
+			<!--Guess button-->
+			<Button Content="Guess!" Grid.ColumnSpan="7" Grid.Row="3" FontSize="30"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+					Command="{Binding GuessCommand}" Foreground="Black">
+			</Button>
+
+			<!--colorblind mode-->
+			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}"/>
+			
 		</Grid>
 		<!--defines buttons in bottom right-->
 		<Grid Grid.Row="1" Grid.Column="1">
@@ -116,20 +159,52 @@
 				</Grid.RowDefinitions>
 
 
-				<Button Content="Save&#x0a;Puzzle" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SavePuzzleCommand}"				BorderThickness="4" BorderBrush="Red"	/>
-				<Button Content="Save&#x0a;Word" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SaveCurrentCommand}"				BorderThickness="4" BorderBrush="Green"	/>
-				<Button Content="Load&#x0a;Game" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding LoadCommand}"						BorderThickness="4" BorderBrush="Red"	/>
-				<Button Content="New Game&#x0a;From Word" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewGameFromWordCommand}"	BorderThickness="4" BorderBrush="Green"	/>
-				<Button Content="Found&#x0a;Words" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShowFoundWordsCommand}"			BorderThickness="4" BorderBrush="Green"	/>
-				<Button Content="Help" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding HelpCommand}"									BorderThickness="4" BorderBrush="Red"	/>
-				<Button Content="Shuffle" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShuffleCommand}"							BorderThickness="4" BorderBrush="Green"	/>
-				<Button Content="New Game" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewPuzzleCommand}"						BorderThickness="4" BorderBrush="Red"	/>
-
-
-
+				<Button Content="Load&#x0a;Game" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding LoadCommand}"						BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
+				<Button Content="New Game" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding NewPuzzleCommand}"	BorderThickness="4" BorderBrush="Green"	Foreground="Black"/>
+				<Button Content="Found&#x0a;Words" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShowFoundWordsCommand}"			BorderThickness="4" BorderBrush="Green"	Foreground="Black"/>
+				<Button Content="Help" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding HelpCommand}"									BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
+				<Button Content="Shuffle" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ShuffleCommand}"							BorderThickness="4" BorderBrush="Green"	Foreground="Black"/>
+				<Button Content="Hints" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding HintCommand}"		BorderThickness="4" BorderBrush="Red"	Foreground="Black" Focusable="False">
+					<Button.Flyout>
+						<Flyout Placement="Top">
+							<Label Content="{Binding Path=HintString}" FontFamily="Courier New"/>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<Button Content="New Game&#x0a;From Word" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="4" BorderBrush="Red"	Foreground="Black" Focusable="False">
+						<Button.Flyout>
+						<Flyout Placement="Top">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+								</Grid.RowDefinitions>
+								<TextBox x:Name="txtBox" VerticalAlignment="Center" Margin="15,0,15,0" HorizontalAlignment="Center"/>
+								<Button Content="Submit" Grid.Row="1" Command="{Binding NewGameFromWordCommand}" CommandParameter="{Binding ElementName=txtBox, Path=Text}" HorizontalAlignment="Center"/>
+							</Grid>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<Button Content="Save" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"	BorderThickness="4" BorderBrush="Green"	Foreground="Black" Focusable="False">
+					<Button.Flyout>
+						<Flyout Placement="Top">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="1*"/>
+									<ColumnDefinition Width="1*"/>
+								</Grid.ColumnDefinitions>
+								<TextBox x:Name="txtBox2" VerticalAlignment="Center" Margin="15,0,15,0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+								<Button Content="Save&#x0a;Puzzle" Grid.Row="1" Command="{Binding SavePuzzleCommand}" CommandParameter="{Binding ElementName=txtBox2, Path=Text}" HorizontalAlignment="Center" />
+								<Button Content="Save&#x0a;Current" Grid.Row="1" Grid.Column="1" Command="{Binding SaveCurrentCommand}" CommandParameter="{Binding ElementName=txtBox2, Path=Text}" HorizontalAlignment="Center"/>
+							</Grid>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
 			</Grid>
 		</Grid>
-		
 	</Grid>
-
 </Window>
