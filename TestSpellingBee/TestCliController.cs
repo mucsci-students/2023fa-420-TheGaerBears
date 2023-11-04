@@ -7,20 +7,51 @@ namespace TestSpellingBee
     /// </summary>
     public class TestCliController
     {
+
+        private void ClearCliControllerInstance()
+        {
+            var instanceField = typeof(CliController).GetField("_instance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            instanceField.SetValue(null, null);
+        }
+
+        ~TestCliController()
+        {
+            // Clear the Singleton instance after all tests are executed
+            ClearCliControllerInstance();
+        }
+
+        private CliController cliControllerInstance;
+
+        private void InitializeCliController()
+        {
+            GameModel model = new GameModel();
+            GameView view = new GameView();
+            cliControllerInstance = CliController.GetInstance(model, view);
+        }
+
+        private void ResetCliControllerInstance()
+        {
+            var instanceField = typeof(CliController).GetField("_instance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            instanceField.SetValue(null, null);
+        }
         /// <summary>
         /// Verifies that the <c>Shuffle</c> method changes the order of the letters in <c>baseWord</c>.
         /// </summary>
         [Fact]
         public void ValidateShuffle()
         {
-            var model = new GameModel(); 
-            var view = new GameView(); 
-            var controller = new CliController(model, view);
+            // Ensure the instance is cleared before the test
+            ResetCliControllerInstance();
+            // Initialize the CliController instance
+            InitializeCliController(); 
+
+            var cliController = CliController.GetExistingInstance();
+            var model = cliController.GetModelInstance();
             var counter = 0;
   
             var originalBaseWord = model.GetBaseWord();
 
-            controller.ShuffleBaseWord();
+            cliController.ShuffleBaseWord();
 
             var shuffledBaseWord = model.GetBaseWord();
          
@@ -43,24 +74,29 @@ namespace TestSpellingBee
         [Fact]
         public void NewPuzzleResetsBaseWord()
         {
-            var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            // Ensure the instance is cleared before the test
+            ResetCliControllerInstance();
+            // Initialize the CliController instance
+            InitializeCliController();
 
-            Assert.False(controller._model.IsNull());
+            var cliController = CliController.GetExistingInstance();
+
+            var model = cliController.GetModelInstance();
+
+            Assert.False(cliController._model.IsNull());
             Assert.False(model.IsNull());
             Assert.NotEmpty(model.GetPangramList());
 
-            controller.NewPuzzle();
+            cliController.NewPuzzle();
             Assert.NotEqual(0, model.GetRequiredLetter());
-            var b1 = controller.GetBaseWord();
+            var b1 = cliController.GetBaseWord();
             Assert.NotEmpty(b1);
 
             Assert.NotEqual(0, model.GetRequiredLetter());
             Assert.False(model.IsNull());
 
-            controller.NewPuzzle();
-            var b2 = controller.GetBaseWord();
+            cliController.NewPuzzle();
+            var b2 = cliController.GetBaseWord();
 
             Assert.NotEmpty(b2);
             Assert.False(model.IsNull());
@@ -73,10 +109,14 @@ namespace TestSpellingBee
         [Fact]
         public void NewPuzzleResetsPoints()
         {
-            var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
-            controller.NewPuzzle();
+            // Ensure the instance is cleared before the test
+            ResetCliControllerInstance();
+            // Initialize the CliController instance
+            InitializeCliController();
+
+            var cliController = CliController.GetExistingInstance();
+            var model = cliController.GetModelInstance();
+            cliController.NewPuzzle();
 
             Assert.True(model.GetPlayerPoints() == 0);
         }
@@ -88,12 +128,17 @@ namespace TestSpellingBee
         [Fact]
         public void NewPuzzleFromBaseWord()
         {
-            var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            // Ensure the instance is cleared before the test
+            ResetCliControllerInstance();
+            // Initialize the CliController instance
+            InitializeCliController();
+
+            var cliController = CliController.GetExistingInstance();
+
+            var model = cliController.GetModelInstance();
 
             string word = "codable";
-            controller.NewPuzzleBaseWord(word);
+            cliController.NewPuzzleBaseWord(word);
 
             Assert.Equal(0, model.GetPlayerPoints());
 
@@ -119,14 +164,19 @@ namespace TestSpellingBee
         [Fact]
         public void GuessValid()
         {
-            var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
-            controller.NewPuzzleBaseWord("codable");
+            // Ensure the instance is cleared before the test
+            ResetCliControllerInstance();
+            // Initialize the CliController instance
+            InitializeCliController();
+
+            
+            var cliController = CliController.GetExistingInstance();
+            var model = cliController.GetModelInstance();
+            cliController.NewPuzzleBaseWord("codable");
 
             Assert.Contains("codable", model.GetValidWords());
 
-            controller.Guess("codable");
+            cliController.Guess("codable");
 
             Assert.NotEqual(0, model.GetPlayerPoints());
         }
@@ -138,15 +188,19 @@ namespace TestSpellingBee
         [Fact]
         public void GuessInvalid()
         {
-            var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            // Ensure the instance is cleared before the test
+            ResetCliControllerInstance();
+            // Initialize the CliController instance
+            InitializeCliController();
 
-            controller.NewPuzzleBaseWord("codable");
+            var cliController = CliController.GetExistingInstance();
+            var model = cliController.GetModelInstance();
+
+            cliController.NewPuzzleBaseWord("codable");
 
             Assert.DoesNotContain("false", model.GetValidWords());
 
-            controller.Guess("false");
+            cliController.Guess("false");
 
             Assert.Equal(0, model.GetPlayerPoints());
         }
