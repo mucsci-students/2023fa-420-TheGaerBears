@@ -14,6 +14,16 @@ using System.Threading.Tasks;
 using Avalonia.Interactivity;
 using Castle.Components.DictionaryAdapter.Xml;
 using System.Drawing.Printing;
+using Avalonia.Media.Imaging;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using Avalonia.Visuals;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Drawing;
+using SkiaSharp;
 
 namespace SpellingBee.ViewModels
 {
@@ -67,6 +77,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> ShuffleCommand { get; }
         public ReactiveCommand<Unit, Unit> GuessCommand { get; }
         public ReactiveCommand<string, Unit> SavePuzzleCommand { get; }
+        public ReactiveCommand<Unit, Unit> ScreenshotCommand { get; }
         public ReactiveCommand<string, Unit> SaveCurrentCommand { get; }
         public ReactiveCommand<Unit, Unit> LoadCommand { get; }
         public ReactiveCommand<string, Unit> NewGameFromWordCommand { get; }
@@ -97,6 +108,7 @@ namespace SpellingBee.ViewModels
             ShuffleCommand = ReactiveCommand.Create(ShuffleLetters);
             GuessCommand = ReactiveCommand.Create(ExecuteGuess);
             SavePuzzleCommand = ReactiveCommand.Create<string>(SavePuzzle);
+            ScreenshotCommand = ReactiveCommand.Create(SaveScreenshot);
             SaveCurrentCommand = ReactiveCommand.Create<string>(SaveCurrent);
             LoadCommand = ReactiveCommand.Create(Load);
             NewGameFromWordCommand = ReactiveCommand.Create<string>(NewGameFromWord);
@@ -262,6 +274,49 @@ namespace SpellingBee.ViewModels
             LowerText = "";
         }
 
+        public void SaveScreenshot()
+        {
+            // Assuming 'myControl' is the root control of your GUI
+
+            // Capture the visual content
+            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.StorageProvider is not { } provider)
+                throw new NullReferenceException("Missing StorageProvider instance.");
+
+            var myControl = (TopLevel)desktop.MainWindow;
+
+            var width = myControl.Width;
+            var height = myControl.Height;
+
+            var bitmap = new RenderTargetBitmap(new PixelSize((int)myControl.Bounds.Width, (int)myControl.Bounds.Height));
+            bitmap.Render(myControl);
+            //bitmap.Save("Please2.png");
+
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory);
+                memory.Position = 0;
+
+                byte[] bytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    memory.CopyTo(ms);
+                    bytes = ms.ToArray();
+                }
+
+                using var skBitmap = SKBitmap.Decode(bytes);
+
+                using var pixmap = new SKPixmap(skBitmap.Info, skBitmap.GetPixels());
+                SKRectI rectI = new SKRectI(0, 0, (int)(.68 * width), (int)(.535 * height));
+
+                var subset = pixmap.ExtractSubset(rectI);
+
+                using var data = subset.Encode(SKPngEncoderOptions.Default);
+
+                File.WriteAllBytes(@"please5.png", data.ToArray());
+            }
+        }
+
         /// <summary>
         /// Method <c>SaveCurrent</c> allows the user to click the SaveCurrent button to save state
         /// as long as a game has started.
@@ -373,6 +428,7 @@ namespace SpellingBee.ViewModels
         {
             _guiController.Hint();
             HintString = _guiController.GetLastMessage();
+            SaveScreenshot();
         }
 
 
