@@ -152,6 +152,9 @@ namespace TestSpellingBee
             //Checks to make sure word is same
             Assert.Equal(bWord, oBaseWord);
 
+            //Checks to make sure required letter is same
+            Assert.Equal(model.GetRequiredLetter(), oReqLetter);
+
             //Checks to make sure points are the same
             Assert.Equal(model.GetFoundWords(), oFoundWords);
 
