@@ -43,8 +43,8 @@ namespace SpellingBee.ViewModels
         private int _points = 0;
         private string _rank = "";
         private int _nextRank = 0;
-        private bool _loadVisible = false;
-        private bool _guessVisible = true;
+        private bool _colorBlindVisible = true;
+        private bool _backspaceVisible = true;
         private bool _saveVisible = false;
         private string _color1 = "Red";
         private string _color2 = "Green";
@@ -276,7 +276,9 @@ namespace SpellingBee.ViewModels
 
         public void SaveScreenshot()
         {
-            // Assuming 'myControl' is the root control of your GUI
+            // Set buttons to not be visible
+            ColorBlindVisible = false;
+            BackspaceVisible = false;
 
             // Capture the visual content
             if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
@@ -315,6 +317,10 @@ namespace SpellingBee.ViewModels
 
                 File.WriteAllBytes(@"please5.png", data.ToArray());
             }
+
+            // Set buttons to be visible
+            ColorBlindVisible = true;
+            BackspaceVisible = true;
         }
 
         /// <summary>
@@ -577,6 +583,18 @@ namespace SpellingBee.ViewModels
         {
             get { return _queenBee; }
             set { this.RaiseAndSetIfChanged(ref _queenBee, value); }
+        }
+
+        public bool ColorBlindVisible
+        {
+            get { return _colorBlindVisible; }
+            set { this.RaiseAndSetIfChanged(ref _colorBlindVisible, value); }
+        }
+
+        public bool BackspaceVisible
+        {
+            get { return _backspaceVisible; }
+            set { this.RaiseAndSetIfChanged(ref _backspaceVisible, value); }
         }
     }
 }
