@@ -142,7 +142,7 @@ namespace TestSpellingBee
             //Verify load
             controller.NewPuzzleBaseWord("companion");
 
-            model = (GameModel)model.LoadGameStateFromFile(0);
+            controller.Load("a-test-mod-load");
 
             oBaseWord.Sort();
 
