@@ -35,17 +35,17 @@ namespace AvaTest
 
                 GameModel model = new();
                 GameView view = new();
-                CliController cliController = new(model, view);
+                CliController cliControllerInstance = CliController.GetInstance(model, view);
 
                 //Intro Screen
-                cliController.BeginScreen();
+                cliControllerInstance.BeginScreen();
 
                 //While loop that allows the game to keep going
                 string input = string.Empty;
                 while(true) 
                 {
                     input = view.TabCompleteInput();
-                    cliController.HandleCommand(input);
+                    cliControllerInstance.HandleCommand(input);
                 }                
 
             }

@@ -122,8 +122,7 @@ namespace TestSpellingBee
         public void LoadVerify()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string oWord = "codable";
 
@@ -143,7 +142,7 @@ namespace TestSpellingBee
             //Verify load
             controller.NewPuzzleBaseWord("companion");
 
-            model = (GameModel)model.LoadGameStateFromFile(0);
+            controller.Load("a-test-mod-load");
 
             oBaseWord.Sort();
 
@@ -173,8 +172,7 @@ namespace TestSpellingBee
         public void PlayerPointsUpdate()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string oWord = "codable";
 
@@ -220,8 +218,7 @@ namespace TestSpellingBee
         public void ValidateAssignFromMethod()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string oWord = "codable";
 
@@ -248,8 +245,7 @@ namespace TestSpellingBee
         public void ValidateWonTheGameWhenAllWordsAreFound()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             controller.NewPuzzleBaseWord("codable");
             model.SelectRandomWordForPuzzle();
@@ -273,7 +269,7 @@ namespace TestSpellingBee
         {
             var model = new GameModel();
             var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             controller.NewPuzzleBaseWord("codable");
 
@@ -321,8 +317,7 @@ namespace TestSpellingBee
         public void ValidateGetAllRanks()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             controller.NewPuzzleBaseWord("codable");
             controller.Guess("codable");
@@ -355,8 +350,7 @@ namespace TestSpellingBee
         public void ValidatePangramCountViaGameSimulation()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string baseWord = "kamotiq";
 
@@ -375,9 +369,8 @@ namespace TestSpellingBee
         public void ValidateGetCurrentScoreReturnsCorrectValue()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view); 
-            
+            var controller = new GuiController(model);
+
             var baseWord = "soldier";
 
             controller.NewPuzzleBaseWord(baseWord);
@@ -396,8 +389,6 @@ namespace TestSpellingBee
         {
             // Set up the game
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
 
             model.baseWord = new List<char> { 'd', 's', 'o', 'l', 'i', 'e', 'r'};
             model.requiredLetter = 'd';

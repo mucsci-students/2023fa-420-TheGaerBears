@@ -10,17 +10,38 @@ namespace SpellingBee
 
     public class CliController : Controller
     {
-        public Model _model;
+        public GameModel _model;
         private readonly GameView _view;
         private string _lastMessage = "";
+
+        private static CliController _instance;
 
         /// <summary>
         /// Initializes a new instance of the <c>CliController</c> class with the provided GameModel and GameView.
         /// </summary>
-        public CliController(Model model, GameView view) : base(model)
+        private CliController(GameModel model, GameView view) : base(model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _view = view ?? throw new ArgumentNullException(nameof(view));
+        }
+
+        public static CliController GetInstance(GameModel model, GameView view)
+        {
+            if (_instance == null)
+            {
+                _instance = new CliController(model, view);
+            }
+            return _instance;
+        }
+
+        public GameModel GetModelInstance()
+        {
+            return _model;
+        }
+
+        public static CliController GetExistingInstance()
+        {
+            return _instance;
         }
 
         /// <summary>
