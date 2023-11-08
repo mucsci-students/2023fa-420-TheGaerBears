@@ -805,5 +805,25 @@ se-23 si-16 sl-5 so-30 sr-1"
 
             Assert.IsType<NullModel>(md);
         }
+
+        /// <summary>
+        /// Validates AddFoundWord function
+        /// </summary>
+        [Fact]
+        public void ValidateAddFoundWord()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            var baseWord = "soldier";
+
+            controller.NewPuzzleBaseWord(baseWord);
+
+            model.AddFoundWord("soldier");
+
+            model.AddFoundWord("soldier");
+
+            model.AddFoundWord("soooo");
+        }
     }
 }
