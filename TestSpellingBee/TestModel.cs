@@ -756,5 +756,54 @@ se-23 si-16 sl-5 so-30 sr-1"
                 Assert.Equal(".json", files[i].Substring(files[i].Length - 5));
             }
         }
+
+        /// <summary>
+        /// Validates that calling save without a file name fails
+        /// </summary>
+        [Fact]
+        public void ValidateSavePuzzleFail()
+        {
+            var model = new GameModel();
+            //var view = new GameView();
+            var controller = new GuiController(model);
+
+            string oWord = "codable";
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+
+            bool success = model.SaveCurrentPuzzleState("");
+
+            Assert.False(success);
+        }
+
+        /// <summary>
+        /// Validates that calling save without a file name fails
+        /// </summary>
+        [Fact]
+        public void ValidateSaveGameFail()
+        {
+            var model = new GameModel();
+            //var view = new GameView();
+            var controller = new GuiController(model);
+
+            string oWord = "codable";
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+
+            bool success = model.SaveCurrentGameState("");
+
+            Assert.False(success);
+        }
+
+        [Fact]
+        public void ValidateSetBaseWordForPuzzleFail()
+        {
+            var model = new GameModel();
+            string word = "zzzzz";
+
+            Model md = model.SetBaseWordForPuzzle(word);
+
+            Assert.IsType<NullModel>(md);
+        }
     }
 }
