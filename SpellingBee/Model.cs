@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.IO;
 using Avalonia.Media.TextFormatting;
 using DynamicData.Aggregation;
+using System.Security.Cryptography;
 
 namespace SpellingBee
 {
@@ -20,6 +21,9 @@ namespace SpellingBee
         [JsonProperty] public int playerPoints;
         [JsonProperty] public char requiredLetter;
         [JsonProperty] public int maxPoints;
+        [JsonProperty] public List<string> wordlist;
+        [JsonProperty] public string author;
+        [JsonProperty] public string encrypted;
 
         /// <summary>
         /// Retrieves the current score of the player.
@@ -121,7 +125,44 @@ namespace SpellingBee
             {
                 string filePath = fileList[fileId];
                 string jsonData = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<GameModel>(jsonData);
+				if (author != "GearBears" && encrypted == "secretwordlist")
+				{
+					return new NullModel();
+				}
+				if (encrypted == "secretwordlist")
+				{
+					byte[] key =
+				    {
+					    0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+					    0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
+				    };
+					for (int i = 0; i < wordlist.Count; i++)
+					{
+						byte[] bA = new byte[16];
+						byte[] buffer = Convert.FromBase64String(wordlist[i]);
+
+						using (Aes aes = Aes.Create())
+						{
+                            aes.Key = key;
+                            
+							aes.IV = bA;
+							ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+							using (MemoryStream memoryStream = new MemoryStream(buffer))
+							{
+								using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
+								{
+									using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+									{
+										wordlist[i] = streamReader.ReadToEnd();
+									}
+								}
+							}
+						}
+					}
+				}
+				return JsonConvert.DeserializeObject<GameModel>(jsonData);
+                
             }
             // File not found or invalid ID.
             return new NullModel();
