@@ -74,7 +74,7 @@ namespace SpellingBee
             Console.WriteLine();
             CenterText("Spelling Bee Puzzle Game");
             Console.WriteLine();
-            CenterText("Enter a Command: (-New Game, -Load, -Help)");
+            CenterText("Enter a Command: (-new game, -load, -help)");
             Console.WriteLine();
             Console.WriteLine();
         }
