@@ -13,10 +13,10 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SpellingBee
-build_property.ProjectDir = C:\Users\turtl\OneDrive\Documents\GaerBears\2023fa-420-TheGaerBears\2023fa-420-TheGaerBears\SpellingBee\
+build_property.ProjectDir = C:\GaerBears\2023fa-420-TheGaerBears\2023fa-420-TheGaerBears\SpellingBee\
 
-[C:/Users/turtl/OneDrive/Documents/GaerBears/2023fa-420-TheGaerBears/2023fa-420-TheGaerBears/SpellingBee/App.axaml]
+[C:/GaerBears/2023fa-420-TheGaerBears/2023fa-420-TheGaerBears/SpellingBee/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/turtl/OneDrive/Documents/GaerBears/2023fa-420-TheGaerBears/2023fa-420-TheGaerBears/SpellingBee/Views/MainWindow.axaml]
+[C:/GaerBears/2023fa-420-TheGaerBears/2023fa-420-TheGaerBears/SpellingBee/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
