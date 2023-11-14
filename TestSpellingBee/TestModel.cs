@@ -1,4 +1,5 @@
 ﻿using SpellingBee;
+using System.Collections.Immutable;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TestSpellingBee
@@ -121,15 +122,20 @@ namespace TestSpellingBee
         [Fact]
         public void LoadVerify()
         {
-            var model = new GameModel();
+            GameModel model = new GameModel();
             var controller = new GuiController(model);
 
             string oWord = "codable";
 
             controller.NewPuzzleBaseWord(oWord);
+            Assert.NotEqual("Not a valid pangram", controller.GetLastMessage());
+            Assert.Equal("", controller.GetLastMessage());
             controller.Guess(oWord);
+            Assert.Equal("Word found!", controller.GetLastMessage());
+            Assert.NotEqual(0, model.GetPlayerPoints());
+            Assert.True(controller.GameStarted());
 
-
+            
             model.SaveCurrentGameState("a-test-mod-load");
 
             //Copy old data of puzzle to compare

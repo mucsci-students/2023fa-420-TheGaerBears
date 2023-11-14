@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security.Cryptography;
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
 using System.IO;
 using Avalonia.Media.TextFormatting;
 using DynamicData.Aggregation;
+using System.Formats.Asn1;
 
 namespace SpellingBee
 {
@@ -65,8 +67,9 @@ namespace SpellingBee
 
             // Fetch the list of pangrams from the database.
             PangramWords = PangramList();
-
-        }
+			author = "GaerBears";
+			encrypted = "wordlist";
+		}
  
         /// <summary>
         /// Retrieves a list of pangrams from the database.
@@ -260,10 +263,24 @@ namespace SpellingBee
             {
                 return false;
             }
+            
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             fileName += ".json";
-            var jsonString = JsonConvert.SerializeObject(this);
-            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
+            this.author = "GaerBears";
+            this.encrypted = "secretwordlist";
+			this.wordlist = new(validWords);
+			for (int i = 0; i < wordlist.Count; i++)
+			{
+				string output = "";
+				foreach (char c in wordlist[i])
+            {
+					output += (char)((((c + 13) - 'a') % 26) + 'a');
+				}
+				wordlist[i] = output;
+			}
+			var jsonString = JsonConvert.SerializeObject(this);
+
+			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;
         }
 
@@ -272,6 +289,7 @@ namespace SpellingBee
         /// </summary>
         public override bool SaveCurrentPuzzleState(string saveName)
         {
+
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             string fileName = saveName;
             if (string.IsNullOrEmpty(fileName))
@@ -283,10 +301,24 @@ namespace SpellingBee
             {
                 requiredLetter = this.requiredLetter,
                 baseWord = new List<char>(this.baseWord),
-                maxPoints = this.maxPoints
-            };
-            var jsonString = JsonConvert.SerializeObject(temp);
-            File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
+                wordlist = this.validWords,
+                maxPoints = this.maxPoints,
+                author = "GaerBears",
+                encrypted = "secretwordlist"
+		    };
+			for (int i = 0; i < temp.wordlist.Count; i++)
+			{
+				string output = "";
+				foreach (char c in temp.wordlist[i])
+				{
+
+					output += (char)((((c + 13) - 'a') % 26) + 'a');
+				}
+				temp.wordlist[i] = output;
+			}
+			var jsonString = JsonConvert.SerializeObject(temp);
+
+			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;
         }
 

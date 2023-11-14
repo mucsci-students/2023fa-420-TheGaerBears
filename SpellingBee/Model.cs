@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.IO;
 using Avalonia.Media.TextFormatting;
 using DynamicData.Aggregation;
+using System.Security.Cryptography;
 
 namespace SpellingBee
 {
@@ -20,6 +21,9 @@ namespace SpellingBee
         [JsonProperty] public int playerPoints;
         [JsonProperty] public char requiredLetter;
         [JsonProperty] public int maxPoints;
+        [JsonProperty] public List<string> wordlist;
+        [JsonProperty] public string author;
+        [JsonProperty] public string encrypted;
 
         /// <summary>
         /// Retrieves the current score of the player.
@@ -121,7 +125,25 @@ namespace SpellingBee
             {
                 string filePath = fileList[fileId];
                 string jsonData = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<GameModel>(jsonData);
+				GameModel loadedGame = JsonConvert.DeserializeObject<GameModel>(jsonData);
+				if (loadedGame.author != "GaerBears" && loadedGame.encrypted == "secretwordlist")
+				{
+                    return new NullModel();
+				}
+				if (loadedGame.encrypted == "secretwordlist")
+				{
+					for (int i = 0; i < loadedGame.wordlist.Count; i++)
+                    {
+                        string output = "";
+                        foreach (char c in loadedGame.wordlist[i])
+                        {
+                            output += (char)((((c + 13) - 'a') % 26) + 'a');
+                        }
+                        loadedGame.wordlist[i] = output;
+                    }
+				}
+                
+                return loadedGame;
             }
             // File not found or invalid ID.
             return new NullModel();
