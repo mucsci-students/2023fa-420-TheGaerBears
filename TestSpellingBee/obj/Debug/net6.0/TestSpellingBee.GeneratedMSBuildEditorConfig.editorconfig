@@ -1,9 +1,4 @@
 is_global = true
-build_property.AvaloniaNameGeneratorIsEnabled = true
-build_property.AvaloniaNameGeneratorBehavior = InitializeComponent
-build_property.AvaloniaNameGeneratorDefaultFieldModifier = internal
-build_property.AvaloniaNameGeneratorFilterByPath = *
-build_property.AvaloniaNameGeneratorFilterByNamespace = *
 build_property.TargetFramework = net6.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = 
@@ -13,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TestSpellingBee
-build_property.ProjectDir = C:\GaerBears\2023fa-420-TheGaerBears\2023fa-420-TheGaerBears\TestSpellingBee\
+build_property.ProjectDir = C:\Users\noahi\source\repos\2023fa-420-TheGaerBears\TestSpellingBee\
