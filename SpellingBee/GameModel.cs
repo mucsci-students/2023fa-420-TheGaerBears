@@ -273,14 +273,13 @@ namespace SpellingBee
 			{
 				string output = "";
 				foreach (char c in wordlist[i])
-				{
-
+            {
 					output += (char)((((c + 13) - 'a') % 26) + 'a');
 				}
 				wordlist[i] = output;
 			}
-			
 			var jsonString = JsonConvert.SerializeObject(this);
+
 			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;
         }
