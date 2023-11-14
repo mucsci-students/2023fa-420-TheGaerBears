@@ -302,20 +302,20 @@ namespace SpellingBee
             {
                 requiredLetter = this.requiredLetter,
                 baseWord = new List<char>(this.baseWord),
-                wordlist = validWords,
+                wordlist = this.validWords,
                 maxPoints = this.maxPoints,
                 author = "GaerBears",
                 encrypted = "secretwordlist"
 		    };
-			for (int i = 0; i < wordlist.Count; i++)
+			for (int i = 0; i < temp.wordlist.Count; i++)
 			{
 				string output = "";
-				foreach (char c in wordlist[i])
+				foreach (char c in temp.wordlist[i])
 				{
 
 					output += (char)((((c + 13) - 'a') % 26) + 'a');
 				}
-				wordlist[i] = output;
+				temp.wordlist[i] = output;
 			}
 			var jsonString = JsonConvert.SerializeObject(temp);
 

@@ -144,6 +144,7 @@ namespace SpellingBee
                         loadedGame.wordlist[i] = output;
                     }
 				}
+                
                 return loadedGame;
             }
             // File not found or invalid ID.
