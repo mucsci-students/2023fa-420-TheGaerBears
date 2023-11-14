@@ -268,7 +268,7 @@ namespace SpellingBee
             fileName += ".json";
             this.author = "GaerBears";
             this.encrypted = "secretwordlist";
-			this.wordlist = validWords;
+			this.wordlist = new(validWords);
 			for (int i = 0; i < wordlist.Count; i++)
 			{
 				string output = "";

@@ -126,13 +126,11 @@ namespace SpellingBee
                 string filePath = fileList[fileId];
                 string jsonData = File.ReadAllText(filePath);
 				GameModel loadedGame = JsonConvert.DeserializeObject<GameModel>(jsonData);
-                
-				if (author != "GearBears" && encrypted == "secretwordlist")
+				if (loadedGame.author != "GaerBears" && loadedGame.encrypted == "secretwordlist")
 				{
                     return new NullModel();
-                    
 				}
-				if (encrypted == "secretwordlist")
+				if (loadedGame.encrypted == "secretwordlist")
 				{
 					for (int i = 0; i < loadedGame.wordlist.Count; i++)
                     {
