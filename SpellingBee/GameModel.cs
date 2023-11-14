@@ -267,31 +267,20 @@ namespace SpellingBee
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "saves/"));
             fileName += ".json";
             this.author = "GaerBears";
-				byte[] bA = new byte[16];
-
-			Aes aes = Aes.Create();
-				
-			byte[] key =
-		    {
-				0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-				0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
-			};
-            
-            aes.Key = key;
-		    aes.IV = bA;
-			ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-            MemoryStream memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
-            StreamWriter streamWriter = new(cryptoStream);
-            wordlist = validWords;
-		    for (int i = 0; i < wordlist.Count; ++i)
-            { 
-                streamWriter.Write(wordlist[i]);
-                wordlist[i] = Convert.ToBase64String(memoryStream.ToArray());	
-			}   
             this.encrypted = "secretwordlist";
-			var jsonString = JsonConvert.SerializeObject(this);
+			this.wordlist = validWords;
+			for (int i = 0; i < wordlist.Count; i++)
+			{
+				string output = "";
+				foreach (char c in wordlist[i])
+				{
 
+					output += (char)((((c + 13) - 'a') % 26) + 'a');
+				}
+				wordlist[i] = output;
+			}
+			
+			var jsonString = JsonConvert.SerializeObject(this);
 			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;
         }
@@ -313,35 +302,22 @@ namespace SpellingBee
             {
                 requiredLetter = this.requiredLetter,
                 baseWord = new List<char>(this.baseWord),
+                wordlist = validWords,
                 maxPoints = this.maxPoints,
                 author = "GaerBears",
                 encrypted = "secretwordlist"
 		    };
-			    byte[] bA = new byte[16];
+			for (int i = 0; i < wordlist.Count; i++)
+			{
+				string output = "";
+				foreach (char c in wordlist[i])
+				{
 
-			    Aes aes = Aes.Create();
-
-			    byte[] key =
-			    {
-				    0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-				    0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
-			    };
-
-			    aes.Key = key;
-			    aes.IV = bA;
-			    ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-			    MemoryStream memoryStream = new MemoryStream();
-
-			    CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
-
-			    StreamWriter streamWriter = new(cryptoStream);
-			    temp.wordlist = validWords;
-			    for (int i = 0; i < temp.wordlist.Count; ++i)
-			    {
-				    streamWriter.WriteLine(temp.wordlist[i]);
-				    temp.wordlist[i] = Convert.ToBase64String(memoryStream.ToArray());
-			    }
-            var jsonString = JsonConvert.SerializeObject(temp);
+					output += (char)((((c + 13) - 'a') % 26) + 'a');
+				}
+				wordlist[i] = output;
+			}
+			var jsonString = JsonConvert.SerializeObject(temp);
 
 			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
             return true;

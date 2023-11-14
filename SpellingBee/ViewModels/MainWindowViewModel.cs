@@ -371,7 +371,7 @@ namespace SpellingBee.ViewModels
         {
             var filesService = (App.Current?.Services?.GetService<IFilesService>()) ?? throw new NullReferenceException("Missing File Service instance.");
             var file = await filesService.OpenFileAsync();
-            if (file.Name is null) return null;
+            if (file is null) return null;
             return file.Name;
         }
 
