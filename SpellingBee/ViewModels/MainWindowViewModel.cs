@@ -24,6 +24,8 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using SkiaSharp;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace SpellingBee.ViewModels
 {
@@ -317,7 +319,14 @@ namespace SpellingBee.ViewModels
 
                 using var data = subset.Encode(SKPngEncoderOptions.Default);
 
-                File.WriteAllBytes(@"please5.png", data.ToArray());
+                List<char> bWordSort = _guiController.GetBaseWord();
+                bWordSort.Sort();
+
+                string picName = new (bWordSort.ToArray());
+                picName += _guiController.GetCurrentScore().ToString();
+                picName += ".png";
+
+                File.WriteAllBytes(picName, data.ToArray());
             }
 
             // Set buttons to be visible
