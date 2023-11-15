@@ -76,5 +76,27 @@ namespace SpellingBee
             }
             return highScores;
         }
+
+        public List<KeyValuePair<string, int>> GetHighScores(string baseWord)
+        {
+            string formattedBaseWord = FormatBaseWordForFileName(baseWord);
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), HighScoresDir, formattedBaseWord + ".json");
+
+            List<KeyValuePair<string, int>> highScores;
+
+            if (File.Exists(filePath))
+            {
+                // Read existing scores
+                string json = File.ReadAllText(filePath);
+                highScores = JsonConvert.DeserializeObject<List<KeyValuePair<string, int>>>(json);
+            }
+            else
+            {
+                // If no file exists, create a new list
+                highScores = new List<KeyValuePair<string, int>>();
+            }
+
+            return highScores;
+        }
     }
 }
