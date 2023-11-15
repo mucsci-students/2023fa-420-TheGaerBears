@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Documents;
+﻿using Avalonia;
+using Avalonia.Controls.Documents;
 using DynamicData.Kernel;
 using Microsoft.CodeAnalysis.FlowAnalysis;
 using System;
@@ -158,6 +159,25 @@ namespace SpellingBee
             }
         }
 
+        public void submitHighScore(string name)
+        {
+            if (name != null && name != "" && !_model.IsNull())
+            {
+                HighScores scores = new HighScores();
+                string temp = "";
+                var word = GetBaseWord();
+                for (int i = 0; i < word.Count; ++i)
+                {
+                    temp += word[i];
+                }
+                _view.DisplayMessage(scores.UpdateOrCreateHighScore(temp, name, _model.GetCurrentScore()).ToString());
+            }
+            else
+            {
+                _view.DisplayMessage("Please enter a valid name");
+            }
+        }
+
         /// <summary>
         /// Displays the initial game screen.
         /// </summary>
@@ -174,7 +194,7 @@ namespace SpellingBee
             switch (input)
             {
                 case "-hint":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         //var hintToPrint = _model.LettersInWord();
                         //PrintHintTable(hintToPrint);
@@ -211,7 +231,7 @@ namespace SpellingBee
                     break;
 
                 case "-save current":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.DisplayMessage("Enter Save File Name:");
                         string saveName = _view.GetInput();
@@ -224,7 +244,7 @@ namespace SpellingBee
                     break;
 
                 case "-save puzzle":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.DisplayMessage("Enter Save File Name:");
                         string saveName = _view.GetInput();
@@ -238,7 +258,7 @@ namespace SpellingBee
 
                 case "-found words":
                 case "-show found words":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.ShowFoundWords(_model.GetFoundWords());
                     }
@@ -250,7 +270,7 @@ namespace SpellingBee
 
                 case "-puzzle":
                 case "-show puzzle":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
                     }
@@ -262,7 +282,7 @@ namespace SpellingBee
 
                 case "-status":
                 case "-show status":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.ShowStatus(_model.GetPlayerPoints(), _model.GetMaxPoints(), _model.GetStatusTitles(), _model.GetAllRanks());
                     }
@@ -273,7 +293,7 @@ namespace SpellingBee
                     break;
 
                 case "-shuffle":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         ShuffleBaseWord();
                     }
@@ -283,8 +303,21 @@ namespace SpellingBee
                     }
                     break;
 
+                case "-save score":
+                    if (_model.Active())
+                    {
+                        _view.DisplayMessage("Please enter a name for the score: ");
+                        string name = _view.GetInput();
+                        submitHighScore(name);
+                    }
+                    else
+                    {
+                        _view.DisplayMessage("A game has not been started. Please start one by calling one of the new game commands.");
+                    }
+                    break;
+
                 default:
-                    if (!_model.IsNull() && !input[0].Equals('-'))
+                    if (_model.Active() && !input[0].Equals('-'))
                     {
                         Guess(input);
                     }

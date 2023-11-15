@@ -1,4 +1,6 @@
-﻿using DynamicData;
+﻿using Avalonia.Styling;
+using Avalonia;
+using DynamicData;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ namespace SpellingBee
 
     public class GameView
     {
-            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status" };
+            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status", "-save score" };
         /// <summary>
         /// Center-aligns and displays the specified text in the console.
         /// </summary>
@@ -90,6 +92,8 @@ namespace SpellingBee
                 Console.WriteLine(word);
             }
         }
+
+        
 
         /// <summary>
         /// Displays the puzzle's letters along with the required letter.
