@@ -165,10 +165,12 @@ namespace SpellingBee
                 -load:               Load a saved game or puzzle.
                 -save current:       Save the current game with progress.
                 -save puzzle:        Save the current puzzle.
+                -save score:         Save the current score as a high score.
                 -show found words:   Display the words you have found.
                 -show puzzle:        Display the puzzle letters.
                 -show status:        Display your current game status.
                 -shuffle:            Shuffle the puzzle letters.
+                -view scores:        Display the high scores for the current puzzle.
                 -hint:               Display helpful hints for solving the puzzle.
                 -help:               Show this list of commands.
                 -exit:               Exit the game.
