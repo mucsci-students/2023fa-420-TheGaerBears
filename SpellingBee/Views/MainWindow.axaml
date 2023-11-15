@@ -214,7 +214,7 @@
 									<RowDefinition Height="1*"/>
 								</Grid.RowDefinitions>
 								<TextBox x:Name="txtBox3" VerticalAlignment="Center" Margin="15,0,15,0" HorizontalAlignment="Center"/>
-								<Button Content="Save&#x0a;Current" Grid.Row="2" Command="{Binding SubmitHighScoreCommand}" CommandParameter="{Binding ElementName=txtBox3, Path=Text}" HorizontalAlignment="Center"/>
+								<Button Content="Save&#x0a;Score" Grid.Row="2" Command="{Binding SubmitHighScoreCommand}" CommandParameter="{Binding ElementName=txtBox3, Path=Text}" HorizontalAlignment="Center"/>
 							</Grid>
 						</Flyout>
 					</Button.Flyout>
