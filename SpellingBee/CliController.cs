@@ -122,7 +122,7 @@ namespace SpellingBee
         /// </summary>
         public override void SavePuzzle(string saveName)
         {
-            if (_model.SaveCurrentGameState(saveName))
+            if (_model.SaveCurrentPuzzleState(saveName))
                 _view.DisplayMessage("Successfully saved game with progress");
             else
                 _view.DisplayMessage("Error: No file name");
@@ -159,6 +159,10 @@ namespace SpellingBee
             }
         }
 
+        /// <summary>
+        /// Submits high score for the current puzzle
+        /// </summary>
+        /// <param name="name"></param>
         public void submitHighScore(string name)
         {
             if (name != null && name != "" && !_model.IsNull())
@@ -176,6 +180,39 @@ namespace SpellingBee
             {
                 _view.DisplayMessage("Please enter a valid name");
             }
+        }
+
+        /// <summary>
+        /// Lists the high scores for the current puzzle
+        /// </summary>
+        public void viewHighScores()
+        {
+            HighScores scores = new HighScores();
+            string temp = "";
+            var word = GetBaseWord();
+            for (int i = 0; i < word.Count; ++i)
+            {
+                temp += word[i];
+            }
+
+            List<KeyValuePair<string, int>> highScores = scores.GetHighScores(temp);
+
+            if (highScores == null || highScores.Count == 0)
+            {
+                _view.DisplayMessage("There are no high scores for this game yet");
+            }
+            else
+            {
+
+                foreach (var score in highScores)
+                {
+                    string display = score.Value.ToString();
+                    display = display.PadRight(10);
+                    display += score.Key.ToString();
+                    _view.DisplayMessage(display);
+                }
+            }
+
         }
 
         /// <summary>
@@ -316,8 +353,23 @@ namespace SpellingBee
                     }
                     break;
 
+                case "-view scores":
+                    if (_model.Active())
+                    {
+                        viewHighScores();
+                    }
+                    else
+                    {
+                        _view.DisplayMessage("A game has not been started. Please start one by calling one of the new game commands.");
+                    }
+                    break;
+
                 default:
-                    if (_model.Active() && !input[0].Equals('-'))
+                    if (input.Equals(""))
+                    {
+                        //Do Nothing
+                    }
+                    else if (_model.Active() && !input[0].Equals('-'))
                     {
                         Guess(input);
                     }
