@@ -152,6 +152,7 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
@@ -204,6 +205,21 @@
 						</Flyout>
 					</Button.Flyout>
 				</Button>
+				<Button Content="Submit&#x0a;High&#x0a;Score" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"	BorderThickness="4" BorderBrush="Green"	Foreground="Black" Focusable="False">
+					<Button.Flyout>
+						<Flyout Placement="Top">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+								</Grid.RowDefinitions>
+								<TextBox x:Name="txtBox3" VerticalAlignment="Center" Margin="15,0,15,0" HorizontalAlignment="Center"/>
+								<Button Content="Save&#x0a;Current" Grid.Row="2" Command="{Binding SubmitHighScoreCommand}" CommandParameter="{Binding ElementName=txtBox3, Path=Text}" HorizontalAlignment="Center"/>
+							</Grid>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<Button Content="Screenshot" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ScreenshotCommand}"									BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
 			</Grid>
 		</Grid>
 	</Grid>

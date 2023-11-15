@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace SpellingBee
 {
     internal class HighScores
     {
-        private const string HighScoresDir = "HighScores";
+        private const string HighScoresDir = "HighScores/";
 
         public HighScores()
         {
@@ -17,15 +18,18 @@ namespace SpellingBee
         private string FormatBaseWordForFileName(string baseWord)
         {
             char firstLetter = baseWord[0];
-            string sortedRest = new string(baseWord.Substring(1).OrderBy(c => c).ToArray());
+            char[] characters = baseWord.Substring(1).ToCharArray();
+            Array.Sort(characters);
+            string sortedRest = new string(characters);
 
-            return $"{firstLetter}{sortedRest}";
+            return firstLetter + sortedRest;
         }
 
-        public void UpdateOrCreateHighScore(string baseWord, string playerName, int score)
+        public string UpdateOrCreateHighScore(string baseWord, string playerName, int score)
         {
+
             string formattedBaseWord = FormatBaseWordForFileName(baseWord);
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), HighScoresDir, $"{formattedBaseWord}.json");
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), HighScoresDir, formattedBaseWord + ".json");
 
             List<KeyValuePair<string, int>> highScores;
 
@@ -47,6 +51,13 @@ namespace SpellingBee
             // Save the updated scores back to the file
             string updatedJson = JsonConvert.SerializeObject(highScores, Formatting.Indented);
             File.WriteAllText(filePath, updatedJson);
+
+            string output = "High Scores!\n";
+            foreach (KeyValuePair<string,int> pair in highScores)
+            {
+                output += pair.Key + ": " + pair.Value + "\n";
+            }
+            return output;
         }
 
 
@@ -63,7 +74,6 @@ namespace SpellingBee
             {
                 highScores.RemoveAt(highScores.Count - 1);
             }
-
             return highScores;
         }
     }

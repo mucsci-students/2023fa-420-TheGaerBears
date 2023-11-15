@@ -86,6 +86,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> ToggleColorblind { get; }
         public ReactiveCommand<Unit, Unit> Backspace { get; }
         public ReactiveCommand<Unit, Unit> HintCommand { get; }
+        public ReactiveCommand<string, Unit> SubmitHighScoreCommand { get; }
 
 
         /// <summary>
@@ -117,6 +118,7 @@ namespace SpellingBee.ViewModels
             ToggleColorblind = ReactiveCommand.Create(ToggleColors);
             Backspace = ReactiveCommand.Create(DeleteFromEnd);
             HintCommand = ReactiveCommand.Create(Hint);
+            SubmitHighScoreCommand = ReactiveCommand.Create<string>(submitHighScore);
         }
 
         /// <summary>
@@ -394,7 +396,7 @@ namespace SpellingBee.ViewModels
         /// Method <c>NewGameFromWord</c> allows the user to start a new game from the word
         /// typed into the textbox as long as it is a valid pangram.
         /// </summary>
-        private void NewGameFromWord(String word)
+        private void NewGameFromWord(string word)
         {
             FeedbackMessage = "";
             if (word != null)
@@ -437,6 +439,20 @@ namespace SpellingBee.ViewModels
             SaveScreenshot();
         }
 
+        private void submitHighScore(string name)
+        {
+            if (name != null || name != "" && Letter1 != "")
+            {
+                HighScores scores = new HighScores();
+                string temp = "";
+                var word = _guiController.GetBaseWord();
+				for (int i = 0;i < word.Count; ++i)
+                {
+                    temp += word[i];
+                }
+                FeedbackMessage = scores.UpdateOrCreateHighScore(temp, name, Points).ToString();
+            }
+        }
 
         public string FeedbackMessage
         {
