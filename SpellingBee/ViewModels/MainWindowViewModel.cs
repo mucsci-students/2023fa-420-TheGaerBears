@@ -313,7 +313,7 @@ namespace SpellingBee.ViewModels
                 using var skBitmap = SKBitmap.Decode(bytes);
 
                 using var pixmap = new SKPixmap(skBitmap.Info, skBitmap.GetPixels());
-                SKRectI rectI = new SKRectI(0, 0, (int)(.68 * width), (int)(.535 * height));
+                SKRectI rectI = new SKRectI(0, 0, (int)(.665 * width), (int)(.535 * height));
 
                 var subset = pixmap.ExtractSubset(rectI);
 
