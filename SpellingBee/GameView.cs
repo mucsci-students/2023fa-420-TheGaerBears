@@ -238,7 +238,7 @@ namespace SpellingBee
 
                 int currentLineCursor = Console.CursorTop;
                 Console.SetCursorPosition(0, Console.CursorTop);
-                Console.Write(new string(' ', Console.WindowWidth));
+                Console.Write(new string(' ', Console.WindowWidth - 1));
                 Console.SetCursorPosition(0, currentLineCursor);
 
                 Console.Write(userInput);
