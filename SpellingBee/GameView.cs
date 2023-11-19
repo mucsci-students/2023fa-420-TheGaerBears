@@ -11,7 +11,7 @@ namespace SpellingBee
 
     public class GameView
     {
-            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status", "-save score", "-view scores" };
+            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status", "-save score", "-view scores" };
         /// <summary>
         /// Center-aligns and displays the specified text in the console.
         /// </summary>
