@@ -8,6 +8,7 @@ using System.IO;
 using Avalonia.Media.TextFormatting;
 using DynamicData.Aggregation;
 using System.Security.Cryptography;
+using Newtonsoft.Json.Serialization;
 
 namespace SpellingBee
 {
@@ -132,17 +133,20 @@ namespace SpellingBee
 				}
 				if (loadedGame.encrypted == "secretwordlist")
 				{
-					for (int i = 0; i < loadedGame.wordlist.Count; i++)
-                    {
-                        string output = "";
-                        foreach (char c in loadedGame.wordlist[i])
-                        {
-                            output += (char)((((c + 13) - 'a') % 26) + 'a');
-                        }
-                        loadedGame.wordlist[i] = output;
-                    }
+
+					StringBuilder jsonString = new StringBuilder(jsonData);
+					int start = jsonString.ToString().IndexOf("wordlist") + 12;
+					int end = jsonString.ToString().IndexOf("author") - 4;
+					for (; start < end; ++start)
+					{
+						jsonString[start] = (char)(jsonString[start] - 1);
+					}
+
+					File.WriteAllText(filePath + "1", jsonString.ToString());
+                    File.Delete(filePath + "1");
+                    loadedGame = JsonConvert.DeserializeObject<GameModel>(jsonData);
 				}
-                
+
                 return loadedGame;
             }
             // File not found or invalid ID.
