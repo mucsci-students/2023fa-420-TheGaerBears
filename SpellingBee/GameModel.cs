@@ -269,18 +269,16 @@ namespace SpellingBee
             this.author = "GaerBears";
             this.encrypted = "secretwordlist";
 			this.wordlist = new(validWords);
-			for (int i = 0; i < wordlist.Count; i++)
-			{
-				string output = "";
-				foreach (char c in wordlist[i])
-            {
-					output += (char)((((c + 13) - 'a') % 26) + 'a');
-				}
-				wordlist[i] = output;
-			}
-			var jsonString = JsonConvert.SerializeObject(this);
 
-			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
+			StringBuilder jsonString = new StringBuilder(JsonConvert.SerializeObject(this));
+            int start = jsonString.ToString().IndexOf("wordlist") + 12;
+            int end = jsonString.ToString().IndexOf("author") - 4;
+            for (; start < end; ++start)
+            {
+				jsonString[start] = (char)(jsonString[start] + 1);
+            }
+
+			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString.ToString());
             return true;
         }
 
@@ -306,19 +304,15 @@ namespace SpellingBee
                 author = "GaerBears",
                 encrypted = "secretwordlist"
 		    };
-			for (int i = 0; i < temp.wordlist.Count; i++)
+			StringBuilder jsonString = new StringBuilder(JsonConvert.SerializeObject(temp));
+			int start = jsonString.ToString().IndexOf("wordlist") + 12;
+			int end = jsonString.ToString().IndexOf("author") - 4;
+			for (; start < end; ++start)
 			{
-				string output = "";
-				foreach (char c in temp.wordlist[i])
-				{
-
-					output += (char)((((c + 13) - 'a') % 26) + 'a');
-				}
-				temp.wordlist[i] = output;
+				jsonString[start] = (char)(jsonString[start] + 1);
 			}
-			var jsonString = JsonConvert.SerializeObject(temp);
 
-			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString);
+			File.WriteAllText(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "saves/"), fileName), jsonString.ToString());
             return true;
         }
 
