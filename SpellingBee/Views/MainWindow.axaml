@@ -61,7 +61,7 @@
 			</Grid.RowDefinitions>
 			<!--Title at the top of the screen-->
 			<Label Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Welcome to Spelling Snowman!" FontSize="30"/>
-			<Button Content="Backspace"				 Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding Backspace}" Foreground="Black"/>
+			<Button Content="Backspace"				 Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding Backspace}" Foreground="Black" IsVisible="{Binding ColorBlindVisible}"/>
 			<Button Content="{Binding Path=Letter1}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter1Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8" BorderBrush="Gold" Foreground="Black"/>
 			<Button Content="{Binding Path=Letter2}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter2Command}" FontSize="45" Background ="{Binding Color2}" BorderThickness="8"					   Foreground="Black"/>
 			<Button Content="{Binding Path=Letter3}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding AppendLetter3Command}" FontSize="45" Background ="{Binding Color1}" BorderThickness="8"					   Foreground="Black"/>
@@ -140,7 +140,7 @@
 			</Button>
 
 			<!--colorblind mode-->
-			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}"/>
+			<Button Content="Toggle&#x0a;Colorblind" Command="{Binding ToggleColorblind}" IsVisible="{Binding BackspaceVisible}"/>
 			
 		</Grid>
 		<!--defines buttons in bottom right-->
@@ -148,6 +148,7 @@
 
 			<Grid>
 				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
@@ -204,6 +205,21 @@
 						</Flyout>
 					</Button.Flyout>
 				</Button>
+				<Button Content="Submit&#x0a;High&#x0a;Score" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"	BorderThickness="4" BorderBrush="Green"	Foreground="Black" Focusable="False">
+					<Button.Flyout>
+						<Flyout Placement="Top">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+								</Grid.RowDefinitions>
+								<TextBox x:Name="txtBox3" VerticalAlignment="Center" Margin="15,0,15,0" HorizontalAlignment="Center"/>
+								<Button Content="Save&#x0a;Score" Grid.Row="2" Command="{Binding SubmitHighScoreCommand}" CommandParameter="{Binding ElementName=txtBox3, Path=Text}" HorizontalAlignment="Center"/>
+							</Grid>
+						</Flyout>
+					</Button.Flyout>
+				</Button>
+				<Button Content="Screenshot" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding ScreenshotCommand}"									BorderThickness="4" BorderBrush="Red"	Foreground="Black"/>
 			</Grid>
 		</Grid>
 	</Grid>

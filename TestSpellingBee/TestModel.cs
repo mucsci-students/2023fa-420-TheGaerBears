@@ -1,4 +1,5 @@
 ﻿using SpellingBee;
+using System.Collections.Immutable;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TestSpellingBee
@@ -121,16 +122,20 @@ namespace TestSpellingBee
         [Fact]
         public void LoadVerify()
         {
-            var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            GameModel model = new GameModel();
+            var controller = new GuiController(model);
 
             string oWord = "codable";
 
             controller.NewPuzzleBaseWord(oWord);
+            Assert.NotEqual("Not a valid pangram", controller.GetLastMessage());
+            Assert.Equal("", controller.GetLastMessage());
             controller.Guess(oWord);
+            Assert.Equal("Word found!", controller.GetLastMessage());
+            Assert.NotEqual(0, model.GetPlayerPoints());
+            Assert.True(controller.GameStarted());
 
-
+            
             model.SaveCurrentGameState("a-test-mod-load");
 
             //Copy old data of puzzle to compare
@@ -143,7 +148,7 @@ namespace TestSpellingBee
             //Verify load
             controller.NewPuzzleBaseWord("companion");
 
-            model = (GameModel)model.LoadGameStateFromFile(0);
+            controller.Load("a-test-mod-load");
 
             oBaseWord.Sort();
 
@@ -173,8 +178,7 @@ namespace TestSpellingBee
         public void PlayerPointsUpdate()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string oWord = "codable";
 
@@ -220,8 +224,7 @@ namespace TestSpellingBee
         public void ValidateAssignFromMethod()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string oWord = "codable";
 
@@ -248,8 +251,7 @@ namespace TestSpellingBee
         public void ValidateWonTheGameWhenAllWordsAreFound()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             controller.NewPuzzleBaseWord("codable");
             model.SelectRandomWordForPuzzle();
@@ -273,7 +275,7 @@ namespace TestSpellingBee
         {
             var model = new GameModel();
             var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             controller.NewPuzzleBaseWord("codable");
 
@@ -321,8 +323,7 @@ namespace TestSpellingBee
         public void ValidateGetAllRanks()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             controller.NewPuzzleBaseWord("codable");
             controller.Guess("codable");
@@ -355,8 +356,7 @@ namespace TestSpellingBee
         public void ValidatePangramCountViaGameSimulation()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
+            var controller = new GuiController(model);
 
             string baseWord = "kamotiq";
 
@@ -375,9 +375,8 @@ namespace TestSpellingBee
         public void ValidateGetCurrentScoreReturnsCorrectValue()
         {
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view); 
-            
+            var controller = new GuiController(model);
+
             var baseWord = "soldier";
 
             controller.NewPuzzleBaseWord(baseWord);
@@ -396,8 +395,6 @@ namespace TestSpellingBee
         {
             // Set up the game
             var model = new GameModel();
-            var view = new GameView();
-            var controller = new CliController(model, view);
 
             model.baseWord = new List<char> { 'd', 's', 'o', 'l', 'i', 'e', 'r'};
             model.requiredLetter = 'd';
@@ -764,6 +761,75 @@ se-23 si-16 sl-5 so-30 sr-1"
             {
                 Assert.Equal(".json", files[i].Substring(files[i].Length - 5));
             }
+        }
+
+        /// <summary>
+        /// Validates that calling save without a file name fails
+        /// </summary>
+        [Fact]
+        public void ValidateSavePuzzleFail()
+        {
+            var model = new GameModel();
+            //var view = new GameView();
+            var controller = new GuiController(model);
+
+            string oWord = "codable";
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+
+            bool success = model.SaveCurrentPuzzleState("");
+
+            Assert.False(success);
+        }
+
+        /// <summary>
+        /// Validates that calling save without a file name fails
+        /// </summary>
+        [Fact]
+        public void ValidateSaveGameFail()
+        {
+            var model = new GameModel();
+            //var view = new GameView();
+            var controller = new GuiController(model);
+
+            string oWord = "codable";
+            controller.NewPuzzleBaseWord(oWord);
+            controller.Guess(oWord);
+
+            bool success = model.SaveCurrentGameState("");
+
+            Assert.False(success);
+        }
+
+        [Fact]
+        public void ValidateSetBaseWordForPuzzleFail()
+        {
+            var model = new GameModel();
+            string word = "zzzzz";
+
+            Model md = model.SetBaseWordForPuzzle(word);
+
+            Assert.IsType<NullModel>(md);
+        }
+
+        /// <summary>
+        /// Validates AddFoundWord function
+        /// </summary>
+        [Fact]
+        public void ValidateAddFoundWord()
+        {
+            var model = new GameModel();
+            var controller = new GuiController(model);
+
+            var baseWord = "soldier";
+
+            controller.NewPuzzleBaseWord(baseWord);
+
+            model.AddFoundWord("soldier");
+
+            model.AddFoundWord("soldier");
+
+            model.AddFoundWord("soooo");
         }
     }
 }

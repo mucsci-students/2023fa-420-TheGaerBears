@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Documents;
+﻿using Avalonia;
+using Avalonia.Controls.Documents;
 using DynamicData.Kernel;
 using Microsoft.CodeAnalysis.FlowAnalysis;
 using System;
@@ -10,17 +11,38 @@ namespace SpellingBee
 
     public class CliController : Controller
     {
-        public Model _model;
+        public GameModel _model;
         private readonly GameView _view;
         private string _lastMessage = "";
+
+        private static CliController _instance;
 
         /// <summary>
         /// Initializes a new instance of the <c>CliController</c> class with the provided GameModel and GameView.
         /// </summary>
-        public CliController(Model model, GameView view) : base(model)
+        private CliController(GameModel model, GameView view) : base(model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _view = view ?? throw new ArgumentNullException(nameof(view));
+        }
+
+        public static CliController GetInstance(GameModel model, GameView view)
+        {
+            if (_instance == null)
+            {
+                _instance = new CliController(model, view);
+            }
+            return _instance;
+        }
+
+        public GameModel GetModelInstance()
+        {
+            return _model;
+        }
+
+        public static CliController GetExistingInstance()
+        {
+            return _instance;
         }
 
         /// <summary>
@@ -100,7 +122,7 @@ namespace SpellingBee
         /// </summary>
         public override void SavePuzzle(string saveName)
         {
-            if (_model.SaveCurrentGameState(saveName))
+            if (_model.SaveCurrentPuzzleState(saveName))
                 _view.DisplayMessage("Successfully saved game with progress");
             else
                 _view.DisplayMessage("Error: No file name");
@@ -138,6 +160,62 @@ namespace SpellingBee
         }
 
         /// <summary>
+        /// Submits high score for the current puzzle
+        /// </summary>
+        /// <param name="name"></param>
+        public void submitHighScore(string name)
+        {
+            if (name != null && name != "" && !_model.IsNull())
+            {
+                HighScores scores = new HighScores();
+                string temp = "";
+                var word = GetBaseWord();
+                for (int i = 0; i < word.Count; ++i)
+                {
+                    temp += word[i];
+                }
+                _view.DisplayMessage(scores.UpdateOrCreateHighScore(temp, name, _model.GetCurrentScore()).ToString());
+            }
+            else
+            {
+                _view.DisplayMessage("Please enter a valid name");
+            }
+        }
+
+        /// <summary>
+        /// Lists the high scores for the current puzzle
+        /// </summary>
+        public void viewHighScores()
+        {
+            HighScores scores = new HighScores();
+            string temp = "";
+            var word = GetBaseWord();
+            for (int i = 0; i < word.Count; ++i)
+            {
+                temp += word[i];
+            }
+
+            List<KeyValuePair<string, int>> highScores = scores.GetHighScores(temp);
+
+            if (highScores == null || highScores.Count == 0)
+            {
+                _view.DisplayMessage("There are no high scores for this game yet");
+            }
+            else
+            {
+
+                foreach (var score in highScores)
+                {
+                    string display = score.Value.ToString();
+                    display = display.PadRight(10);
+                    display += score.Key.ToString();
+                    _view.DisplayMessage(display);
+                }
+            }
+
+        }
+
+        /// <summary>
         /// Displays the initial game screen.
         /// </summary>
         public void BeginScreen()
@@ -153,7 +231,7 @@ namespace SpellingBee
             switch (input)
             {
                 case "-hint":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         //var hintToPrint = _model.LettersInWord();
                         //PrintHintTable(hintToPrint);
@@ -190,7 +268,7 @@ namespace SpellingBee
                     break;
 
                 case "-save current":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.DisplayMessage("Enter Save File Name:");
                         string saveName = _view.GetInput();
@@ -203,7 +281,7 @@ namespace SpellingBee
                     break;
 
                 case "-save puzzle":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.DisplayMessage("Enter Save File Name:");
                         string saveName = _view.GetInput();
@@ -217,7 +295,7 @@ namespace SpellingBee
 
                 case "-found words":
                 case "-show found words":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.ShowFoundWords(_model.GetFoundWords());
                     }
@@ -229,7 +307,7 @@ namespace SpellingBee
 
                 case "-puzzle":
                 case "-show puzzle":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.ShowPuzzle(_model.GetBaseWord(), _model.GetRequiredLetter());
                     }
@@ -241,7 +319,7 @@ namespace SpellingBee
 
                 case "-status":
                 case "-show status":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         _view.ShowStatus(_model.GetPlayerPoints(), _model.GetMaxPoints(), _model.GetStatusTitles(), _model.GetAllRanks());
                     }
@@ -252,7 +330,7 @@ namespace SpellingBee
                     break;
 
                 case "-shuffle":
-                    if (!_model.IsNull())
+                    if (_model.Active())
                     {
                         ShuffleBaseWord();
                     }
@@ -262,8 +340,36 @@ namespace SpellingBee
                     }
                     break;
 
+                case "-save score":
+                    if (_model.Active())
+                    {
+                        _view.DisplayMessage("Please enter a name for the score: ");
+                        string name = _view.GetInput();
+                        submitHighScore(name);
+                    }
+                    else
+                    {
+                        _view.DisplayMessage("A game has not been started. Please start one by calling one of the new game commands.");
+                    }
+                    break;
+
+                case "-view scores":
+                    if (_model.Active())
+                    {
+                        viewHighScores();
+                    }
+                    else
+                    {
+                        _view.DisplayMessage("A game has not been started. Please start one by calling one of the new game commands.");
+                    }
+                    break;
+
                 default:
-                    if (!_model.IsNull() && !input[0].Equals('-'))
+                    if (input.Equals(""))
+                    {
+                        //Do Nothing
+                    }
+                    else if (_model.Active() && !input[0].Equals('-'))
                     {
                         Guess(input);
                     }

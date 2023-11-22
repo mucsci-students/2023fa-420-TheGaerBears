@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using System.IO;
 using Avalonia.Media.TextFormatting;
 using DynamicData.Aggregation;
+using System.Security.Cryptography;
+using Newtonsoft.Json.Serialization;
 
 namespace SpellingBee
 {
@@ -20,6 +22,9 @@ namespace SpellingBee
         [JsonProperty] public int playerPoints;
         [JsonProperty] public char requiredLetter;
         [JsonProperty] public int maxPoints;
+        [JsonProperty] public List<string> wordlist;
+        [JsonProperty] public string author;
+        [JsonProperty] public string encrypted;
 
         /// <summary>
         /// Retrieves the current score of the player.
@@ -121,7 +126,28 @@ namespace SpellingBee
             {
                 string filePath = fileList[fileId];
                 string jsonData = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<GameModel>(jsonData);
+				GameModel loadedGame = JsonConvert.DeserializeObject<GameModel>(jsonData);
+				if (loadedGame.author != "GaerBears" && loadedGame.encrypted == "secretwordlist")
+				{
+                    return new NullModel();
+				}
+				if (loadedGame.encrypted == "secretwordlist")
+				{
+
+					StringBuilder jsonString = new StringBuilder(jsonData);
+					int start = jsonString.ToString().IndexOf("wordlist") + 12;
+					int end = jsonString.ToString().IndexOf("author") - 4;
+					for (; start < end; ++start)
+					{
+						jsonString[start] = (char)(jsonString[start] - 1);
+					}
+
+					File.WriteAllText(filePath + "1", jsonString.ToString());
+                    File.Delete(filePath + "1");
+                    loadedGame = JsonConvert.DeserializeObject<GameModel>(jsonData);
+				}
+
+                return loadedGame;
             }
             // File not found or invalid ID.
             return new NullModel();

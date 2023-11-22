@@ -1,4 +1,6 @@
-﻿using DynamicData;
+﻿using Avalonia.Styling;
+using Avalonia;
+using DynamicData;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ namespace SpellingBee
 
     public class GameView
     {
-            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status" };
+            private string[] tabCompletable = { "-exit", "-found words", "-help", "-hint", "-load", "-new", "-new game", "-new game from word", "-puzzle", "-save current", "-save puzzle", "-show found words", "-show puzzle", "-show status", "-shuffle", "-status", "-save score", "-view scores" };
         /// <summary>
         /// Center-aligns and displays the specified text in the console.
         /// </summary>
@@ -74,7 +76,7 @@ namespace SpellingBee
             Console.WriteLine();
             CenterText("Spelling Bee Puzzle Game");
             Console.WriteLine();
-            CenterText("Enter a Command: (-New Game, -Load, -Help)");
+            CenterText("Enter a Command: (-new game, -load, -help)");
             Console.WriteLine();
             Console.WriteLine();
         }
@@ -90,6 +92,8 @@ namespace SpellingBee
                 Console.WriteLine(word);
             }
         }
+
+        
 
         /// <summary>
         /// Displays the puzzle's letters along with the required letter.
@@ -161,10 +165,12 @@ namespace SpellingBee
                 -load:               Load a saved game or puzzle.
                 -save current:       Save the current game with progress.
                 -save puzzle:        Save the current puzzle.
+                -save score:         Save the current score as a high score.
                 -show found words:   Display the words you have found.
                 -show puzzle:        Display the puzzle letters.
                 -show status:        Display your current game status.
                 -shuffle:            Shuffle the puzzle letters.
+                -view scores:        Display the high scores for the current puzzle.
                 -hint:               Display helpful hints for solving the puzzle.
                 -help:               Show this list of commands.
                 -exit:               Exit the game.
@@ -232,7 +238,7 @@ namespace SpellingBee
 
                 int currentLineCursor = Console.CursorTop;
                 Console.SetCursorPosition(0, Console.CursorTop);
-                Console.Write(new string(' ', Console.WindowWidth));
+                Console.Write(new string(' ', Console.WindowWidth - 1));
                 Console.SetCursorPosition(0, currentLineCursor);
 
                 Console.Write(userInput);

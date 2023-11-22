@@ -299,12 +299,15 @@ namespace SpellingBee
 New Game: Starts a new puzzle game.
 New Game From Word: Starts a new puzzle game with the word currently written at the bottom of the screen.
 Load Game: Load a saved game or puzzle.
-Save Word: Save the current game with progress with the name currently written at the bottom of the screen.
+Save Current: Save the current game with progress with the name currently written at the bottom of the screen.
 Save Puzzle: Save the current puzzle with progress with the name currently written at the bottom of the screen. 
 Found Words: Display the words you have found.
 Shuffle: Shuffle the puzzle letters.
-Help: Show this list of commands.
+Help: Show this list.
 Toggle Colorblind: Adjusts game to be more Red-Green colorblind friendly!
+Hints: Display the hints for this puzzle.
+Submit High Score: Enter the current score for this puzzle in the high score list.
+Screenshot: Save an image of the game to share!
 
 You can also simply type in a word to make a guess.
 Remember, all words must contain the required letter!";

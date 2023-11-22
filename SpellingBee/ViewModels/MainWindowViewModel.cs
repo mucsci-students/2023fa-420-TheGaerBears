@@ -14,6 +14,18 @@ using System.Threading.Tasks;
 using Avalonia.Interactivity;
 using Castle.Components.DictionaryAdapter.Xml;
 using System.Drawing.Printing;
+using Avalonia.Media.Imaging;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using Avalonia.Visuals;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Drawing;
+using SkiaSharp;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace SpellingBee.ViewModels
 {
@@ -33,8 +45,8 @@ namespace SpellingBee.ViewModels
         private int _points = 0;
         private string _rank = "";
         private int _nextRank = 0;
-        private bool _loadVisible = false;
-        private bool _guessVisible = true;
+        private bool _colorBlindVisible = true;
+        private bool _backspaceVisible = true;
         private bool _saveVisible = false;
         private string _color1 = "Red";
         private string _color2 = "Green";
@@ -67,6 +79,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> ShuffleCommand { get; }
         public ReactiveCommand<Unit, Unit> GuessCommand { get; }
         public ReactiveCommand<string, Unit> SavePuzzleCommand { get; }
+        public ReactiveCommand<Unit, Unit> ScreenshotCommand { get; }
         public ReactiveCommand<string, Unit> SaveCurrentCommand { get; }
         public ReactiveCommand<Unit, Unit> LoadCommand { get; }
         public ReactiveCommand<string, Unit> NewGameFromWordCommand { get; }
@@ -75,6 +88,7 @@ namespace SpellingBee.ViewModels
         public ReactiveCommand<Unit, Unit> ToggleColorblind { get; }
         public ReactiveCommand<Unit, Unit> Backspace { get; }
         public ReactiveCommand<Unit, Unit> HintCommand { get; }
+        public ReactiveCommand<string, Unit> SubmitHighScoreCommand { get; }
 
 
         /// <summary>
@@ -97,6 +111,7 @@ namespace SpellingBee.ViewModels
             ShuffleCommand = ReactiveCommand.Create(ShuffleLetters);
             GuessCommand = ReactiveCommand.Create(ExecuteGuess);
             SavePuzzleCommand = ReactiveCommand.Create<string>(SavePuzzle);
+            ScreenshotCommand = ReactiveCommand.Create(SaveScreenshot);
             SaveCurrentCommand = ReactiveCommand.Create<string>(SaveCurrent);
             LoadCommand = ReactiveCommand.Create(Load);
             NewGameFromWordCommand = ReactiveCommand.Create<string>(NewGameFromWord);
@@ -105,6 +120,7 @@ namespace SpellingBee.ViewModels
             ToggleColorblind = ReactiveCommand.Create(ToggleColors);
             Backspace = ReactiveCommand.Create(DeleteFromEnd);
             HintCommand = ReactiveCommand.Create(Hint);
+            SubmitHighScoreCommand = ReactiveCommand.Create<string>(submitHighScore);
         }
 
         /// <summary>
@@ -262,6 +278,62 @@ namespace SpellingBee.ViewModels
             LowerText = "";
         }
 
+        public void SaveScreenshot()
+        {
+            // Set buttons to not be visible
+            ColorBlindVisible = false;
+            BackspaceVisible = false;
+
+            // Capture the visual content
+            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.StorageProvider is not { } provider)
+                throw new NullReferenceException("Missing StorageProvider instance.");
+
+            var myControl = (TopLevel)desktop.MainWindow;
+
+            var width = myControl.Width;
+            var height = myControl.Height;
+
+            var bitmap = new RenderTargetBitmap(new PixelSize((int)myControl.Bounds.Width, (int)myControl.Bounds.Height));
+            bitmap.Render(myControl);
+            //bitmap.Save("Please2.png");
+
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory);
+                memory.Position = 0;
+
+                byte[] bytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    memory.CopyTo(ms);
+                    bytes = ms.ToArray();
+                }
+
+                using var skBitmap = SKBitmap.Decode(bytes);
+
+                using var pixmap = new SKPixmap(skBitmap.Info, skBitmap.GetPixels());
+                SKRectI rectI = new SKRectI(0, 0, (int)(.665 * width), (int)(.535 * height));
+
+                var subset = pixmap.ExtractSubset(rectI);
+
+                using var data = subset.Encode(SKPngEncoderOptions.Default);
+
+                List<char> bWordSort = _guiController.GetBaseWord();
+                bWordSort.Sort();
+
+                string picName = new (bWordSort.ToArray());
+                picName += _guiController.GetCurrentScore().ToString();
+                picName += ".png";
+
+                File.WriteAllBytes(picName, data.ToArray());
+            }
+
+            // Set buttons to be visible
+            ColorBlindVisible = true;
+            BackspaceVisible = true;
+        }
+
         /// <summary>
         /// Method <c>SaveCurrent</c> allows the user to click the SaveCurrent button to save state
         /// as long as a game has started.
@@ -333,7 +405,7 @@ namespace SpellingBee.ViewModels
         /// Method <c>NewGameFromWord</c> allows the user to start a new game from the word
         /// typed into the textbox as long as it is a valid pangram.
         /// </summary>
-        private void NewGameFromWord(String word)
+        private void NewGameFromWord(string word)
         {
             FeedbackMessage = "";
             if (word != null)
@@ -373,8 +445,23 @@ namespace SpellingBee.ViewModels
         {
             _guiController.Hint();
             HintString = _guiController.GetLastMessage();
+            SaveScreenshot();
         }
 
+        private void submitHighScore(string name)
+        {
+            if (name != null || name != "" && Letter1 != "")
+            {
+                HighScores scores = new HighScores();
+                string temp = "";
+                var word = _guiController.GetBaseWord();
+				for (int i = 0;i < word.Count; ++i)
+                {
+                    temp += word[i];
+                }
+                FeedbackMessage = scores.UpdateOrCreateHighScore(temp, name, Points).ToString();
+            }
+        }
 
         public string FeedbackMessage
         {
@@ -521,6 +608,18 @@ namespace SpellingBee.ViewModels
         {
             get { return _queenBee; }
             set { this.RaiseAndSetIfChanged(ref _queenBee, value); }
+        }
+
+        public bool ColorBlindVisible
+        {
+            get { return _colorBlindVisible; }
+            set { this.RaiseAndSetIfChanged(ref _colorBlindVisible, value); }
+        }
+
+        public bool BackspaceVisible
+        {
+            get { return _backspaceVisible; }
+            set { this.RaiseAndSetIfChanged(ref _backspaceVisible, value); }
         }
     }
 }
